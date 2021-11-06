@@ -1,0 +1,81 @@
+referencias ML 
+
+https://towardsdatascience.com/machine-learning-with-pyspark-and-mllib-solving-a-binary-classification-problem-96396065d2aa 
+
+https://towardsdatascience.com/machine-learning-with-pyspark-and-mllib-solving-a-binary-classification-problem-96396065d2aa
+
+https://towardsdatascience.com/building-a-logistic-regression-in-python-step-by-step-becd4d56c9c8
+
+
+https://spark.apache.org/docs/latest/api/python/reference/api/pyspark.ml.classification.LogisticRegressionModel.html#pyspark.ml.classification.LogisticRegressionModel.getRegParam
+
+
+#####################
+Crear imagen de docker
+docker build --tag bigdata .
+
+
+
+
+######################
+abrir la imagen creada de docker
+docker run -i -t bigdata /bin/bash
+
+######################
+running containers
+docker ps
+
+
+######################
+Salir del bash de docker
+type exit
+
+
+
+
+###docker cp "C:\Users\steve\OneDrive\Cursos\Ciencia de Datos\004BigData\Tarea1\universidad\ready.py" b744974eb384:/src/universidad
+
+docker cp universidad 84aa47fa42bf:/src
+
+spark-submit programaestudiante.py estudiante.csv curso.csv nota.csv
+
+docker cp testingPython 84aa47fa42bf:/src
+
+spark-submit test.py estudiante.csv curso.csv nota.csv
+
+
+
+docker cp testsample 84aa47fa42bf:/src
+
+docker cp 5db837d980b3:/src/sparkml/BigData-Leccion5.ipynb .
+
+# Images
+docker image ls -a
+
+
+# Contenedores
+docker container ls -a
+docker start 543fd6b4dea2
+docker ps
+docker exec -it 3033c8a98e3c /bin/bash
+
+  
+
+#Jupyter Notebook 
+docker run -p 8888:8888 -i -t bigdata /bin/bash
+
+
+
+#pgadmin
+https://www.enterprisedb.com/postgres-tutorials/connecting-postgresql-using-psql-and-pgadmin
+psql -h localhost -U postgres -p 5433
+
+
+docker cp 543fd6b4dea2:/src/Tarea3 ./
+
+
+
+docker run --name bigdata-db ^
+  -e POSTGRES_PASSWORD=testPassword ^
+  -p 5433:5432 ^
+  -d postgres
