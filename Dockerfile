@@ -21,6 +21,11 @@ RUN pip3 install pyspark
 RUN pip3 install pytest
 RUN pip3 install notebook
 RUN pip3 install findspark
+RUN pip3 install pandas
+RUN pip3 install scipy
+RUN pip3 install scikit-learn
+RUN pip3 install statsmodels
+RUN pip3 install plotly
 RUN ln /usr/bin/python3.7 /usr/bin/python
 
 WORKDIR /src
