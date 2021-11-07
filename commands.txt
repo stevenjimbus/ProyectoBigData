@@ -35,17 +35,17 @@ type exit
 
 ###docker cp "C:\Users\steve\OneDrive\Cursos\Ciencia de Datos\004BigData\Tarea1\universidad\ready.py" b744974eb384:/src/universidad
 
-docker cp universidad 84aa47fa42bf:/src
+docker cp universidad 85c615f37595:/src
 
 spark-submit programaestudiante.py estudiante.csv curso.csv nota.csv
 
-docker cp testingPython 84aa47fa42bf:/src
+docker cp testingPython 85c615f37595:/src
 
 spark-submit test.py estudiante.csv curso.csv nota.csv
 
 
 
-docker cp testsample 84aa47fa42bf:/src
+docker cp testsample 85c615f37595:/src
 
 docker cp 5db837d980b3:/src/sparkml/BigData-Leccion5.ipynb .
 
@@ -55,9 +55,9 @@ docker image ls -a
 
 # Contenedores
 docker container ls -a
-docker start 543fd6b4dea2
+docker start 85c615f37595
 docker ps
-docker exec -it 3033c8a98e3c /bin/bash
+docker exec -it 85c615f37595 /bin/bash
 
   
 
