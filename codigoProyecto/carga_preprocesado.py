@@ -5,16 +5,17 @@ from pyspark.sql import functions as f
 from pyspark.sql.functions import col, date_format, udf
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType)
+import sys
 
 spark = SparkSession.builder.appName("carga_y_preprocesado").getOrCreate()
 
 
-def cargarDataset1():
+def cargarDataset1(csvPath1):
     #StringType, IntegerType, FloatType, DecimalType, StructField, StructType
     worldIndDF = spark \
         .read \
         .format("csv") \
-        .option("path", "dataset1_world_indicators.csv") \
+        .option("path", csvPath1) \
         .option("header", True) \
         .schema(StructType([
                     StructField("Entity",StringType()),
@@ -30,11 +31,11 @@ def cargarDataset1():
 
     return worldIndDF
 
-def cargarDataset2():
+def cargarDataset2(csvPath2):
     AthletesDF = spark \
         .read \
         .format("csv") \
-        .option("path", "dataset2_athletes.csv") \
+        .option("path", csvPath2) \
         .option("dateFormat", "MM-dd-yyyy")\
         .option("header", True) \
         .schema(StructType([
@@ -71,8 +72,11 @@ def transformDatasetAtletas(Atletas_DF):
 
 
 def main():
-    IndicesDesarrllo_por_paisDF = cargarDataset1()
-    AtletasDF = cargarDataset2()
+    csvPath1 = sys.argv[1]
+    csvPath2 = sys.argv[2]
+
+    IndicesDesarrllo_por_paisDF = cargarDataset1(csvPath1)
+    AtletasDF = cargarDataset2(csvPath2)
     transformDatasetAtletas(AtletasDF)
 
     return True
