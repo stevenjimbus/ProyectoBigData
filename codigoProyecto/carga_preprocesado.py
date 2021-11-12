@@ -18,7 +18,7 @@ def cargarDataset1(csvPath1):
         .option("path", csvPath1) \
         .option("header", True) \
         .schema(StructType([
-                    StructField("Entity",StringType()),
+                    StructField("country",StringType()),
                     StructField("Code",StringType()),
                     StructField("poverty_percent",FloatType()),
                     StructField("gdp_per_capita",FloatType()),
@@ -61,9 +61,13 @@ def cargarDataset2(csvPath2):
     AthletesDF.show(truncate=False,n=3)    
     return AthletesDF
 
+def transformDatasetIndicesGlobales(Indices_DF):
+    cleanDF = Indices_DF.select("country","poverty_percent","gdp_per_capita","population","years_of_education")
+    cleanDF.show()
+    return True
+
 def transformDatasetAtletas(Atletas_DF):
     sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
-    #sumDF.show(n=50)
     binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(0))
     binaryLabelDF.show(n=50)
     cleanDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
@@ -72,12 +76,14 @@ def transformDatasetAtletas(Atletas_DF):
 
 
 def main():
-    csvPath1 = sys.argv[1]
-    csvPath2 = sys.argv[2]
+    csvPath1 = sys.argv[1]#Indices de desarrollo
+    csvPath2 = sys.argv[2]#Informacion de atletas
 
     IndicesDesarrllo_por_paisDF = cargarDataset1(csvPath1)
     AtletasDF = cargarDataset2(csvPath2)
-    transformDatasetAtletas(AtletasDF)
+    cleanIndicesDF = transformDatasetIndicesGlobales(IndicesDesarrllo_por_paisDF)
+    cleanAtletasDF = transformDatasetAtletas(AtletasDF)
+
 
     return True
 
