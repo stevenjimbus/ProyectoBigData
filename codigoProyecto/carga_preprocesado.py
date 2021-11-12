@@ -79,9 +79,12 @@ def imputacionIndicesGlobales(indicesGlobalesDF):
 
     indicesGlobalesDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
 
+    return True
 
+def imputacionAtletas(atletasDF):
+    print("columnas XXX", atletasDF.columns)
 
-
+    atletasDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in atletasDF.columns]).show()
 
     return True
 
@@ -96,6 +99,7 @@ def main():
     mainColumnsAtletasDF = transformDatasetAtletas(AtletasDF)#Seleccionar features deseados para el modelo predictivo
     #Imputacion de valores faltantes
     imputacionIndicesGlobales(mainColumnsIndicesDF)
+    imputacionAtletas(mainColumnsAtletasDF)
 
 
     return True
