@@ -74,15 +74,22 @@ def transformDatasetAtletas(Atletas_DF):
     cleanDF.show()
     return True
 
+def imputacionIndicesGlobales(indicesGlobalesDF):
+    indicesGlobalesDF.where(col("dt_mvmt").isNull())
+
+    return True
 
 def main():
     csvPath1 = sys.argv[1]#Indices de desarrollo
     csvPath2 = sys.argv[2]#Informacion de atletas
-
-    IndicesDesarrllo_por_paisDF = cargarDataset1(csvPath1)
-    AtletasDF = cargarDataset2(csvPath2)
-    cleanIndicesDF = transformDatasetIndicesGlobales(IndicesDesarrllo_por_paisDF)
-    cleanAtletasDF = transformDatasetAtletas(AtletasDF)
+    ###Cargar datos desde .csv
+    IndicesDesarrllo_por_paisDF = cargarDataset1(csvPath1)#Cargar RawDataset1
+    AtletasDF = cargarDataset2(csvPath2)#Cargar RawDataset2
+    ####Seleccionar features deseados para el modelo predictivo
+    mainColumnsIndicesDF = transformDatasetIndicesGlobales(IndicesDesarrllo_por_paisDF)#Seleccionar features deseados para el modelo predictivo
+    mainColumnsAtletasDF = transformDatasetAtletas(AtletasDF)#Seleccionar features deseados para el modelo predictivo
+    #Imputacion de valores faltantes
+    imputacionIndicesGlobales()
 
 
     return True
