@@ -2,7 +2,7 @@ from datetime import datetime
 
 from pyspark.sql import SparkSession
 from pyspark.sql import functions as f
-from pyspark.sql.functions import col, date_format, udf
+from pyspark.sql.functions import col, date_format, udf, isnan, when, count, isnull
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType)
 import sys
@@ -64,7 +64,7 @@ def cargarDataset2(csvPath2):
 def transformDatasetIndicesGlobales(Indices_DF):
     cleanDF = Indices_DF.select("country","poverty_percent","gdp_per_capita","population","years_of_education")
     cleanDF.show()
-    return True
+    return cleanDF
 
 def transformDatasetAtletas(Atletas_DF):
     sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
@@ -72,10 +72,16 @@ def transformDatasetAtletas(Atletas_DF):
     binaryLabelDF.show(n=50)
     cleanDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
     cleanDF.show()
-    return True
+    return cleanDF
 
 def imputacionIndicesGlobales(indicesGlobalesDF):
-    indicesGlobalesDF.where(col("dt_mvmt").isNull())
+    print("columnas XXX", indicesGlobalesDF.columns)
+
+    indicesGlobalesDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
+
+
+
+
 
     return True
 
@@ -89,7 +95,7 @@ def main():
     mainColumnsIndicesDF = transformDatasetIndicesGlobales(IndicesDesarrllo_por_paisDF)#Seleccionar features deseados para el modelo predictivo
     mainColumnsAtletasDF = transformDatasetAtletas(AtletasDF)#Seleccionar features deseados para el modelo predictivo
     #Imputacion de valores faltantes
-    imputacionIndicesGlobales()
+    imputacionIndicesGlobales(mainColumnsIndicesDF)
 
 
     return True
