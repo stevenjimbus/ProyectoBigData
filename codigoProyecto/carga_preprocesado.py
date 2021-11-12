@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from pyspark.sql import SparkSession
+from pyspark.sql import functions as f
 from pyspark.sql.functions import col, date_format, udf
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType)
@@ -59,14 +60,18 @@ def cargarDataset2():
     AthletesDF.show(truncate=False,n=3)    
     return AthletesDF
 
-def transformDatasetAtletas(Atletas_Dataframe):
-
+def transformDatasetAtletas(Atletas_DF):
+    sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
+    #sumDF.show(n=50)
+    binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(1))
+    binaryLabelDF.show(n=50)
     return True
 
 
 def main():
     IndicesDesarrllo_por_paisDF = cargarDataset1()
     AtletasDF = cargarDataset2()
+    transformDatasetAtletas(AtletasDF)
 
     return True
 
