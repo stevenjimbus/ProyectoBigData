@@ -63,8 +63,10 @@ def cargarDataset2():
 def transformDatasetAtletas(Atletas_DF):
     sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
     #sumDF.show(n=50)
-    binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(1))
+    binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(0))
     binaryLabelDF.show(n=50)
+    cleanDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
+    cleanDF.show()
     return True
 
 
