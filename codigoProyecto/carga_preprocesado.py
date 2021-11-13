@@ -108,7 +108,7 @@ def imputacionAtletas(atletasDF):
     print("Tamano Dataframe preprocesado de Atletas",(cleanDF.count(), len(cleanDF.columns)))
     return cleanDF
 
-def escribir_en_DB(DF):
+def escribir_en_DB(DF,nombreDF):
     DF \
         .write \
         .format("jdbc") \
@@ -116,7 +116,7 @@ def escribir_en_DB(DF):
         .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
         .option("user", "postgres") \
         .option("password", "testPassword") \
-        .option("dbtable", "nombreDF") \
+        .option("dbtable", nombreDF) \
         .save()
     return True
 
@@ -133,17 +133,9 @@ def main():
     #Imputacion de valores faltantes
     IndicesPreprocesadosDF = imputacionIndicesGlobales(mainColumnsIndicesDF)
     AtletasPreprocesadosDF = imputacionAtletas(mainColumnsAtletasDF)
-    #escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
-    #escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-    IndicesPreprocesadosDF\
-        .write \
-        .format("jdbc") \
-        .mode('overwrite') \
-        .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
-        .option("user", "postgres") \
-        .option("password", "testPassword") \
-        .option("dbtable", "nombreDF") \
-        .save()
+    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+
 
 
     return True
