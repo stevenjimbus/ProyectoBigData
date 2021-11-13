@@ -47,20 +47,20 @@ def cargarDataset2(csvPath2):
         .option("dateFormat", "MM-dd-yyyy")\
         .option("header", True) \
         .schema(StructType([
-                    StructField("id",IntegerType()),
+                    StructField("id",LongType()),
                     StructField("name",StringType()),
                     StructField("nationality",StringType()),
                     StructField("sex",StringType()),
-                    StructField("dob",DateType()),
-                    StructField("height",FloatType()),
+                    StructField("dob",LongType()),
+                    StructField("height",DoubleType()),
                     StructField("weight",FloatType()),
                     StructField("sport",StringType()),
-                    StructField("gold",IntegerType()),
-                    StructField("silver",IntegerType()),
-                    StructField("bronze",IntegerType()),
+                    StructField("gold",LongType()),
+                    StructField("silver",LongType()),
+                    StructField("bronze",LongType()),
                     StructField("country",StringType()),
-                    StructField("countrypopulation",FloatType()),
-                    StructField("countrygdp_per_capita",FloatType()),
+                    StructField("countrypopulation",LongType()),
+                    StructField("countrygdp_per_capita",DoubleType()),
 
                     ])) \
         .load()
