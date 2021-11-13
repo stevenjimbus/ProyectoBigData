@@ -76,16 +76,24 @@ def transformDatasetAtletas(Atletas_DF):
 
 def imputacionIndicesGlobales(indicesGlobalesDF):
     
-    indicesGlobalesDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
-    print("################Shape of indicesGlobalesDF",(indicesGlobalesDF.count(), len(indicesGlobalesDF.columns)))
     
+    print("################Shape of indicesGlobalesDF",(indicesGlobalesDF.count(), len(indicesGlobalesDF.columns)))
+    indicesGlobalesDF.select([count(when(isnan(c), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
+    indicesGlobalesDF.select([count(when(col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
+    cleanDF = indicesGlobalesDF.na.drop()
+    cleanDF.show()
+    print("################Shape of cleanDF",(cleanDF.count(), len(cleanDF.columns)))
 
-    return True
+    return cleanDF
 
 def imputacionAtletas(atletasDF):
     
-    atletasDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in atletasDF.columns]).show()
     print("################Shape of atletasDF",(atletasDF.count(), len(atletasDF.columns)))
+    atletasDF.select([count(when(isnan(c), c)).alias(c) for c in atletasDF.columns]).show()
+    atletasDF.select([count(when(col(c).isNull(), c)).alias(c) for c in atletasDF.columns]).show()
+    cleanDF = atletasDF.na.drop()
+    cleanDF.show()
+    print("################Shape of cleanDF",(cleanDF.count(), len(cleanDF.columns)))
     
 
     return True

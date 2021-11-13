@@ -1,0 +1,1 @@
+docker cp 85c615f37595:/src/codigoProyecto/output.txt ./codigoProyecto
