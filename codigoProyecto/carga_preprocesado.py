@@ -1,3 +1,6 @@
+import findspark
+findspark.init('/usr/lib/python3.7/site-packages/pyspark')
+
 from datetime import datetime
 
 from pyspark.sql import SparkSession
@@ -7,8 +10,13 @@ from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType)
 import sys
 
-spark = SparkSession.builder.appName("carga_y_preprocesado").getOrCreate()
 
+spark = SparkSession \
+    .builder \
+    .appName("Basic JDBC pipeline") \
+    .config("spark.driver.extraClassPath", "postgresql-42.2.14.jar") \
+    .config("spark.executor.extraClassPath", "postgresql-42.2.14.jar") \
+    .getOrCreate()
 
 def cargarDataset1(csvPath1):
     #StringType, IntegerType, FloatType, DecimalType, StructField, StructType
@@ -100,16 +108,16 @@ def imputacionAtletas(atletasDF):
     print("Tamano Dataframe preprocesado de Atletas",(cleanDF.count(), len(cleanDF.columns)))
     return cleanDF
 
-def escribir_en_DB(DF,nombreDF):
+def escribir_en_DB(DF):
     DF \
-    .write \
-    .format("jdbc") \
-    .mode('overwrite') \
-    .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
-    .option("user", "postgres") \
-    .option("password", "testPassword") \
-    .option("dbtable", nombreDF) \
-    .save()
+        .write \
+        .format("jdbc") \
+        .mode('overwrite') \
+        .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
+        .option("user", "postgres") \
+        .option("password", "testPassword") \
+        .option("dbtable", "nombreDF") \
+        .save()
     return True
 
 
@@ -125,9 +133,17 @@ def main():
     #Imputacion de valores faltantes
     IndicesPreprocesadosDF = imputacionIndicesGlobales(mainColumnsIndicesDF)
     AtletasPreprocesadosDF = imputacionAtletas(mainColumnsAtletasDF)
-    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
-    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-    
+    #escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    #escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+    IndicesPreprocesadosDF\
+        .write \
+        .format("jdbc") \
+        .mode('overwrite') \
+        .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
+        .option("user", "postgres") \
+        .option("password", "testPassword") \
+        .option("dbtable", "nombreDF") \
+        .save()
 
 
     return True
