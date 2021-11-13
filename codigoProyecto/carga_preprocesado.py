@@ -7,7 +7,7 @@ from pyspark.sql import SparkSession
 from pyspark.sql import functions as f
 from pyspark.sql.functions import col, date_format, udf, isnan, when, count, isnull
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
-                               StructField, StructType, TimestampType)
+                               StructField, StructType, TimestampType,LongType,DoubleType)
 import sys
 
 
@@ -28,10 +28,10 @@ def cargarDataset1(csvPath1):
         .schema(StructType([
                     StructField("country",StringType()),
                     StructField("Code",StringType()),
-                    StructField("poverty_percent",FloatType()),
-                    StructField("gdp_per_capita",FloatType()),
-                    StructField("population",IntegerType()),
-                    StructField("years_of_education",FloatType())])) \
+                    StructField("poverty_percent",DoubleType()),
+                    StructField("gdp_per_capita",LongType()),
+                    StructField("population",LongType()),
+                    StructField("years_of_education",DoubleType())])) \
         .load()
     print('Qty Filas: {}\n Cantidad Columnas: {}'.format(worldIndDF.count(), len(worldIndDF.columns)))
     worldIndDF.printSchema()
