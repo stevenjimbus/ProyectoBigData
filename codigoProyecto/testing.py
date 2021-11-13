@@ -91,13 +91,13 @@ def test_transformDatasetAtletas(spark_session):
     actual_ds.printSchema()
    
 
-
+    print("expected")
     expected_ds = spark_session.createDataFrame(
         [
             (None,'male',1.65,71.0,'wrestling',0), 
             ('Austria','female',1.68,75.3,'aquatics',1), 
             ('Brazil','male',1.63,62.0,'fencing',1,), 
-            (None,'male',1.83,84.0,'shooting',1)           
+            ("Chile",'male',1.83,84.0,'shooting',1)           
         ], 
         [  'country','sex','height','weight','sport','TieneMedalla'])  
     expected_ds.show()     
