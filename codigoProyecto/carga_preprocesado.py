@@ -86,7 +86,7 @@ def transformDatasetAtletas(Atletas_DF):
     print("Sumamos la cantidad de medallas por participantes")   
     sumDF=AtletasSinNulls_DF.withColumn('total_Medallas',(AtletasSinNulls_DF.gold + AtletasSinNulls_DF.silver + AtletasSinNulls_DF.bronze).cast(LongType()) )
     print("Creamos columna TieneMedalla: ###Participante Ganó medalla -> 1  ### Participante No Ganó medalla -> 0###")
-    binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(0))
+    binaryLabelDF = sumDF.withColumn('TieneMedalla', (f.when(f.col('total_Medallas') > 0, 1).otherwise(0)).cast(LongType()))
     binaryLabelDF.show()
     print("Seleccionamos las columnas que nos interesa del dataset binario Ganó/No Ganó medalla")
     transformedDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
