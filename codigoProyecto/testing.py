@@ -55,7 +55,7 @@ def test_loading_AtletasDF(spark_session):
 
 def test_transformDatasetIndicesGlobales(spark_session):
     sc=spark_session.sparkContext
-    csvPath = Path("testDS2_loadcsv_athletes.csv")#Informacion de atletas
+    csvPath = Path("testDS1_loadcsv_world_indicators.csv")#Informacion de atletas
     indices_ds =cargarDataset1(csvPath) 
     actual_ds=transformDatasetIndicesGlobales(indices_ds) 
 
@@ -81,3 +81,25 @@ def test_transformDatasetIndicesGlobales(spark_session):
 
 
 
+def test_transformDatasetAtletas(spark_session):
+    sc=spark_session.sparkContext
+    csvPath = Path("testDS2_loadcsv_athletes.csv")#Informacion de atletas
+    atletas_df =cargarDataset2(csvPath)  
+    actual_ds=transformDatasetAtletas(atletas_df) 
+    print("Dataset del CSV")
+    actual_ds.show(n=10)
+    actual_ds.printSchema()
+   
+
+
+    expected_ds = spark_session.createDataFrame(
+        [
+            (None,'Carlos Lara','AFG','male',31060,1.65,71,'wrestling',0,0,0,1377237,22600.2), 
+            ('Austria',34,'Jose Soto','AUT','female',33888,1.68,75,'aquatics',0,1,0,,13544345,55555.5), 
+            ('Brazil','Maria Perez','BRA','male',33176,1.63,62,'fencing',1,2,0,,64523,33333.3), 
+            (None,'Abdullah Alrashidi','CHL','male',23244,1.83,84,'shooting',0,1,'Chile',7897789,99999.99)           
+        ], 
+        [  'country','sex','height','weight','sport','TieneMedalla'])  
+    expected_ds.show()     
+    expected_ds.printSchema()                                                             
+    assert expected_ds.collect() == actual_ds.collect()
