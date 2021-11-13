@@ -19,14 +19,15 @@ def test_loading_IndicesGlobalesDF(spark_session):
 
     expected_ds = spark_session.createDataFrame(
         [
-            ('Afghanistan',None,49.3,2080,10872072,3.6), 
-            ('Austria','AUT',39.1,9550,71307,13.0), 
-            ('Brazil','BRA',1.05,22574,None,10.8), 
-            ('Chile','CHL',0.72,37465,127763267,12.7)           
+            ('Afghanistan',None,49.3,2080.0,10872072,3.6), 
+            ('Austria','AUT',39.1,9550.23,71307,13.0), 
+            ('Brazil','BRA',1.05,22574.0,None,10.8), 
+            ('Chile','CHL',0.72,37465.45,127763267,12.7)           
         ], 
         [  'country','Code','poverty_percent','gdp_per_capita','population','years_of_education'])  
-    expected_ds.show()     
-    expected_ds.printSchema()                                                             
+    expected_ds.show(n=10)     
+    expected_ds.printSchema()   
+
     assert expected_ds.collect() == actual_ds.collect()
 
 
@@ -51,4 +52,32 @@ def test_loading_AtletasDF(spark_session):
     expected_ds.show()     
     expected_ds.printSchema()                                                             
     assert expected_ds.collect() == actual_ds.collect()
+
+def test_transformDatasetIndicesGlobales(spark_session):
+    sc=spark_session.sparkContext
+    csvPath = Path("testDS2_loadcsv_athletes.csv")#Informacion de atletas
+    indices_ds =cargarDataset1(csvPath) 
+    actual_ds=transformDatasetIndicesGlobales(indices_ds) 
+
+    print("Actual DS test_transformDatasetIndicesGlobales ")
+    actual_ds.show()
+
+    print("Expected test_transformDatasetIndicesGlobales")
+    expected_ds = spark_session.createDataFrame(
+        [
+            ('Afghanistan',49.3,2080.0,10872072,3.6), 
+            ('Austria',39.1,9550.23,71307,13.0), 
+            ('Brazil',1.05,22574.0,None,10.8), 
+            ('Chile',0.72,37465.45,127763267,12.7)           
+        ], 
+        [  'country','poverty_percent','gdp_per_capita','population','years_of_education'])  
+    expected_ds.show(n=10)     
+    expected_ds.printSchema()   
+
+    
+
+
+    assert expected_ds.collect() == actual_ds.collect()
+
+
 

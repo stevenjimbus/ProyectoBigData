@@ -19,7 +19,7 @@ spark = SparkSession \
     .getOrCreate()
 
 def cargarDataset1(csvPath1):
-    #StringType, IntegerType, FloatType, DecimalType, StructField, StructType
+    
     worldIndDF = spark \
         .read \
         .format("csv") \
@@ -29,10 +29,11 @@ def cargarDataset1(csvPath1):
                     StructField("country",StringType()),
                     StructField("Code",StringType()),
                     StructField("poverty_percent",DoubleType()),
-                    StructField("gdp_per_capita",LongType()),
+                    StructField("gdp_per_capita",DoubleType()),
                     StructField("population",LongType()),
                     StructField("years_of_education",DoubleType())])) \
         .load()
+    print("Carga inicial de Indicadores GlobalesDF")
     print('Qty Filas: {}\n Cantidad Columnas: {}'.format(worldIndDF.count(), len(worldIndDF.columns)))
     worldIndDF.printSchema()
     worldIndDF.show(truncate=False,n=3)
@@ -64,20 +65,25 @@ def cargarDataset2(csvPath2):
 
                     ])) \
         .load()
+    print("Carga inicial de AtletasDF")
     print('Qty Filas: {}\n Cantidad Columnas: {}'.format(AthletesDF.count(), len(AthletesDF.columns)))
     AthletesDF.printSchema()
     AthletesDF.show(truncate=False,n=3)    
     return AthletesDF
 
 def transformDatasetIndicesGlobales(Indices_DF):
+    print("Seleccionamos columnas especificas de Indices_DF (hacemos drop a columna CODE)")
     transformedDF = Indices_DF.select("country","poverty_percent","gdp_per_capita","population","years_of_education")
     transformedDF.show()
     return transformedDF
 
 def transformDatasetAtletas(Atletas_DF):
+    print("Sumamos la cantidad de medallas por participantes")
     sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
+    print("Creamos columna TieneMedalla: ###Participante Ganó medalla -> 1  ### Participante No Ganó medalla -> 0###")
     binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(0))
-    binaryLabelDF.show(n=50)
+    binaryLabelDF.show()
+    print("Seleccionamos las columnas que nos interesa del dataset binario Ganó/No Ganó medalla")
     transformedDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
     transformedDF.show()
     return transformedDF
@@ -85,6 +91,7 @@ def transformDatasetAtletas(Atletas_DF):
 def imputacionIndicesGlobales(indicesGlobalesDF):   
     print("Tamano Dataframe indicesGlobalesDF",(indicesGlobalesDF.count(), len(indicesGlobalesDF.columns)))
     print("Cantidad de valores NaN por columna indicesGlobalesDF")
+    indicesGlobalesDF.show()
     indicesGlobalesDF.select([count(when(isnan(c), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
     print("Cantidad de valores Null por columna indicesGlobalesDF")
     indicesGlobalesDF.select([count(when(col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
