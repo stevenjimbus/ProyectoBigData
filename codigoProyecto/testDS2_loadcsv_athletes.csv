@@ -1,5 +1,5 @@
 ﻿id,name,nationality,sex,dob,height,weight,sport,gold,silver,bronze,country,countrypopulation,countrygdp_per_capita
 12,Carlos Lara,AFG,male,31060,1.65,71,wrestling,0,0,0,,1377237,22600.2
-34,Jose Soto,AUT,female,33888,1.68,75,aquatics,0,1,0,Austria,13544345,55555.5
+34,Jose Soto,AUT,female,33888,1.68,75.3,aquatics,0,1,0,Austria,13544345,55555.5
 56,Maria Perez,BRA,male,33176,1.63,62,fencing,1,2,0,Brazil,64523,33333.3
 78,Abdullah Alrashidi,CHL,male,23244,1.83,84,shooting,,0,1,Chile,7897789,99999.99

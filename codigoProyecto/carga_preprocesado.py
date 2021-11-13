@@ -54,7 +54,7 @@ def cargarDataset2(csvPath2):
                     StructField("sex",StringType()),
                     StructField("dob",LongType()),
                     StructField("height",DoubleType()),
-                    StructField("weight",FloatType()),
+                    StructField("weight",DoubleType()),
                     StructField("sport",StringType()),
                     StructField("gold",LongType()),
                     StructField("silver",LongType()),
@@ -78,8 +78,13 @@ def transformDatasetIndicesGlobales(Indices_DF):
     return transformedDF
 
 def transformDatasetAtletas(Atletas_DF):
-    print("Sumamos la cantidad de medallas por participantes")
-    sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
+    print("Raw")
+    Atletas_DF.show()
+    print("AtletasSinNulls_DF") 
+    AtletasSinNulls_DF = Atletas_DF.na.fill(value=0,subset=["gold","silver","bronze"])
+    AtletasSinNulls_DF.show()
+    print("Sumamos la cantidad de medallas por participantes")   
+    sumDF=AtletasSinNulls_DF.withColumn('total_Medallas',AtletasSinNulls_DF.gold + AtletasSinNulls_DF.silver + AtletasSinNulls_DF.bronze )
     print("Creamos columna TieneMedalla: ###Participante Ganó medalla -> 1  ### Participante No Ganó medalla -> 0###")
     binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(0))
     binaryLabelDF.show()
