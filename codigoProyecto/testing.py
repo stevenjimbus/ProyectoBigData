@@ -73,10 +73,6 @@ def test_transformDatasetIndicesGlobales(spark_session):
         [  'country','poverty_percent','gdp_per_capita','population','years_of_education'])  
     expected_ds.show(n=10)     
     expected_ds.printSchema()   
-
-    
-
-
     assert expected_ds.collect() == actual_ds.collect()
 
 
@@ -95,6 +91,54 @@ def test_transformDatasetAtletas(spark_session):
     expected_ds = spark_session.createDataFrame(
         [
             (None,'male',1.65,71.0,'wrestling',0), 
+            ('Austria','female',1.68,75.3,'aquatics',1), 
+            ('Brazil','male',1.63,62.0,'fencing',1,), 
+            ("Chile",'male',1.83,84.0,'shooting',1)           
+        ], 
+        [  'country','sex','height','weight','sport','TieneMedalla'])  
+    expected_ds.show()     
+    expected_ds.printSchema()                                                             
+    assert expected_ds.collect() == actual_ds.collect()
+
+
+def test_imputacionIndicesGlobales(spark_session):
+    sc=spark_session.sparkContext
+    csvPath = Path("testDS1_loadcsv_world_indicators.csv")#Informacion de atletas
+    indices_ds =cargarDataset1(csvPath) 
+    transformed_DF=transformDatasetIndicesGlobales(indices_ds) 
+    actual_ds = imputacionIndicesGlobales(transformed_DF)
+
+    print("Actual DS test_transformDatasetIndicesGlobales ")
+    actual_ds.show()
+
+    print("Expected test_transformDatasetIndicesGlobales")
+    expected_ds = spark_session.createDataFrame(
+        [
+            ('Afghanistan',49.3,2080.0,10872072,3.6), 
+            ('Austria',39.1,9550.23,71307,13.0), 
+            ('Chile',0.72,37465.45,127763267,12.7)           
+        ], 
+        [  'country','poverty_percent','gdp_per_capita','population','years_of_education'])  
+    expected_ds.show(n=10)     
+    expected_ds.printSchema()   
+    assert expected_ds.collect() == actual_ds.collect()
+
+
+
+def test_imputacionAtletas(spark_session):
+    sc=spark_session.sparkContext
+    csvPath = Path("testDS2_loadcsv_athletes.csv")#Informacion de atletas
+    atletas_df =cargarDataset2(csvPath)  
+    tranformed_DF=transformDatasetAtletas(atletas_df) 
+    actual_ds = imputacionAtletas(tranformed_DF)
+    print("Dataset del CSV")
+    actual_ds.show(n=10)
+    actual_ds.printSchema()
+   
+
+    print("expected")
+    expected_ds = spark_session.createDataFrame(
+        [
             ('Austria','female',1.68,75.3,'aquatics',1), 
             ('Brazil','male',1.63,62.0,'fencing',1,), 
             ("Chile",'male',1.83,84.0,'shooting',1)           
