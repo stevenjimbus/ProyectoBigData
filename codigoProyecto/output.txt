@@ -152,19 +152,22 @@ only showing top 50 rows
 +-----------+------+------+------+----------+------------+
 only showing top 20 rows
 
-################Shape of indicesGlobalesDF (254, 5)
+Tamano Dataframe indicesGlobalesDF (254, 5)
+Cantidad de valores NaN por columna indicesGlobalesDF
 +-------+---------------+--------------+----------+------------------+
 |country|poverty_percent|gdp_per_capita|population|years_of_education|
 +-------+---------------+--------------+----------+------------------+
 |      0|              0|             0|         0|                 0|
 +-------+---------------+--------------+----------+------------------+
 
+Cantidad de valores Null por columna indicesGlobalesDF
 +-------+---------------+--------------+----------+------------------+
 |country|poverty_percent|gdp_per_capita|population|years_of_education|
 +-------+---------------+--------------+----------+------------------+
 |      0|              4|             1|         1|                 3|
 +-------+---------------+--------------+----------+------------------+
 
+Dataframe preprocesado de Indices Globales
 +-----------+---------------+--------------+----------+------------------+
 |    country|poverty_percent|gdp_per_capita|population|years_of_education|
 +-----------+---------------+--------------+----------+------------------+
@@ -191,20 +194,23 @@ only showing top 20 rows
 +-----------+---------------+--------------+----------+------------------+
 only showing top 20 rows
 
-################Shape of cleanDF (247, 5)
-################Shape of atletasDF (11538, 6)
+Tamano Dataframe preprocesado de Indices Globales  (247, 5)
+Tamano Dataframe atletasDF (11538, 6)
+Cantidad de valores NaN por columna atletasDF
 +-------+---+------+------+-----+------------+
 |country|sex|height|weight|sport|TieneMedalla|
 +-------+---+------+------+-----+------------+
 |      0|  0|     0|     0|    0|           0|
 +-------+---+------+------+-----+------------+
 
+Cantidad de valores Null por columna atletasDF
 +-------+---+------+------+-----+------------+
 |country|sex|height|weight|sport|TieneMedalla|
 +-------+---+------+------+-----+------------+
 |    307|  0|   330|   659|    0|           0|
 +-------+---+------+------+-----+------------+
 
+Dataframe preprocesado de Atletas 
 +-----------+------+------+------+----------+------------+
 |    country|   sex|height|weight|     sport|TieneMedalla|
 +-----------+------+------+------+----------+------------+
@@ -231,4 +237,4 @@ only showing top 20 rows
 +-----------+------+------+------+----------+------------+
 only showing top 20 rows
 
-################Shape of cleanDF (10564, 6)
+Tamano Dataframe preprocesado de Atletas (10564, 6)

@@ -74,26 +74,30 @@ def transformDatasetAtletas(Atletas_DF):
     transformedDF.show()
     return transformedDF
 
-def imputacionIndicesGlobales(indicesGlobalesDF):
-    
-    
-    print("################Shape of indicesGlobalesDF",(indicesGlobalesDF.count(), len(indicesGlobalesDF.columns)))
+def imputacionIndicesGlobales(indicesGlobalesDF):   
+    print("Tamano Dataframe indicesGlobalesDF",(indicesGlobalesDF.count(), len(indicesGlobalesDF.columns)))
+    print("Cantidad de valores NaN por columna indicesGlobalesDF")
     indicesGlobalesDF.select([count(when(isnan(c), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
+    print("Cantidad de valores Null por columna indicesGlobalesDF")
     indicesGlobalesDF.select([count(when(col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
     cleanDF = indicesGlobalesDF.na.drop()
+    print("Dataframe preprocesado de Indices Globales")
     cleanDF.show()
-    print("################Shape of cleanDF",(cleanDF.count(), len(cleanDF.columns)))
+    print("Tamano Dataframe preprocesado de Indices Globales ",(cleanDF.count(), len(cleanDF.columns)))
 
     return cleanDF
 
 def imputacionAtletas(atletasDF):
     
-    print("################Shape of atletasDF",(atletasDF.count(), len(atletasDF.columns)))
+    print("Tamano Dataframe atletasDF",(atletasDF.count(), len(atletasDF.columns)))
+    print("Cantidad de valores NaN por columna atletasDF")
     atletasDF.select([count(when(isnan(c), c)).alias(c) for c in atletasDF.columns]).show()
+    print("Cantidad de valores Null por columna atletasDF")
     atletasDF.select([count(when(col(c).isNull(), c)).alias(c) for c in atletasDF.columns]).show()
     cleanDF = atletasDF.na.drop()
+    print("Dataframe preprocesado de Atletas ")
     cleanDF.show()
-    print("################Shape of cleanDF",(cleanDF.count(), len(cleanDF.columns)))
+    print("Tamano Dataframe preprocesado de Atletas",(cleanDF.count(), len(cleanDF.columns)))
     
 
     return True
