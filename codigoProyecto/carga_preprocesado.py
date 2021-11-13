@@ -98,9 +98,20 @@ def imputacionAtletas(atletasDF):
     print("Dataframe preprocesado de Atletas ")
     cleanDF.show()
     print("Tamano Dataframe preprocesado de Atletas",(cleanDF.count(), len(cleanDF.columns)))
-    
+    return cleanDF
 
+def escribir_en_DB(DF,nombreDF):
+    DF \
+    .write \
+    .format("jdbc") \
+    .mode('overwrite') \
+    .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
+    .option("user", "postgres") \
+    .option("password", "testPassword") \
+    .option("dbtable", nombreDF) \
+    .save()
     return True
+
 
 def main():
     csvPath1 = sys.argv[1]#Indices de desarrollo
@@ -112,8 +123,11 @@ def main():
     mainColumnsIndicesDF = transformDatasetIndicesGlobales(IndicesDesarrllo_por_paisDF)#Seleccionar features deseados para el modelo predictivo
     mainColumnsAtletasDF = transformDatasetAtletas(AtletasDF)#Seleccionar features deseados para el modelo predictivo
     #Imputacion de valores faltantes
-    imputacionIndicesGlobales(mainColumnsIndicesDF)
-    imputacionAtletas(mainColumnsAtletasDF)
+    IndicesPreprocesadosDF = imputacionIndicesGlobales(mainColumnsIndicesDF)
+    AtletasPreprocesadosDF = imputacionAtletas(mainColumnsAtletasDF)
+    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+    
 
 
     return True
