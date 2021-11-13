@@ -28,7 +28,7 @@ root
  |-- sex: string (nullable = true)
  |-- dob: long (nullable = true)
  |-- height: double (nullable = true)
- |-- weight: float (nullable = true)
+ |-- weight: double (nullable = true)
  |-- sport: string (nullable = true)
  |-- gold: long (nullable = true)
  |-- silver: long (nullable = true)
@@ -73,63 +73,87 @@ Seleccionamos columnas especificas de Indices_DF (hacemos drop a columna CODE)
 +-------------------+---------------+--------------+----------+------------------+
 only showing top 20 rows
 
+Raw
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+
+|       id|                name|nationality|   sex|  dob|height|weight|     sport|gold|silver|bronze|    country|countrypopulation|countrygdp_per_capita|
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+
+|736041664|      A Jesus Garcia|        ESP|  male|25493|  1.72|  64.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+| 87689776| Aauri Lorena Bokesa|        ESP|female|32491|   1.8|  62.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|803161695| Abdelaziz Merzougui|        ESP|  male|33480|  1.75|  67.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|302277635|        Adel Mechaal|        ESP|  male|33212|  1.82|  71.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|400838338|Adrian Gavira Col...|        ESP|  male|32037|  1.93|  89.0|volleyball|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|228337858|      Adriana Martin|        ESP|female|35167|  1.62|  65.0|   archery|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|477738986|Africa Zamorano Sanz|        ESP|female|35806|   1.7|  58.0|  aquatics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|152408417|  Abdul Wahab Zahiri|        AFG|  male|33751|  1.75|  68.0| athletics|   0|     0|     0|Afghanistan|         32526562|          594.3230812|
+|532037425|          A Lam Shin|        KOR|female|31678|  1.68|  56.0|   fencing|   0|     0|     0|South Korea|         50617045|          27221.52405|
+| 47988332|           Ahreum Na|        KOR|female|32956|  1.63|  55.0|   cycling|   0|     0|     0|South Korea|         50617045|          27221.52405|
+|435962603|         Aaron Brown|        CAN|  male|33751|  1.98|  79.0| athletics|   0|     0|     1|     Canada|         35851774|          43248.52991|
+|136977152|         Adam Froese|        CAN|  male|33463|  1.82|  81.0|    hockey|   0|     0|     0|     Canada|         35851774|          43248.52991|
+|983411298|  Adam van Koeverden|        CAN|  male|29980|  1.82|  85.0|     canoe|   0|     0|     0|     Canada|         35851774|          43248.52991|
+|677622742|   Abdelghani Demmou|        ALG|  male|32537|  1.85|  75.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|349871091|Abdelhafid Benchabla|        ALG|  male|31681|  1.86|  null|    boxing|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|904808208| Abdelhakim Amokrane|        ALG|  male|34464|  1.86|  70.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+| 23564778|    Abdelkader Chadi|        ALG|  male|31758|  1.78|  null|    boxing|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|133974151|    Abdelkadir Salhi|        ALG|  male|34047|  1.85|  79.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|512730813| Abdelmalik Lahoulou|        ALG|  male|33731|  1.77|  72.0| athletics|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|514096508|  Abdelraouf Benguit|        ALG|  male|35160|   1.7|  65.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+
+only showing top 20 rows
+
+AtletasSinNulls_DF
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+
+|       id|                name|nationality|   sex|  dob|height|weight|     sport|gold|silver|bronze|    country|countrypopulation|countrygdp_per_capita|
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+
+|736041664|      A Jesus Garcia|        ESP|  male|25493|  1.72|  64.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+| 87689776| Aauri Lorena Bokesa|        ESP|female|32491|   1.8|  62.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|803161695| Abdelaziz Merzougui|        ESP|  male|33480|  1.75|  67.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|302277635|        Adel Mechaal|        ESP|  male|33212|  1.82|  71.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|400838338|Adrian Gavira Col...|        ESP|  male|32037|  1.93|  89.0|volleyball|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|228337858|      Adriana Martin|        ESP|female|35167|  1.62|  65.0|   archery|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|477738986|Africa Zamorano Sanz|        ESP|female|35806|   1.7|  58.0|  aquatics|   0|     0|     0|      Spain|         46418269|          25831.58231|
+|152408417|  Abdul Wahab Zahiri|        AFG|  male|33751|  1.75|  68.0| athletics|   0|     0|     0|Afghanistan|         32526562|          594.3230812|
+|532037425|          A Lam Shin|        KOR|female|31678|  1.68|  56.0|   fencing|   0|     0|     0|South Korea|         50617045|          27221.52405|
+| 47988332|           Ahreum Na|        KOR|female|32956|  1.63|  55.0|   cycling|   0|     0|     0|South Korea|         50617045|          27221.52405|
+|435962603|         Aaron Brown|        CAN|  male|33751|  1.98|  79.0| athletics|   0|     0|     1|     Canada|         35851774|          43248.52991|
+|136977152|         Adam Froese|        CAN|  male|33463|  1.82|  81.0|    hockey|   0|     0|     0|     Canada|         35851774|          43248.52991|
+|983411298|  Adam van Koeverden|        CAN|  male|29980|  1.82|  85.0|     canoe|   0|     0|     0|     Canada|         35851774|          43248.52991|
+|677622742|   Abdelghani Demmou|        ALG|  male|32537|  1.85|  75.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|349871091|Abdelhafid Benchabla|        ALG|  male|31681|  1.86|  null|    boxing|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|904808208| Abdelhakim Amokrane|        ALG|  male|34464|  1.86|  70.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+| 23564778|    Abdelkader Chadi|        ALG|  male|31758|  1.78|  null|    boxing|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|133974151|    Abdelkadir Salhi|        ALG|  male|34047|  1.85|  79.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|512730813| Abdelmalik Lahoulou|        ALG|  male|33731|  1.77|  72.0| athletics|   0|     0|     0|    Algeria|         39666519|          4206.031232|
+|514096508|  Abdelraouf Benguit|        ALG|  male|35160|   1.7|  65.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+
+only showing top 20 rows
+
 Sumamos la cantidad de medallas por participantes
 Creamos columna TieneMedalla: ###Participante Ganó medalla -> 1  ### Participante No Ganó medalla -> 0###
-+---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-------------+-----------------+---------------------+--------------+------------+
-|       id|                name|nationality|   sex|  dob|height|weight|     sport|gold|silver|bronze|      country|countrypopulation|countrygdp_per_capita|total_Medallas|TieneMedalla|
-+---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-------------+-----------------+---------------------+--------------+------------+
-|736041664|      A Jesus Garcia|        ESP|  male|25493|  1.72|  64.0| athletics|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-| 87689776| Aauri Lorena Bokesa|        ESP|female|32491|   1.8|  62.0| athletics|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-|803161695| Abdelaziz Merzougui|        ESP|  male|33480|  1.75|  67.0| athletics|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-|302277635|        Adel Mechaal|        ESP|  male|33212|  1.82|  71.0| athletics|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-|400838338|Adrian Gavira Col...|        ESP|  male|32037|  1.93|  89.0|volleyball|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-|228337858|      Adriana Martin|        ESP|female|35167|  1.62|  65.0|   archery|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-|477738986|Africa Zamorano Sanz|        ESP|female|35806|   1.7|  58.0|  aquatics|   0|     0|     0|        Spain|         46418269|          25831.58231|             0|           0|
-|152408417|  Abdul Wahab Zahiri|        AFG|  male|33751|  1.75|  68.0| athletics|   0|     0|     0|  Afghanistan|         32526562|          594.3230812|             0|           0|
-|532037425|          A Lam Shin|        KOR|female|31678|  1.68|  56.0|   fencing|   0|     0|     0|  South Korea|         50617045|          27221.52405|             0|           0|
-| 47988332|           Ahreum Na|        KOR|female|32956|  1.63|  55.0|   cycling|   0|     0|     0|  South Korea|         50617045|          27221.52405|             0|           0|
-|435962603|         Aaron Brown|        CAN|  male|33751|  1.98|  79.0| athletics|   0|     0|     1|       Canada|         35851774|          43248.52991|             1|           1|
-|136977152|         Adam Froese|        CAN|  male|33463|  1.82|  81.0|    hockey|   0|     0|     0|       Canada|         35851774|          43248.52991|             0|           0|
-|983411298|  Adam van Koeverden|        CAN|  male|29980|  1.82|  85.0|     canoe|   0|     0|     0|       Canada|         35851774|          43248.52991|             0|           0|
-|677622742|   Abdelghani Demmou|        ALG|  male|32537|  1.85|  75.0|  football|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|349871091|Abdelhafid Benchabla|        ALG|  male|31681|  1.86|  null|    boxing|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|904808208| Abdelhakim Amokrane|        ALG|  male|34464|  1.86|  70.0|  football|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-| 23564778|    Abdelkader Chadi|        ALG|  male|31758|  1.78|  null|    boxing|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|133974151|    Abdelkadir Salhi|        ALG|  male|34047|  1.85|  79.0|  football|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|512730813| Abdelmalik Lahoulou|        ALG|  male|33731|  1.77|  72.0| athletics|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|514096508|  Abdelraouf Benguit|        ALG|  male|35160|   1.7|  65.0|  football|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|388896171|Abderrahmane Bena...|        ALG|  male|31231|  1.83|  90.0|      judo|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|285603057|Abderrahmane Mans...|        ALG|  male|34712|  1.72|  66.0|   cycling|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|545134894|Abderrahmane Meziane|        ALG|  male|34400|  1.68|  62.0|  football|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|303297765|    Adem Boudjemline|        ALG|  male|34393|   1.8|  85.0| wrestling|   0|     0|     0|      Algeria|         39666519|          4206.031232|             0|           0|
-|521041435|          Aaron Cook|        MDA|  male|33240|  1.83|  80.0| taekwondo|   0|     0|     0|      Moldova|          3554150|          1848.061804|             0|           0|
-| 33922579|          Aaron Gate|        NZL|  male|33203|  1.81|  71.0|   cycling|   0|     0|     0|  New Zealand|          4595700|          37807.96728|             0|           0|
-|337369662|          Abby Erceg|        NZL|female|32832|  1.75|  68.0|  football|   0|     0|     0|  New Zealand|          4595700|          37807.96728|             0|           0|
-|173071782|         Aaron Royle|        AUS|  male|32899|   1.8|  67.0| triathlon|   0|     0|     0|    Australia|         23781169|          56310.96299|             0|           0|
-|382571888|       Aaron Younger|        AUS|  male|33506|  1.93| 100.0|  aquatics|   0|     0|     0|    Australia|         23781169|          56310.96299|             0|           0|
-|390173289|          Adam Vella|        AUS|  male|26096|  1.78|  92.0|  shooting|   0|     0|     0|    Australia|         23781169|          56310.96299|             0|           0|
-|266237702|       Aaron Russell|        USA|  male|34124|  2.05|  98.0|volleyball|   0|     0|     1|United States|        321418820|          56115.71843|             1|           1|
-|376068084|    Abbey D'Agostino|        USA|female|33749|  1.61|  49.0| athletics|   0|     0|     0|United States|        321418820|          56115.71843|             0|           0|
-|162792594|      Abbey Weitzeil|        USA|female|35402|  1.78|  68.0|  aquatics|   1|     1|     0|United States|        321418820|          56115.71843|             2|           1|
-|884912136|    Abigail Johnston|        USA|female|32828|  1.66|  61.0|  aquatics|   0|     0|     0|United States|        321418820|          56115.71843|             0|           0|
-|259002430|  Adeline Maria Gray|        USA|female|33253|  1.73|  77.0| wrestling|   0|     0|     0|United States|        321418820|          56115.71843|             0|           0|
-|447910544|   Adrienne Martelli|        USA|female|32114|  1.86|  77.0|    rowing|   0|     0|     0|United States|        321418820|          56115.71843|             0|           0|
-|915726586|      Adrian Portela|        ARG|  male|31479|  1.85|  95.0|  handball|   0|     0|     0|    Argentina|         43416755|          13431.87834|             0|           0|
-|638298176|    Agustin Mazzilli|        ARG|  male|32679|  1.73|  77.0|    hockey|   1|     0|     0|    Argentina|         43416755|          13431.87834|             1|           1|
-|833236523|       Agustin Vidal|        ARG|  male|31966|  1.94| 100.0|  handball|   0|     0|     0|    Argentina|         43416755|          13431.87834|             0|           0|
-|794585269|Agustina Albertarrio|        ARG|female|33970|  1.65|  55.0|    hockey|   0|     0|     0|    Argentina|         43416755|          13431.87834|             0|           0|
-|441542780|      Agustina Habif|        ARG|female|33671|  1.65|  55.0|    hockey|   0|     0|     0|    Argentina|         43416755|          13431.87834|             0|           0|
-|997877719|     Ababel Yeshaneh|        ETH|female|33441|  1.65|  54.0| athletics|   0|     0|     0|     Ethiopia|         99390750|          619.1694065|             0|           0|
-|343694681|         Abadi Hadis|        ETH|  male|35740|   1.7|  63.0| athletics|   0|     0|     0|     Ethiopia|         99390750|          619.1694065|             0|           0|
-|591319906|Abbas Abubakar Abbas|        BRN|  male|35202|  1.75|  66.0| athletics|   0|     0|     0|      Bahrain|          1377237|           22600.2141|             0|           0|
-| 78813419|Abraham Kipchirch...|        BRN|  male|34238|  1.83|  65.0| athletics|   0|     0|     0|      Bahrain|          1377237|           22600.2141|             0|           0|
-|555457991|Abraham Naibei Ch...|        BRN|  male|33888|  1.76|  60.0| athletics|   0|     0|     0|      Bahrain|          1377237|           22600.2141|             0|           0|
-|507726155|        Adam Batirov|        BRN|  male|31060|  1.65|  71.0| wrestling|   0|     0|     0|      Bahrain|          1377237|           22600.2141|             0|           0|
-|258556239|          Abbas Qali|        IOA|  male|33888|  null|  null|  aquatics|   0|     0|     0|         null|             null|                 null|             0|           0|
-|262868423|  Abdulaziz Alshatti|        IOA|  male|33176|  null|  null|   fencing|   0|     0|     0|         null|             null|                 null|             0|           0|
-|969824503|  Abdullah Alrashidi|        IOA|  male|23244|  1.83|  84.0|  shooting|   0|     0|     1|         null|             null|                 null|             1|           1|
-+---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-------------+-----------------+---------------------+--------------+------------+
-only showing top 50 rows
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+--------------+------------+
+|       id|                name|nationality|   sex|  dob|height|weight|     sport|gold|silver|bronze|    country|countrypopulation|countrygdp_per_capita|total_Medallas|TieneMedalla|
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+--------------+------------+
+|736041664|      A Jesus Garcia|        ESP|  male|25493|  1.72|  64.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+| 87689776| Aauri Lorena Bokesa|        ESP|female|32491|   1.8|  62.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+|803161695| Abdelaziz Merzougui|        ESP|  male|33480|  1.75|  67.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+|302277635|        Adel Mechaal|        ESP|  male|33212|  1.82|  71.0| athletics|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+|400838338|Adrian Gavira Col...|        ESP|  male|32037|  1.93|  89.0|volleyball|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+|228337858|      Adriana Martin|        ESP|female|35167|  1.62|  65.0|   archery|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+|477738986|Africa Zamorano Sanz|        ESP|female|35806|   1.7|  58.0|  aquatics|   0|     0|     0|      Spain|         46418269|          25831.58231|             0|           0|
+|152408417|  Abdul Wahab Zahiri|        AFG|  male|33751|  1.75|  68.0| athletics|   0|     0|     0|Afghanistan|         32526562|          594.3230812|             0|           0|
+|532037425|          A Lam Shin|        KOR|female|31678|  1.68|  56.0|   fencing|   0|     0|     0|South Korea|         50617045|          27221.52405|             0|           0|
+| 47988332|           Ahreum Na|        KOR|female|32956|  1.63|  55.0|   cycling|   0|     0|     0|South Korea|         50617045|          27221.52405|             0|           0|
+|435962603|         Aaron Brown|        CAN|  male|33751|  1.98|  79.0| athletics|   0|     0|     1|     Canada|         35851774|          43248.52991|             1|           1|
+|136977152|         Adam Froese|        CAN|  male|33463|  1.82|  81.0|    hockey|   0|     0|     0|     Canada|         35851774|          43248.52991|             0|           0|
+|983411298|  Adam van Koeverden|        CAN|  male|29980|  1.82|  85.0|     canoe|   0|     0|     0|     Canada|         35851774|          43248.52991|             0|           0|
+|677622742|   Abdelghani Demmou|        ALG|  male|32537|  1.85|  75.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
+|349871091|Abdelhafid Benchabla|        ALG|  male|31681|  1.86|  null|    boxing|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
+|904808208| Abdelhakim Amokrane|        ALG|  male|34464|  1.86|  70.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
+| 23564778|    Abdelkader Chadi|        ALG|  male|31758|  1.78|  null|    boxing|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
+|133974151|    Abdelkadir Salhi|        ALG|  male|34047|  1.85|  79.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
+|512730813| Abdelmalik Lahoulou|        ALG|  male|33731|  1.77|  72.0| athletics|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
+|514096508|  Abdelraouf Benguit|        ALG|  male|35160|   1.7|  65.0|  football|   0|     0|     0|    Algeria|         39666519|          4206.031232|             0|           0|
++---------+--------------------+-----------+------+-----+------+------+----------+----+------+------+-----------+-----------------+---------------------+--------------+------------+
+only showing top 20 rows
 
 Seleccionamos las columnas que nos interesa del dataset binario Ganó/No Ganó medalla
 +-----------+------+------+------+----------+------------+
@@ -160,264 +184,31 @@ only showing top 20 rows
 
 Tamano Dataframe indicesGlobalesDF (254, 5)
 Cantidad de valores NaN por columna indicesGlobalesDF
-+--------------------+---------------+--------------+----------+------------------+
-|             country|poverty_percent|gdp_per_capita|population|years_of_education|
-+--------------------+---------------+--------------+----------+------------------+
-|         Afghanistan|           51.7|        1929.0|  35383028|               3.9|
-|             Albania|       0.858683|       10342.0|   2886427|              10.0|
-|             Algeria|      0.3268976|       14331.0|  40551398|               8.0|
-|             Andorra|         0.2298|       40897.0|     77295|              10.5|
-|              Angola|       42.16528|        8453.0|  28842482|               5.1|
-| Antigua and Barbuda|        22.1895|       15198.0|     94520|              null|
-|           Argentina|       1.070877|       18875.0|  43508459|             10.95|
-|             Armenia|       1.162991|       10080.0|   2936147|              11.7|
-|               Aruba|         42.958|       28452.0|    104865|             14.21|
-|           Australia|      0.4984838|       48845.0|  24262710|              12.9|
-|             Austria|      0.6640635|       41445.0|   8747306|              12.1|
-|          Azerbaijan|            0.0|       16645.0|   9736041|              10.7|
-|             Bahamas|         11.169|       31563.0|    377923|              12.9|
-|             Bahrain|            0.0|       41078.0|   1425793|               9.5|
-|          Bangladesh|       14.32455|        3604.0| 157977151|               5.2|
-|            Barbados|         19.356|       12003.0|    285798|              10.6|
-|             Belarus|            0.0|       17628.0|   9445638|              12.3|
-|             Belgium|     0.05981615|       38766.0|  11354407|              11.8|
-|              Belize|       12.29517|        4856.0|    368399|              10.5|
-|               Benin|       49.33021|        2080.0|  10872072|               3.6|
-|             Bermuda|          11.34|      106885.0|     63360|             12.54|
-|              Bhutan|       1.620174|        2930.0|    736706|               3.1|
-|             Bolivia|       7.465656|        6355.0|  11031822|               8.9|
-|Bosnia and Herzeg...|     0.05898651|        9746.0|   3386263|               9.7|
-|            Botswana|       14.38431|       15198.0|   2159925|               9.3|
-|              Brazil|       3.871028|       13873.0| 206163056|               7.8|
-|British Virgin Is...|          22.35|       43818.0|     29355|              11.9|
-|              Brunei|          4.893|       60420.0|    419791|              14.6|
-|            Bulgaria|       1.948435|       17037.0|   7151948|              11.8|
-|        Burkina Faso|       40.87778|        1483.0|  18646350|               1.5|
-|             Burundi|       77.26145|         665.0|  10488002|               3.0|
-|            Cambodia|       13.79504|        3251.0|  15766290|              11.5|
-|            Cameroon|       23.96946|        2828.0|  23926549|               6.3|
-|              Canada|      0.2487137|       43745.0|  36382942|              13.1|
-|          Cape Verde|        3.05792|        6418.0|    531140|               6.1|
-|      Cayman Islands|          3.458|       78471.0|     62564|             13.39|
-|Central African R...|        73.4232|         589.0|   4537683|               4.3|
-|                Chad|       37.77059|        2189.0|  14561658|               2.3|
-|               Chile|      0.2875647|       21696.0|  18209072|              10.3|
-|               China|      0.5253779|       12569.0|1414049353|               7.8|
-|            Colombia|       4.528075|       13326.0|  48175048|               8.3|
-|             Comoros|       19.18614|        1702.0|    795597|               4.8|
-|               Congo|       44.56631|        5974.0|   4980996|               6.3|
-|        Cook Islands|           null|       17682.0|     17521|              null|
-|          Costa Rica|       1.265725|       14098.0|   4899336|               8.8|
-|       Cote d'Ivoire|       27.66405|        3395.0|  23822726|               5.1|
-|             Croatia|      0.6206112|       20376.0|   4208611|              11.3|
-|                Cuba|          26.54|        8000.0|  11335108|              14.3|
-|              Cyprus|     0.04114901|       25577.0|   1170189|              12.1|
-|             Denmark|       0.278387|       44836.0|   5711346|              12.6|
-|            Djibouti|        17.9788|        3064.0|    929117|               4.1|
-|            Dominica|          39.15|        9550.0|     71307|              13.0|
-|  Dominican Republic|       1.636527|       14489.0|  10397738|               7.8|
-|             Ecuador|       3.577468|       10527.0|  16491116|               8.7|
-|               Egypt|       2.366573|       11351.0|  94447071|               7.2|
-|         El Salvador|       2.323181|        8280.0|   6356137|               6.9|
-|   Equatorial Guinea|          39.37|       33317.0|   1215181|               9.7|
-|             Eritrea|           50.0|        655.42|   3376558|               5.0|
-|             Estonia|      0.4700586|       24857.0|   1316507|              12.6|
-|            Eswatini|        29.3431|        7881.0|   1113994|               6.5|
-|            Ethiopia|       28.98309|        1635.0| 103603461|               2.7|
-|                Fiji|      0.2987445|       11940.0|    872406|              10.8|
-|             Finland|     0.04643161|       37239.0|   5497714|              12.4|
-|              France|     0.05812588|       37124.0|  64667590|              11.5|
-|               Gabon|       3.595783|       18413.0|   2007882|               8.2|
-|              Gambia|       10.63552|        1788.0|   2149134|               3.4|
-|             Georgia|        3.80347|       10899.0|   4015457|              12.8|
-|             Germany|            0.0|       44689.0|  82193770|              14.1|
-|               Ghana|       12.77348|        3878.0|  28481947|               7.1|
-|              Greece|        1.05405|       22574.0|  10615183|              10.8|
-|             Grenada|           32.0|       13650.0|    110263|              16.9|
-|                Guam|           23.0|       36214.0|    162948|              null|
-|           Guatemala|        7.61334|        7221.0|  16583079|               6.5|
-|              Guinea|       28.28551|        1417.0|  11738434|               2.6|
-|       Guinea-Bissau|       65.70409|        1436.0|   1782434|               3.0|
-|              Guyana|       6.640709|       11290.0|    771363|               8.4|
-|               Haiti|       21.55501|        1728.0|  10839976|               5.2|
-|            Honduras|       16.11051|        4796.0|   9270794|               6.5|
-|           Hong Kong|           21.4|       48330.0|   7243541|               8.1|
-|             Hungary|       1.330806|       23279.0|   9752970|              11.9|
-|             Iceland|            0.0|       42085.0|    332209|              12.4|
-|               India|       12.23808|        6125.0|1324517250|               6.4|
-|           Indonesia|       5.239999|       10911.0| 261556386|               8.0|
-|                Iran|      0.3843361|       16783.0|  79563991|               9.8|
-|                Iraq|       1.017139|       13898.0|  36610632|               6.7|
-|             Ireland|      0.1311761|       56597.0|   4695790|              12.5|
-|              Israel|      0.2413946|       31701.0|   8108984|              13.0|
-|               Italy|       1.625868|       33419.0|  60663068|              10.2|
-|             Jamaica|       1.836437|        7084.0|   2906242|               9.8|
-|               Japan|      0.7278879|       37465.0| 127763267|              12.7|
-|              Jordan|      0.1041225|       11529.0|   9554286|              10.4|
-|          Kazakhstan|     0.01151561|       23842.0|  17830902|              11.7|
-|               Kenya|       36.52142|        3169.0|  49051531|               6.4|
-|          Kyrgyzstan|       1.005343|        4879.0|   6074327|              10.9|
-|                Laos|       11.47089|        5859.0|   6845848|               5.2|
-|              Latvia|      0.6330571|       22092.0|   1974265|              12.8|
-|             Lebanon|            0.0|       12972.0|   6714281|               8.6|
-|             Lesotho|        27.6034|        2767.0|   2075041|               6.3|
-|             Liberia|       44.43257|         829.0|   4586788|               4.5|
-|               Libya|           33.0|        8096.0|   6492160|              12.9|
-|       Liechtenstein|            0.0|      165642.0|     37655|              14.9|
-|           Lithuania|       1.270506|       24743.0|   2889555|              13.0|
-|          Luxembourg|      0.1172195|       57006.0|    579266|              12.1|
-|          Madagascar|       78.19301|        1381.0|  24894370|               6.1|
-|              Malawi|       69.46827|        1112.0|  17205253|               4.5|
-|            Malaysia|     0.01196461|       23053.0|  30684652|              10.2|
-|            Maldives|            0.0|        9209.0|    475505|               6.3|
-|                Mali|       46.32163|        1594.0|  17965448|               2.3|
-|               Malta|     0.09208711|       29817.0|    436099|              11.3|
-|          Mauritania|       5.917086|        3407.0|   4163532|               4.4|
-|           Mauritius|      0.3364831|       18918.0|   1261870|               9.3|
-|              Mexico|       2.158935|       16133.0| 123333379|               8.6|
-|          Micronesia|       15.74535|        3014.0|    110215|               8.0|
-|             Moldova|        0.16489|        6068.0|   4066013|              11.6|
-|              Monaco|            0.0|      170028.0|     38070|              17.3|
-|            Mongolia|       0.470293|       12360.0|   3056358|              10.1|
-|             Morocco|      0.7636227|        8039.0|  35126274|               5.4|
-|          Mozambique|       62.48024|        1113.0|  27829930|               3.5|
-|             Namibia|       14.13244|        9376.0|   2358044|               6.8|
-|               Nauru|      0.2661546|       18560.0|     10474|               9.0|
-|               Nepal|        6.27957|        2435.0|  27263430|               4.9|
-|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|
-|         New Zealand|            7.0|       34295.0|   4659265|              18.8|
-|           Nicaragua|       2.505943|        5045.0|   6303970|               6.7|
-|               Niger|       43.39908|         925.0|  20788789|               1.9|
-|             Nigeria|       42.01507|        5360.0| 185960244|               6.2|
-|         North Korea|           60.0|       1742.02|  25307665|             11.68|
-|     North Macedonia|       4.330195|       12644.0|   2080746|               9.6|
-|              Norway|      0.2506598|       82814.0|   5250950|              12.6|
-|                Oman|           null|       38515.0|   4479217|              14.2|
-|            Pakistan|       4.291767|        5223.0| 203631356|               5.2|
-|               Palau|           22.3|       16653.0|     17718|              15.8|
-|           Palestine|      0.6939639|       5321.38|   4635644|               9.1|
-|              Panama|        2.19565|       21449.0|   4037073|              10.0|
-|    Papua New Guinea|        27.3878|        2509.0|   8271766|               4.6|
-|            Paraguay|       1.518428|        8786.0|   6777878|               8.4|
-|                Peru|       3.532684|       11776.0|  30926036|               9.2|
-|         Philippines|       6.620026|        7410.0| 103663812|               9.3|
-|              Poland|    0.004540368|       24838.0|  37989218|              12.2|
-|            Portugal|       0.374637|       25346.0|  10325540|               9.2|
-|         Puerto Rico|           25.8|       35082.0|   3283121|              11.9|
-|               Qatar|            0.0|      156299.0|   2654379|              12.0|
-|              Russia|      0.0292134|       23635.0| 145275374|              12.0|
-|              Rwanda|       55.63547|        1758.0|  11668829|               4.1|
-|Saint Kitts and N...|            1.8|       18810.0|     51629|              13.8|
-|         Saint Lucia|       4.580246|       10233.0|    180028|               8.9|
-|Saint Vincent and...|           30.2|        7074.0|    109467|              14.1|
-|               Samoa|      0.5589933|        4109.0|    194540|              10.3|
-|          San Marino|            6.7|        1700.0|     33503|              13.0|
-|Sao Tome and Prin...|        34.6022|        3624.0|    203221|               6.0|
-|        Saudi Arabia|           12.7|       51397.0|  32443443|              16.1|
-|             Senegal|       32.47264|        2403.0|  14993514|               2.9|
-|          Seychelles|      0.7564313|       26624.0|     95711|               9.5|
-|        Sierra Leone|       46.09359|        1619.0|   7328846|               3.4|
-|           Singapore|           null|       65729.0|   5653625|              16.4|
-|            Slovakia|       1.331123|       25364.0|   5442001|              12.5|
-|            Slovenia|            0.0|       26908.0|   2074205|              12.3|
-|     Solomon Islands|       24.41388|        2225.0|    619438|               5.4|
-|             Somalia|       67.77053|         295.0|  14185635|              3.75|
-|        South Africa|        19.0491|       12139.0|  56207649|              10.1|
-|         South Korea|      0.2266651|       36103.0|  50983446|              12.1|
-|               Spain|       1.169434|       30110.0|  46634131|               9.8|
-|           Sri Lanka|      0.9453691|       11149.0|  21021177|              10.9|
-|               Sudan|       10.62583|        3651.0|  39847433|               3.6|
-|            Suriname|       19.36712|        5872.0|    564883|               8.5|
-|              Sweden|      0.2614527|       44659.0|   9836003|              12.4|
-|         Switzerland|     0.03427533|       59662.0|   8379915|              13.4|
-|               Syria|       14.36329|        3091.0|  17465567|               5.1|
-|              Taiwan|            0.0|       42165.0|  23618201|              12.0|
-|          Tajikistan|       3.356168|        3991.0|   8663575|              10.5|
-|            Tanzania|       49.14998|        2660.0|  53049231|               5.8|
-|            Thailand|     0.02727074|       15454.0|  68971313|               7.6|
-|               Timor|       22.27965|        1353.0|   1219289|               4.5|
-|                Togo|       49.12019|        1400.0|   7509952|               4.8|
-|               Tonga|      0.6729592|        4157.0|    101143|              11.2|
-|             Tunisia|      0.2461845|       11073.0|  11303942|               7.1|
-|              Turkey|       0.202717|       17906.0|  79827868|               8.0|
-|        Turkmenistan|       2.729222|       23813.0|   5662371|               9.8|
-|              Uganda|       40.30483|        1980.0|  39649173|               5.7|
-|             Ukraine|            0.0|        9214.0|  44713708|              11.3|
-|United Arab Emirates|            0.0|       75876.0|   9360975|              10.8|
-|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|
-|       United States|      0.9993911|       53015.0| 323015992|              13.4|
-|United States Vir...|           null|          null|    104829|              14.2|
-|             Uruguay|     0.07511552|       19468.0|   3424139|               8.7|
-|          Uzbekistan|       13.62555|       10381.0|  31441753|              11.4|
-|             Vanuatu|       15.58116|        2805.0|    278326|               6.8|
-|           Venezuela|           82.0|       15219.0|  29851249|              12.8|
-|             Vietnam|       1.804834|        6062.0|  93640435|               8.1|
-|               Yemen|       47.91951|        2506.0|  27168210|               3.0|
-|              Zambia|       58.54165|        3479.0|  16363449|               7.0|
-|            Zimbabwe|       32.36664|        1534.0|  14030338|               8.2|
-|      American Samoa|         3.8694|   28347.75912|     55739|               0.1|
-|            Anguilla|         23.487|   1636.324798|     14435|               1.4|
-|Bonaire Sint Eust...|        36.6479|   24559.45932|     25017|               3.7|
-|     Channel Islands|        39.5327|    24433.3491|    166922|               1.6|
-|             Curacao|        39.0991|   1810.878125|    161055|               1.4|
-|             Czechia|            0.0|       28823.0|  10618868|              12.7|
-|      Czechoslovakia|         7.9016|       27738.0|      null|               0.9|
-|Democratic Republ...|       72.84104|         836.0|  78789130|               6.6|
-|           East Asia|        20.3606|      15697.94|  88926344|               1.1|
-|East Asia and Pac...|       1.724642|   39647.90112|  31248603|               1.0|
-|      Eastern Europe|        36.4261|      19446.35|  36312755|               2.2|
-|Europe and Centra...|       1.279116|   8804.927739|  29395340|               1.4|
-|      Faeroe Islands|         7.8047|   36377.98979|     48173|               3.4|
-|    Falkland Islands|        19.5616|   40586.61148|      2926|               2.0|
-|         Former USSR|        24.6822|       18635.0|  90986753|               2.6|
-|   Former Yugoslavia|         7.7127|       15416.0|   5846789|               0.1|
-|       French Guiana|        30.1742|    42844.6163|    267824|               2.8|
-|    French Polynesia|        18.2985|   47486.84837|    274576|               3.2|
-|           Gibraltar|        22.2136|   45158.49396|     33738|               2.0|
-|           Greenland|        15.0165|   18019.58501|     56408|               3.5|
-|          Guadeloupe|        43.0692|   4271.306877|    399760|               3.4|
-|         Isle of Man|         4.0812|   7905.834323|     83296|               3.3|
-|            Kiribati|       11.10658|   8081.903522|    112529|               7.9|
-|              Kosovo|      0.7646961|   38202.78578|  26448279|               0.8|
-|              Kuwait|        21.1725|       71010.0|   3956862|               0.7|
-|               Macao|         7.0455|   42157.45393|    612824|               3.8|
-|    Marshall Islands|        13.6373|   26930.00502|     57723|               1.9|
-|          Martinique|        17.5482|   23945.68813|    376789|               1.6|
-|             Mayotte|        21.7797|   33405.49272|    246460|               3.0|
-|         Middle East|        26.0794|       18010.0|  26475771|               3.8|
-|Middle East and N...|       5.243514|   2094.715287|  28701289|               3.5|
-|          Montenegro|       2.504604|       17741.0|    627271|              11.3|
-|          Montserrat|        40.6481|    13348.9167|      4978|               1.0|
-|             Myanmar|       3.033426|        5284.0|  53045199|               4.9|
-|Netherlands Antilles|         26.475|   38162.97975|    319898|               0.4|
-|       New Caledonia|        24.6334|   30364.28502|    274190|               2.3|
-|                Niue|        30.1564|   10340.32946|      1611|               0.7|
-|Northern Mariana ...|         5.1972|   3813.517202|     56187|               2.8|
-|             Oceania|        36.9901|   16059.21941|  40435631|               0.3|
-|             Reunion|        39.6814|   2930.977536|    869742|               0.4|
-|             Romania|            0.0|       17782.0|  19796280|              11.0|
-|     Saint Barthlemy|         6.6359|   24721.06178|      9745|               2.1|
-|        Saint Helena|        36.6767|   2739.310352|      5958|               0.1|
-|Saint Martin (Fre...|        15.5416|   26069.81925|     36061|               2.2|
-|Saint Pierre and ...|        16.3398|   8640.135343|      5933|               3.8|
-|              Serbia|       6.356387|       13184.0|   8853963|              11.1|
-|Sint Maarten (Dut...|        40.5875|   6508.617659|     40812|               3.8|
-|South and South-E...|         23.961|       6991.33|  43931764|               2.9|
-|         South Sudan|       75.26468|   11449.77781|  10832520|               4.8|
-|   Sub-Sahara Africa|         6.1957|       3491.18|  72752016|               2.7|
-|  Sub-Saharan Africa|       41.85471|   26809.06612|  19773806|               2.7|
-|    Suriname (Urban)|       17.53247|   26823.20688|  74679298|               1.7|
-|Svalbard and Jan ...|        34.5005|   7189.146351|      2400|               1.8|
-|             Tokelau|        37.0698|   46157.70022|      1276|               1.4|
-| Trinidad and Tobago|      0.2605341|       29178.0|   1377563|              10.9|
-|Turks and Caicos ...|        12.7845|   45699.55834|     36558|               3.8|
-|              Tuvalu|       1.329496|   31115.91913|     11232|               1.2|
-|   Wallis and Futuna|        37.3334|   20241.16615|     12098|               3.9|
-|      Western Europe|         3.3917|      38511.33|  23191760|               2.0|
-|   Western Offshoots|         33.132|      51667.98|  97610342|               0.5|
-|      Western Sahara|        14.8227|   4426.271872|    538744|               3.1|
-|               Burma|          9.017|   7578.563991|  81874809|               1.5|
-+--------------------+---------------+--------------+----------+------------------+
++-------------------+---------------+--------------+----------+------------------+
+|            country|poverty_percent|gdp_per_capita|population|years_of_education|
++-------------------+---------------+--------------+----------+------------------+
+|        Afghanistan|           51.7|        1929.0|  35383028|               3.9|
+|            Albania|       0.858683|       10342.0|   2886427|              10.0|
+|            Algeria|      0.3268976|       14331.0|  40551398|               8.0|
+|            Andorra|         0.2298|       40897.0|     77295|              10.5|
+|             Angola|       42.16528|        8453.0|  28842482|               5.1|
+|Antigua and Barbuda|        22.1895|       15198.0|     94520|              null|
+|          Argentina|       1.070877|       18875.0|  43508459|             10.95|
+|            Armenia|       1.162991|       10080.0|   2936147|              11.7|
+|              Aruba|         42.958|       28452.0|    104865|             14.21|
+|          Australia|      0.4984838|       48845.0|  24262710|              12.9|
+|            Austria|      0.6640635|       41445.0|   8747306|              12.1|
+|         Azerbaijan|            0.0|       16645.0|   9736041|              10.7|
+|            Bahamas|         11.169|       31563.0|    377923|              12.9|
+|            Bahrain|            0.0|       41078.0|   1425793|               9.5|
+|         Bangladesh|       14.32455|        3604.0| 157977151|               5.2|
+|           Barbados|         19.356|       12003.0|    285798|              10.6|
+|            Belarus|            0.0|       17628.0|   9445638|              12.3|
+|            Belgium|     0.05981615|       38766.0|  11354407|              11.8|
+|             Belize|       12.29517|        4856.0|    368399|              10.5|
+|              Benin|       49.33021|        2080.0|  10872072|               3.6|
++-------------------+---------------+--------------+----------+------------------+
+only showing top 20 rows
 
 +-------+---------------+--------------+----------+------------------+
 |country|poverty_percent|gdp_per_capita|population|years_of_education|
@@ -433,257 +224,31 @@ Cantidad de valores Null por columna indicesGlobalesDF
 +-------+---------------+--------------+----------+------------------+
 
 Dataframe preprocesado de Indices Globales
-+--------------------+---------------+--------------+----------+------------------+
-|             country|poverty_percent|gdp_per_capita|population|years_of_education|
-+--------------------+---------------+--------------+----------+------------------+
-|         Afghanistan|           51.7|        1929.0|  35383028|               3.9|
-|             Albania|       0.858683|       10342.0|   2886427|              10.0|
-|             Algeria|      0.3268976|       14331.0|  40551398|               8.0|
-|             Andorra|         0.2298|       40897.0|     77295|              10.5|
-|              Angola|       42.16528|        8453.0|  28842482|               5.1|
-|           Argentina|       1.070877|       18875.0|  43508459|             10.95|
-|             Armenia|       1.162991|       10080.0|   2936147|              11.7|
-|               Aruba|         42.958|       28452.0|    104865|             14.21|
-|           Australia|      0.4984838|       48845.0|  24262710|              12.9|
-|             Austria|      0.6640635|       41445.0|   8747306|              12.1|
-|          Azerbaijan|            0.0|       16645.0|   9736041|              10.7|
-|             Bahamas|         11.169|       31563.0|    377923|              12.9|
-|             Bahrain|            0.0|       41078.0|   1425793|               9.5|
-|          Bangladesh|       14.32455|        3604.0| 157977151|               5.2|
-|            Barbados|         19.356|       12003.0|    285798|              10.6|
-|             Belarus|            0.0|       17628.0|   9445638|              12.3|
-|             Belgium|     0.05981615|       38766.0|  11354407|              11.8|
-|              Belize|       12.29517|        4856.0|    368399|              10.5|
-|               Benin|       49.33021|        2080.0|  10872072|               3.6|
-|             Bermuda|          11.34|      106885.0|     63360|             12.54|
-|              Bhutan|       1.620174|        2930.0|    736706|               3.1|
-|             Bolivia|       7.465656|        6355.0|  11031822|               8.9|
-|Bosnia and Herzeg...|     0.05898651|        9746.0|   3386263|               9.7|
-|            Botswana|       14.38431|       15198.0|   2159925|               9.3|
-|              Brazil|       3.871028|       13873.0| 206163056|               7.8|
-|British Virgin Is...|          22.35|       43818.0|     29355|              11.9|
-|              Brunei|          4.893|       60420.0|    419791|              14.6|
-|            Bulgaria|       1.948435|       17037.0|   7151948|              11.8|
-|        Burkina Faso|       40.87778|        1483.0|  18646350|               1.5|
-|             Burundi|       77.26145|         665.0|  10488002|               3.0|
-|            Cambodia|       13.79504|        3251.0|  15766290|              11.5|
-|            Cameroon|       23.96946|        2828.0|  23926549|               6.3|
-|              Canada|      0.2487137|       43745.0|  36382942|              13.1|
-|          Cape Verde|        3.05792|        6418.0|    531140|               6.1|
-|      Cayman Islands|          3.458|       78471.0|     62564|             13.39|
-|Central African R...|        73.4232|         589.0|   4537683|               4.3|
-|                Chad|       37.77059|        2189.0|  14561658|               2.3|
-|               Chile|      0.2875647|       21696.0|  18209072|              10.3|
-|               China|      0.5253779|       12569.0|1414049353|               7.8|
-|            Colombia|       4.528075|       13326.0|  48175048|               8.3|
-|             Comoros|       19.18614|        1702.0|    795597|               4.8|
-|               Congo|       44.56631|        5974.0|   4980996|               6.3|
-|          Costa Rica|       1.265725|       14098.0|   4899336|               8.8|
-|       Cote d'Ivoire|       27.66405|        3395.0|  23822726|               5.1|
-|             Croatia|      0.6206112|       20376.0|   4208611|              11.3|
-|                Cuba|          26.54|        8000.0|  11335108|              14.3|
-|              Cyprus|     0.04114901|       25577.0|   1170189|              12.1|
-|             Denmark|       0.278387|       44836.0|   5711346|              12.6|
-|            Djibouti|        17.9788|        3064.0|    929117|               4.1|
-|            Dominica|          39.15|        9550.0|     71307|              13.0|
-|  Dominican Republic|       1.636527|       14489.0|  10397738|               7.8|
-|             Ecuador|       3.577468|       10527.0|  16491116|               8.7|
-|               Egypt|       2.366573|       11351.0|  94447071|               7.2|
-|         El Salvador|       2.323181|        8280.0|   6356137|               6.9|
-|   Equatorial Guinea|          39.37|       33317.0|   1215181|               9.7|
-|             Eritrea|           50.0|        655.42|   3376558|               5.0|
-|             Estonia|      0.4700586|       24857.0|   1316507|              12.6|
-|            Eswatini|        29.3431|        7881.0|   1113994|               6.5|
-|            Ethiopia|       28.98309|        1635.0| 103603461|               2.7|
-|                Fiji|      0.2987445|       11940.0|    872406|              10.8|
-|             Finland|     0.04643161|       37239.0|   5497714|              12.4|
-|              France|     0.05812588|       37124.0|  64667590|              11.5|
-|               Gabon|       3.595783|       18413.0|   2007882|               8.2|
-|              Gambia|       10.63552|        1788.0|   2149134|               3.4|
-|             Georgia|        3.80347|       10899.0|   4015457|              12.8|
-|             Germany|            0.0|       44689.0|  82193770|              14.1|
-|               Ghana|       12.77348|        3878.0|  28481947|               7.1|
-|              Greece|        1.05405|       22574.0|  10615183|              10.8|
-|             Grenada|           32.0|       13650.0|    110263|              16.9|
-|           Guatemala|        7.61334|        7221.0|  16583079|               6.5|
-|              Guinea|       28.28551|        1417.0|  11738434|               2.6|
-|       Guinea-Bissau|       65.70409|        1436.0|   1782434|               3.0|
-|              Guyana|       6.640709|       11290.0|    771363|               8.4|
-|               Haiti|       21.55501|        1728.0|  10839976|               5.2|
-|            Honduras|       16.11051|        4796.0|   9270794|               6.5|
-|           Hong Kong|           21.4|       48330.0|   7243541|               8.1|
-|             Hungary|       1.330806|       23279.0|   9752970|              11.9|
-|             Iceland|            0.0|       42085.0|    332209|              12.4|
-|               India|       12.23808|        6125.0|1324517250|               6.4|
-|           Indonesia|       5.239999|       10911.0| 261556386|               8.0|
-|                Iran|      0.3843361|       16783.0|  79563991|               9.8|
-|                Iraq|       1.017139|       13898.0|  36610632|               6.7|
-|             Ireland|      0.1311761|       56597.0|   4695790|              12.5|
-|              Israel|      0.2413946|       31701.0|   8108984|              13.0|
-|               Italy|       1.625868|       33419.0|  60663068|              10.2|
-|             Jamaica|       1.836437|        7084.0|   2906242|               9.8|
-|               Japan|      0.7278879|       37465.0| 127763267|              12.7|
-|              Jordan|      0.1041225|       11529.0|   9554286|              10.4|
-|          Kazakhstan|     0.01151561|       23842.0|  17830902|              11.7|
-|               Kenya|       36.52142|        3169.0|  49051531|               6.4|
-|          Kyrgyzstan|       1.005343|        4879.0|   6074327|              10.9|
-|                Laos|       11.47089|        5859.0|   6845848|               5.2|
-|              Latvia|      0.6330571|       22092.0|   1974265|              12.8|
-|             Lebanon|            0.0|       12972.0|   6714281|               8.6|
-|             Lesotho|        27.6034|        2767.0|   2075041|               6.3|
-|             Liberia|       44.43257|         829.0|   4586788|               4.5|
-|               Libya|           33.0|        8096.0|   6492160|              12.9|
-|       Liechtenstein|            0.0|      165642.0|     37655|              14.9|
-|           Lithuania|       1.270506|       24743.0|   2889555|              13.0|
-|          Luxembourg|      0.1172195|       57006.0|    579266|              12.1|
-|          Madagascar|       78.19301|        1381.0|  24894370|               6.1|
-|              Malawi|       69.46827|        1112.0|  17205253|               4.5|
-|            Malaysia|     0.01196461|       23053.0|  30684652|              10.2|
-|            Maldives|            0.0|        9209.0|    475505|               6.3|
-|                Mali|       46.32163|        1594.0|  17965448|               2.3|
-|               Malta|     0.09208711|       29817.0|    436099|              11.3|
-|          Mauritania|       5.917086|        3407.0|   4163532|               4.4|
-|           Mauritius|      0.3364831|       18918.0|   1261870|               9.3|
-|              Mexico|       2.158935|       16133.0| 123333379|               8.6|
-|          Micronesia|       15.74535|        3014.0|    110215|               8.0|
-|             Moldova|        0.16489|        6068.0|   4066013|              11.6|
-|              Monaco|            0.0|      170028.0|     38070|              17.3|
-|            Mongolia|       0.470293|       12360.0|   3056358|              10.1|
-|             Morocco|      0.7636227|        8039.0|  35126274|               5.4|
-|          Mozambique|       62.48024|        1113.0|  27829930|               3.5|
-|             Namibia|       14.13244|        9376.0|   2358044|               6.8|
-|               Nauru|      0.2661546|       18560.0|     10474|               9.0|
-|               Nepal|        6.27957|        2435.0|  27263430|               4.9|
-|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|
-|         New Zealand|            7.0|       34295.0|   4659265|              18.8|
-|           Nicaragua|       2.505943|        5045.0|   6303970|               6.7|
-|               Niger|       43.39908|         925.0|  20788789|               1.9|
-|             Nigeria|       42.01507|        5360.0| 185960244|               6.2|
-|         North Korea|           60.0|       1742.02|  25307665|             11.68|
-|     North Macedonia|       4.330195|       12644.0|   2080746|               9.6|
-|              Norway|      0.2506598|       82814.0|   5250950|              12.6|
-|            Pakistan|       4.291767|        5223.0| 203631356|               5.2|
-|               Palau|           22.3|       16653.0|     17718|              15.8|
-|           Palestine|      0.6939639|       5321.38|   4635644|               9.1|
-|              Panama|        2.19565|       21449.0|   4037073|              10.0|
-|    Papua New Guinea|        27.3878|        2509.0|   8271766|               4.6|
-|            Paraguay|       1.518428|        8786.0|   6777878|               8.4|
-|                Peru|       3.532684|       11776.0|  30926036|               9.2|
-|         Philippines|       6.620026|        7410.0| 103663812|               9.3|
-|              Poland|    0.004540368|       24838.0|  37989218|              12.2|
-|            Portugal|       0.374637|       25346.0|  10325540|               9.2|
-|         Puerto Rico|           25.8|       35082.0|   3283121|              11.9|
-|               Qatar|            0.0|      156299.0|   2654379|              12.0|
-|              Russia|      0.0292134|       23635.0| 145275374|              12.0|
-|              Rwanda|       55.63547|        1758.0|  11668829|               4.1|
-|Saint Kitts and N...|            1.8|       18810.0|     51629|              13.8|
-|         Saint Lucia|       4.580246|       10233.0|    180028|               8.9|
-|Saint Vincent and...|           30.2|        7074.0|    109467|              14.1|
-|               Samoa|      0.5589933|        4109.0|    194540|              10.3|
-|          San Marino|            6.7|        1700.0|     33503|              13.0|
-|Sao Tome and Prin...|        34.6022|        3624.0|    203221|               6.0|
-|        Saudi Arabia|           12.7|       51397.0|  32443443|              16.1|
-|             Senegal|       32.47264|        2403.0|  14993514|               2.9|
-|          Seychelles|      0.7564313|       26624.0|     95711|               9.5|
-|        Sierra Leone|       46.09359|        1619.0|   7328846|               3.4|
-|            Slovakia|       1.331123|       25364.0|   5442001|              12.5|
-|            Slovenia|            0.0|       26908.0|   2074205|              12.3|
-|     Solomon Islands|       24.41388|        2225.0|    619438|               5.4|
-|             Somalia|       67.77053|         295.0|  14185635|              3.75|
-|        South Africa|        19.0491|       12139.0|  56207649|              10.1|
-|         South Korea|      0.2266651|       36103.0|  50983446|              12.1|
-|               Spain|       1.169434|       30110.0|  46634131|               9.8|
-|           Sri Lanka|      0.9453691|       11149.0|  21021177|              10.9|
-|               Sudan|       10.62583|        3651.0|  39847433|               3.6|
-|            Suriname|       19.36712|        5872.0|    564883|               8.5|
-|              Sweden|      0.2614527|       44659.0|   9836003|              12.4|
-|         Switzerland|     0.03427533|       59662.0|   8379915|              13.4|
-|               Syria|       14.36329|        3091.0|  17465567|               5.1|
-|              Taiwan|            0.0|       42165.0|  23618201|              12.0|
-|          Tajikistan|       3.356168|        3991.0|   8663575|              10.5|
-|            Tanzania|       49.14998|        2660.0|  53049231|               5.8|
-|            Thailand|     0.02727074|       15454.0|  68971313|               7.6|
-|               Timor|       22.27965|        1353.0|   1219289|               4.5|
-|                Togo|       49.12019|        1400.0|   7509952|               4.8|
-|               Tonga|      0.6729592|        4157.0|    101143|              11.2|
-|             Tunisia|      0.2461845|       11073.0|  11303942|               7.1|
-|              Turkey|       0.202717|       17906.0|  79827868|               8.0|
-|        Turkmenistan|       2.729222|       23813.0|   5662371|               9.8|
-|              Uganda|       40.30483|        1980.0|  39649173|               5.7|
-|             Ukraine|            0.0|        9214.0|  44713708|              11.3|
-|United Arab Emirates|            0.0|       75876.0|   9360975|              10.8|
-|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|
-|       United States|      0.9993911|       53015.0| 323015992|              13.4|
-|             Uruguay|     0.07511552|       19468.0|   3424139|               8.7|
-|          Uzbekistan|       13.62555|       10381.0|  31441753|              11.4|
-|             Vanuatu|       15.58116|        2805.0|    278326|               6.8|
-|           Venezuela|           82.0|       15219.0|  29851249|              12.8|
-|             Vietnam|       1.804834|        6062.0|  93640435|               8.1|
-|               Yemen|       47.91951|        2506.0|  27168210|               3.0|
-|              Zambia|       58.54165|        3479.0|  16363449|               7.0|
-|            Zimbabwe|       32.36664|        1534.0|  14030338|               8.2|
-|      American Samoa|         3.8694|   28347.75912|     55739|               0.1|
-|            Anguilla|         23.487|   1636.324798|     14435|               1.4|
-|Bonaire Sint Eust...|        36.6479|   24559.45932|     25017|               3.7|
-|     Channel Islands|        39.5327|    24433.3491|    166922|               1.6|
-|             Curacao|        39.0991|   1810.878125|    161055|               1.4|
-|             Czechia|            0.0|       28823.0|  10618868|              12.7|
-|Democratic Republ...|       72.84104|         836.0|  78789130|               6.6|
-|           East Asia|        20.3606|      15697.94|  88926344|               1.1|
-|East Asia and Pac...|       1.724642|   39647.90112|  31248603|               1.0|
-|      Eastern Europe|        36.4261|      19446.35|  36312755|               2.2|
-|Europe and Centra...|       1.279116|   8804.927739|  29395340|               1.4|
-|      Faeroe Islands|         7.8047|   36377.98979|     48173|               3.4|
-|    Falkland Islands|        19.5616|   40586.61148|      2926|               2.0|
-|         Former USSR|        24.6822|       18635.0|  90986753|               2.6|
-|   Former Yugoslavia|         7.7127|       15416.0|   5846789|               0.1|
-|       French Guiana|        30.1742|    42844.6163|    267824|               2.8|
-|    French Polynesia|        18.2985|   47486.84837|    274576|               3.2|
-|           Gibraltar|        22.2136|   45158.49396|     33738|               2.0|
-|           Greenland|        15.0165|   18019.58501|     56408|               3.5|
-|          Guadeloupe|        43.0692|   4271.306877|    399760|               3.4|
-|         Isle of Man|         4.0812|   7905.834323|     83296|               3.3|
-|            Kiribati|       11.10658|   8081.903522|    112529|               7.9|
-|              Kosovo|      0.7646961|   38202.78578|  26448279|               0.8|
-|              Kuwait|        21.1725|       71010.0|   3956862|               0.7|
-|               Macao|         7.0455|   42157.45393|    612824|               3.8|
-|    Marshall Islands|        13.6373|   26930.00502|     57723|               1.9|
-|          Martinique|        17.5482|   23945.68813|    376789|               1.6|
-|             Mayotte|        21.7797|   33405.49272|    246460|               3.0|
-|         Middle East|        26.0794|       18010.0|  26475771|               3.8|
-|Middle East and N...|       5.243514|   2094.715287|  28701289|               3.5|
-|          Montenegro|       2.504604|       17741.0|    627271|              11.3|
-|          Montserrat|        40.6481|    13348.9167|      4978|               1.0|
-|             Myanmar|       3.033426|        5284.0|  53045199|               4.9|
-|Netherlands Antilles|         26.475|   38162.97975|    319898|               0.4|
-|       New Caledonia|        24.6334|   30364.28502|    274190|               2.3|
-|                Niue|        30.1564|   10340.32946|      1611|               0.7|
-|Northern Mariana ...|         5.1972|   3813.517202|     56187|               2.8|
-|             Oceania|        36.9901|   16059.21941|  40435631|               0.3|
-|             Reunion|        39.6814|   2930.977536|    869742|               0.4|
-|             Romania|            0.0|       17782.0|  19796280|              11.0|
-|     Saint Barthlemy|         6.6359|   24721.06178|      9745|               2.1|
-|        Saint Helena|        36.6767|   2739.310352|      5958|               0.1|
-|Saint Martin (Fre...|        15.5416|   26069.81925|     36061|               2.2|
-|Saint Pierre and ...|        16.3398|   8640.135343|      5933|               3.8|
-|              Serbia|       6.356387|       13184.0|   8853963|              11.1|
-|Sint Maarten (Dut...|        40.5875|   6508.617659|     40812|               3.8|
-|South and South-E...|         23.961|       6991.33|  43931764|               2.9|
-|         South Sudan|       75.26468|   11449.77781|  10832520|               4.8|
-|   Sub-Sahara Africa|         6.1957|       3491.18|  72752016|               2.7|
-|  Sub-Saharan Africa|       41.85471|   26809.06612|  19773806|               2.7|
-|    Suriname (Urban)|       17.53247|   26823.20688|  74679298|               1.7|
-|Svalbard and Jan ...|        34.5005|   7189.146351|      2400|               1.8|
-|             Tokelau|        37.0698|   46157.70022|      1276|               1.4|
-| Trinidad and Tobago|      0.2605341|       29178.0|   1377563|              10.9|
-|Turks and Caicos ...|        12.7845|   45699.55834|     36558|               3.8|
-|              Tuvalu|       1.329496|   31115.91913|     11232|               1.2|
-|   Wallis and Futuna|        37.3334|   20241.16615|     12098|               3.9|
-|      Western Europe|         3.3917|      38511.33|  23191760|               2.0|
-|   Western Offshoots|         33.132|      51667.98|  97610342|               0.5|
-|      Western Sahara|        14.8227|   4426.271872|    538744|               3.1|
-|               Burma|          9.017|   7578.563991|  81874809|               1.5|
-+--------------------+---------------+--------------+----------+------------------+
++-----------+---------------+--------------+----------+------------------+
+|    country|poverty_percent|gdp_per_capita|population|years_of_education|
++-----------+---------------+--------------+----------+------------------+
+|Afghanistan|           51.7|        1929.0|  35383028|               3.9|
+|    Albania|       0.858683|       10342.0|   2886427|              10.0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|
+|    Andorra|         0.2298|       40897.0|     77295|              10.5|
+|     Angola|       42.16528|        8453.0|  28842482|               5.1|
+|  Argentina|       1.070877|       18875.0|  43508459|             10.95|
+|    Armenia|       1.162991|       10080.0|   2936147|              11.7|
+|      Aruba|         42.958|       28452.0|    104865|             14.21|
+|  Australia|      0.4984838|       48845.0|  24262710|              12.9|
+|    Austria|      0.6640635|       41445.0|   8747306|              12.1|
+| Azerbaijan|            0.0|       16645.0|   9736041|              10.7|
+|    Bahamas|         11.169|       31563.0|    377923|              12.9|
+|    Bahrain|            0.0|       41078.0|   1425793|               9.5|
+| Bangladesh|       14.32455|        3604.0| 157977151|               5.2|
+|   Barbados|         19.356|       12003.0|    285798|              10.6|
+|    Belarus|            0.0|       17628.0|   9445638|              12.3|
+|    Belgium|     0.05981615|       38766.0|  11354407|              11.8|
+|     Belize|       12.29517|        4856.0|    368399|              10.5|
+|      Benin|       49.33021|        2080.0|  10872072|               3.6|
+|    Bermuda|          11.34|      106885.0|     63360|             12.54|
++-----------+---------------+--------------+----------+------------------+
+only showing top 20 rows
 
 Tamano Dataframe preprocesado de Indices Globales  (247, 5)
 Tamano Dataframe atletasDF (11538, 6)
@@ -729,3 +294,30 @@ Dataframe preprocesado de Atletas
 only showing top 20 rows
 
 Tamano Dataframe preprocesado de Atletas (10564, 6)
++-----------+---------------+--------------+----------+------------------+-----------+------+------+------+----------+------------+
+|    country|poverty_percent|gdp_per_capita|population|years_of_education|    country|   sex|height|weight|     sport|TieneMedalla|
++-----------+---------------+--------------+----------+------------------+-----------+------+------+------+----------+------------+
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.72|  64.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|female|   1.8|  62.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.75|  67.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.82|  71.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.93|  89.0|volleyball|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|female|  1.62|  65.0|   archery|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|female|   1.7|  58.0|  aquatics|           0|
+|Afghanistan|           51.7|        1929.0|  35383028|               3.9|Afghanistan|  male|  1.75|  68.0| athletics|           0|
+|South Korea|      0.2266651|       36103.0|  50983446|              12.1|South Korea|female|  1.68|  56.0|   fencing|           0|
+|South Korea|      0.2266651|       36103.0|  50983446|              12.1|South Korea|female|  1.63|  55.0|   cycling|           0|
+|     Canada|      0.2487137|       43745.0|  36382942|              13.1|     Canada|  male|  1.98|  79.0| athletics|           1|
+|     Canada|      0.2487137|       43745.0|  36382942|              13.1|     Canada|  male|  1.82|  81.0|    hockey|           0|
+|     Canada|      0.2487137|       43745.0|  36382942|              13.1|     Canada|  male|  1.82|  85.0|     canoe|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.85|  75.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.86|  70.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.85|  79.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.77|  72.0| athletics|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|   1.7|  65.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.83|  90.0|      judo|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.72|  66.0|   cycling|           0|
++-----------+---------------+--------------+----------+------------------+-----------+------+------+------+----------+------------+
+only showing top 20 rows
+
+Tamano Dataframe jointDFs (10407, 11)

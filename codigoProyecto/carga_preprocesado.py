@@ -132,6 +132,13 @@ def escribir_en_DB(DF,nombreDF):
         .save()
     return True
 
+def joinDataframes(DF1,DF2):
+    jointDFs = DF1.join(DF2, DF1.country == DF2.country)
+    jointDFs.show()
+    print("Tamano Dataframe jointDFs",(jointDFs.count(), len(jointDFs.columns)))
+
+    return jointDFs
+
 
 def main():
     csvPath1 = sys.argv[1]#Indices de desarrollo
@@ -145,6 +152,12 @@ def main():
     #Imputacion de valores faltantes
     IndicesPreprocesadosDF = imputacionIndicesGlobales(mainColumnsIndicesDF)
     AtletasPreprocesadosDF = imputacionAtletas(mainColumnsAtletasDF)
+
+    #Union/cruzar datasets
+    UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
+
+
+    #Escritura a base de datos
     escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
     escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
 
