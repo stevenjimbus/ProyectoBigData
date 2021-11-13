@@ -62,29 +62,31 @@ def cargarDataset2(csvPath2):
     return AthletesDF
 
 def transformDatasetIndicesGlobales(Indices_DF):
-    cleanDF = Indices_DF.select("country","poverty_percent","gdp_per_capita","population","years_of_education")
-    cleanDF.show()
-    return cleanDF
+    transformedDF = Indices_DF.select("country","poverty_percent","gdp_per_capita","population","years_of_education")
+    transformedDF.show()
+    return transformedDF
 
 def transformDatasetAtletas(Atletas_DF):
     sumDF=Atletas_DF.withColumn('total_Medallas',Atletas_DF.gold + Atletas_DF.silver + Atletas_DF.bronze )
     binaryLabelDF = sumDF.withColumn('TieneMedalla', f.when(f.col('total_Medallas') > 0, 1).otherwise(0))
     binaryLabelDF.show(n=50)
-    cleanDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
-    cleanDF.show()
-    return cleanDF
+    transformedDF = binaryLabelDF.select("country","sex","height","weight","sport","TieneMedalla")
+    transformedDF.show()
+    return transformedDF
 
 def imputacionIndicesGlobales(indicesGlobalesDF):
-    print("columnas XXX", indicesGlobalesDF.columns)
-
+    
     indicesGlobalesDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in indicesGlobalesDF.columns]).show()
+    print("################Shape of indicesGlobalesDF",(indicesGlobalesDF.count(), len(indicesGlobalesDF.columns)))
+    
 
     return True
 
 def imputacionAtletas(atletasDF):
-    print("columnas XXX", atletasDF.columns)
-
+    
     atletasDF.select([count(when(isnan(c) | col(c).isNull(), c)).alias(c) for c in atletasDF.columns]).show()
+    print("################Shape of atletasDF",(atletasDF.count(), len(atletasDF.columns)))
+    
 
     return True
 
