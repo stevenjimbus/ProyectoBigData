@@ -35,49 +35,25 @@ root
 +---------------+--------------+----------+------------------+----+------+------+-----+------------+
 only showing top 20 rows
 
-listaunique: ['hockey', 'gymnastics', 'shooting', 'canoe', 'cycling', 'equestrian', 'aquatics', 'basketball', 'sailing', 'triathlon', 'archery', 'table tennis', 'wrestling', 'football', 'golf', 'rowing', 'badminton', 'taekwondo', 'handball', 'rugby sevens', 'fencing', 'volleyball', 'athletics', 'judo', 'tennis', 'modern pentathlon', 'weightlifting']
 ['sex', 'sport']
 ['poverty_percent', 'gdp_per_capita', 'years_of_education', 'height', 'weight']
-assemblerInputs ['sexclassVec', 'sportclassVec', 'poverty_percent', 'gdp_per_capita', 'years_of_education', 'height', 'weight']
-root
- |-- features: vector (nullable = true)
- |-- poverty_percent: double (nullable = true)
- |-- gdp_per_capita: double (nullable = true)
- |-- population: long (nullable = true)
- |-- years_of_education: double (nullable = true)
- |-- sex: string (nullable = true)
- |-- height: double (nullable = true)
- |-- weight: double (nullable = true)
- |-- sport: string (nullable = true)
- |-- TieneMedalla: long (nullable = true)
+Traceback (most recent call last):
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/ml/param/__init__.py", line 464, in _set
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/ml/param/__init__.py", line 213, in toString
+TypeError: Could not convert <class 'list'> to string type
 
-+-----------------------------------------------------------------------+---------------+--------------+----------+------------------+----+------+------+-----+------------+
-|features                                                               |poverty_percent|gdp_per_capita|population|years_of_education|sex |height|weight|sport|TieneMedalla|
-+-----------------------------------------------------------------------+---------------+--------------+----------+------------------+----+------+------+-----+------------+
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.2487137,43745.0,13.1,1.82,85.0])  |0.2487137      |43745.0       |36382942  |13.1              |male|1.82  |85.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.05812588,37124.0,11.5,1.85,84.0]) |0.05812588     |37124.0       |64667590  |11.5              |male|1.85  |84.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.3843361,16783.0,9.8,1.85,82.0])   |0.3843361      |16783.0       |79563991  |9.8               |male|1.85  |82.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.625868,33419.0,10.2,1.86,88.0])   |1.625868       |33419.0       |60663068  |10.2              |male|1.86  |88.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.0292134,23635.0,12.0,1.84,77.0])  |0.0292134      |23635.0       |145275374 |12.0              |male|1.84  |77.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.6330571,22092.0,12.8,1.85,90.0])  |0.6330571      |22092.0       |1974265   |12.8              |male|1.85  |90.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,13.62555,10381.0,11.4,1.86,90.0])   |13.62555       |10381.0       |31441753  |11.4              |male|1.86  |90.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.01151561,23842.0,11.7,1.84,97.0]) |0.01151561     |23842.0       |17830902  |11.7              |male|1.84  |97.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.01151561,23842.0,11.7,1.87,95.0]) |0.01151561     |23842.0       |17830902  |11.7              |male|1.87  |95.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.169434,30110.0,9.8,1.82,86.0])    |1.169434       |30110.0       |46634131  |9.8               |male|1.82  |86.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.169434,30110.0,9.8,1.86,80.0])    |1.169434       |30110.0       |46634131  |9.8               |male|1.86  |80.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,3.871028,13873.0,7.8,1.69,64.0])    |3.871028       |13873.0       |206163056 |7.8               |male|1.69  |64.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.270506,24743.0,13.0,1.85,87.0])   |1.270506       |24743.0       |2889555   |13.0              |male|1.85  |87.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.0292134,23635.0,12.0,1.79,90.0])  |0.0292134      |23635.0       |145275374 |12.0              |male|1.79  |90.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.01151561,23842.0,11.7,1.88,100.0])|0.01151561     |23842.0       |17830902  |11.7              |male|1.88  |100.0 |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.948435,17037.0,11.8,1.88,88.0])   |1.948435       |17037.0       |7151948   |11.8              |male|1.88  |88.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.05812588,37124.0,11.5,1.8,74.0])  |0.05812588     |37124.0       |64667590  |11.5              |male|1.8   |74.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,0.05981615,38766.0,11.8,1.93,95.0]) |0.05981615     |38766.0       |11354407  |11.8              |male|1.93  |95.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.330806,23279.0,11.9,1.86,89.0])   |1.330806       |23279.0       |9752970   |11.9              |male|1.86  |89.0  |canoe|0           |
-|(32,[0,12,27,28,29,30,31],[1.0,1.0,1.330806,23279.0,11.9,1.81,72.0])   |1.330806       |23279.0       |9752970   |11.9              |male|1.81  |72.0  |canoe|0           |
-+-----------------------------------------------------------------------+---------------+--------------+----------+------------------+----+------+------+-----+------------+
-only showing top 20 rows
+During handling of the above exception, another exception occurred:
 
-Training Dataset Count: 2351
-Test Dataset Count: 977
-lr_summary.accuracy 0.6086771586558911
-lr_summary.areaUnderROC 0.6454343888847858
+Traceback (most recent call last):
+  File "/src/codigoProyecto/carga_preprocesado.py", line 376, in <module>
+    main()
+  File "/src/codigoProyecto/carga_preprocesado.py", line 362, in main
+    CustomOneHotEncoder()
+  File "/src/codigoProyecto/carga_preprocesado.py", line 203, in CustomOneHotEncoder
+    withStd=True, withMean=False)
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/__init__.py", line 114, in wrapper
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/ml/feature.py", line 3507, in __init__
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/__init__.py", line 114, in wrapper
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/ml/feature.py", line 3517, in setParams
+  File "/usr/lib/python3.7/site-packages/pyspark/python/lib/pyspark.zip/pyspark/ml/param/__init__.py", line 466, in _set
+TypeError: Invalid param value given for param "inputCol". Could not convert <class 'list'> to string type

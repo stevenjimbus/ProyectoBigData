@@ -10,7 +10,7 @@ from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType,LongType,DoubleType)
 
 from pyspark.ml.linalg import Vectors
-from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler
+from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler,StandardScaler
 from pyspark.ml import Pipeline
 import pandas as pd
 
@@ -184,26 +184,26 @@ def MuestraEstratificado(UnionDFs):
 #############################################
 ############Ojo estoy leyendo desde DB#######
 #############################################
-def CustomOneHotEncoder():
-    
+def CustomOneHotEncoder():    
     sample_df = leer_desde_DB("MuestraEstrat")   
     sample_df = sample_df.drop("country")
     sample_df.printSchema()
     sample_df.show()
     cols = sample_df.columns
 
-    uniqueSex = sample_df.select("sport").distinct()   
-    listauniqueSex = [row.sport for row in uniqueSex.collect()]
-    print("listaunique:",listauniqueSex)
-
-    #create a list of the columns that are string typed
+    #Columnas Categoricas: crear una lista de las columnas que son del tipo string 
     categoricalColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('string') ]
     print(categoricalColumns)
 
-    #create a list of the columns that are string typed
+    #Columnas Numericas: crear una lista de las columnas que son del tipo double y long 
     numericColumns = [item[0] for item in sample_df.dtypes if (item[1].startswith('double')|item[1].startswith('long')) ]
     print(numericColumns)
 
+
+
+
+
+    """ 
     stages = []
     for categoricalCol in categoricalColumns:
         stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
@@ -226,7 +226,12 @@ def CustomOneHotEncoder():
     df.printSchema()
     df.show(truncate=False,n=20)
 
-    
+
+
+
+
+
+       
     train_df, test_df = df.randomSplit([0.7, 0.3], seed = 2018)
     print("Training Dataset Count: " + str(train_df.count()))
     print("Test Dataset Count: " + str(test_df.count()))
@@ -237,7 +242,7 @@ def CustomOneHotEncoder():
     lr_summary=lrModel.summary
     print("lr_summary.accuracy",lr_summary.accuracy)
     print("lr_summary.areaUnderROC",lr_summary.areaUnderROC)
-
+    """
 
 
 
