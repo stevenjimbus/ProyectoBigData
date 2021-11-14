@@ -10,8 +10,8 @@ from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType,LongType,DoubleType)
 
 from pyspark.ml.linalg import Vectors
-from pyspark.ml.feature import OneHotEncoder, StringIndexer
-from pyspark.ml.feature import VectorAssembler
+from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler
+
 import sys
 
 
@@ -182,29 +182,59 @@ def MuestraEstratificado(UnionDFs):
 #############################################
 ############Ojo estoy leyendo desde DB#######
 #############################################
-def OneHotEncoder():
+def CustomOneHotEncoder():
+    """
     sample_df = leer_desde_DB("MuestraEstrat")
    
     stringIndexer = StringIndexer(inputCol="sport", outputCol="sportIndex")
     model = stringIndexer.fit(sample_df)
     indexed = model.transform(sample_df)
-    indexed.show(n=500)
+
 
 
     encoder = OneHotEncoder()
     encoder.setInputCols(["sportIndex"])
     encoder.setOutputCols(["sportVec"])
+    encoded = encoder.transform(indexed)
 
-    model = encoder.fit(indexed)
-    model.setOutputCols(["sportVec"])
+
+
+
+    print("type single_col_model:", type(encoded))
+    encoded.show()
+    """
+
+    df = spark.createDataFrame([(0.0,), (1.0,), (2.0,)], ["input"])
+    df.show()
+    ohe = OneHotEncoder()
+    ohe.setInputCols(["input"])
+
+    ohe.setOutputCols(["output"])
+
+    model = ohe.fit(df)
+    model.setOutputCols(["output"])
+
     model.getHandleInvalid()
-    model.show()
-    model.transform(indexed).head().output
 
+    model.transform(df).head().output
 
+    single_col_ohe = OneHotEncoder(inputCol="input", outputCol="output")
+    single_col_model = single_col_ohe.fit(df)
+    single_col_model.transform(df).head().output
+    
+    ohePath = "./ohe"
+    ohe.save(ohePath)
+    loadedOHE = OneHotEncoder.load(ohePath)
+    loadedOHE.getInputCols() == ohe.getInputCols()
 
-    print("type single_col_model:", type(model))
-    model.show()
+    modelPath = "./ohe-model"
+    model.save(modelPath)
+    loadedModel = OneHotEncoderModel.load(modelPath)
+    loadedModel.categorySizes == model.categorySizes
+
+    loadedModel.transform(df).take(1) == model.transform(df).take(1)
+    
+
 
 
     return True
@@ -253,7 +283,7 @@ def main():
     muestraEstratificadaDF = MuestraEstratificado(UnionDFs)   
     """
 
-    OneHotEncoder()
+    CustomOneHotEncoder()
 
 
 
