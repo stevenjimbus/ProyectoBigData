@@ -175,9 +175,54 @@ def test_joinDataframes(spark_session):
             ('Chile',0.72,37465.45,127763267,12.7,'male',1.83,84.0,'shooting',1)           
         ], 
         [  'country','poverty_percent','gdp_per_capita','population','years_of_education','sex','height','weight','sport','TieneMedalla'])  
+    assert expected_ds.collect() == actual_ds.collect()
 
+def test_MuestraEstratificado(spark_session):
 
+    UnionDFs = spark_session.createDataFrame(
+        [
+            ('chile',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',1), 
+            ('Afghanistan',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',1), 
+            ('brazil',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',0), 
+            ('etiopia',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',0), 
+            ('Afghanistan',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',0), 
+            ('spain',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',1), 
+            ('nicaragua',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',1), 
+            ('costa rica',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',1), 
+            ('belize',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',0), 
+            ('francia',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',0), 
+                      
+        ], 
+        [  'country','poverty_percent','gdp_per_capita','population','years_of_education','sex','height','weight','sport','TieneMedalla'])  
+    UnionDFs.show()
+    UnionDFs.printSchema()
+
+    actual_ds=MuestraEstratificado(UnionDFs)
+    actual_ds.show()
+    actual_ds.printSchema()
+
+    expected_ds = spark_session.createDataFrame(
+        [
+            ('chile',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',1), 
+            ('Afghanistan',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',1), 
+            ('brazil',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',0), 
+            ('etiopia',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',0), 
+            ('spain',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',1), 
+            ('nicaragua',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',1), 
+            ('costa rica',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',1), 
+            ('belize',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',0), 
+            ('francia',49.3,2080.0,10872072,3.6,'male',1.68,75.3,'cycling',0), 
+                      
+        ], 
+        [  'country','poverty_percent','gdp_per_capita','population','years_of_education','sex','height','weight','sport','TieneMedalla'])  
+
+    print("printing limit")
+    expected_ds.limit(30).show()
+    expected_ds.show()
+    expected_ds.printSchema()
 
 
     assert expected_ds.collect() == actual_ds.collect()
+
+    
 
