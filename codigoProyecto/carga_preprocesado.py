@@ -189,11 +189,11 @@ def MuestraEstratificado(UnionDFs):
 ############Ojo estoy leyendo desde DB#######
 #############################################
 def CustomOneHotEncoder():    
-    sample_df = leer_desde_DB("MuestraEstrat")   
-    sample_df = sample_df.drop("country")
-    sample_df.printSchema()
-    sample_df.show()
-    cols = sample_df.columns
+    sample_df = leer_desde_DB("MuestraEstrat")#Leer desde DB   
+    sample_df = sample_df.drop("country")#Eliminar columna country
+    sample_df.printSchema()#imprimir schema
+    sample_df.show()#mostrar DF
+    cols = sample_df.columns#obtener todas las columnas del DF 
 
 
     #Columnas Numericas: crear una lista de las columnas que son del tipo double y long 
@@ -205,12 +205,14 @@ def CustomOneHotEncoder():
     print("categoricalColumns",categoricalColumns)
 
     
-
+    #Definir el pipeline de transformacion
     print("Define pipeline")
     stages = []
     assemblerInputsNumeric = numericColumns #
     print("assemblerInputsNumeric",assemblerInputsNumeric)
+    #Agrupar features numericos en vector mediante VectorAssembler
     assemblerNumeric = VectorAssembler(inputCols=assemblerInputsNumeric, outputCol="featuresNumericos")
+    #Agregar operacion al pipeline
     stages += [assemblerNumeric]
 
   
@@ -218,32 +220,34 @@ def CustomOneHotEncoder():
     #One Hot Encoding para variables categoricas
     for categoricalCol in categoricalColumns:
         stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
-        encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], outputCols=[categoricalCol + "classVec"])
+        encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], \
+                                outputCols=[categoricalCol + "classVec"])
         stages += [stringIndexer, encoder]
 
-    assemblerInputs = [c + "classVec" for c in categoricalColumns] #
+    
+    assemblerInputs = [c + "classVec" for c in categoricalColumns] 
     print("assemblerInputs",assemblerInputs)
+    #Agrupar features categoricos en vector mediante VectorAssembler
     assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="featuresCategoricos")
     stages += [assembler]
 
 
-
+    #Inicio del Pipiline de ML
     print("Start pipeline")
     pipeline = Pipeline(stages = stages)
     pipelineModel = pipeline.fit(sample_df)
     df = pipelineModel.transform(sample_df)
     df.show(truncate=False,n=20)
     selectedCols = ['featuresCategoricos',"featuresNumericos"] + cols
-    #selectedCols = ['label', 'CategoricalFeatures'] + cols
-    df = df.select(selectedCols)
-    df.printSchema()
-    df.show(truncate=False,n=20)
+
+    df_transformed = df.select(selectedCols)
+    df_transformed.printSchema()
+    df_transformed.show(truncate=False,n=20)
 
     print("Escalamiento")
     standard_scaler = StandardScaler(inputCol='featuresNumericos', outputCol='scaledFeaturesNumericos')
-    scale_model = standard_scaler.fit(df)
-
-    scaled_df = scale_model.transform(df)
+    scale_model = standard_scaler.fit(df_transformed)
+    scaled_df = scale_model.transform(df_transformed)
     scaled_df.show()
 
     print("finalAssembler")
@@ -255,7 +259,7 @@ def CustomOneHotEncoder():
     
 
 
-    train_df, test_df = outputDF.randomSplit([0.7, 0.3])#, seed = 2018
+    train_df, test_df = outputDF.randomSplit([0.9,0.1])#, seed = 21
     print("Training Dataset Count: " + str(train_df.count()))
     print("Test Dataset Count: " + str(test_df.count()))
 
@@ -264,7 +268,7 @@ def CustomOneHotEncoder():
 
     # crear grilla para probar el modelo 
     dtparamGrid = (ParamGridBuilder()
-                .addGrid(dt.maxDepth, [4])             
+                .addGrid(dt.maxDepth, [6])             
                 .build())
 
     # Evaluar el modelo
