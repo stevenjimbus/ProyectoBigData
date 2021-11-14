@@ -13,6 +13,7 @@ from pyspark.ml.linalg import Vectors
 from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler,StandardScaler
 from pyspark.ml import Pipeline
 import pandas as pd
+from pyspark.ml.functions import vector_to_array
 from pyspark.ml.classification import DecisionTreeClassifier
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
@@ -256,6 +257,20 @@ def CustomOneHotEncoder():
         outputCol="featuresFull")
     outputDF = Finalassembler.transform(scaled_df)
     outputDF.show(truncate=False)
+
+
+
+
+    #ExpandedDFtoDB = outputDF.select("featuresCategoricos",vector_to_array("featuresNumericos"))
+    ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeatures")))\
+                    .select([col("xs")[i].alias(numericColumns[i]) for i in range(len(numericColumns))]\
+                           +["featuresCategoricos"] + ["TieneMedalla"])
+    
+    
+    ExpandedDFtoDB.show()
+
+
+
     
 
 
@@ -300,131 +315,6 @@ def CustomOneHotEncoder():
 
     predictionsDF1 = dtpredictionsTest
     predictionsDF1.show(n=500)
-
-
-
-
-
-
-
-
-    """
-    from pyspark.ml.classification import LogisticRegression
-    lr = LogisticRegression(featuresCol = 'featuresFull', labelCol = 'TieneMedalla', maxIter=2)
-    lrModel = lr.fit(train_df)
-    lr_summary=lrModel.summary
-    print("lr_summary.accuracy",lr_summary.accuracy)
-    print("lr_summary.areaUnderROC",lr_summary.areaUnderROC)
-    """
-
-
-
-
-
-
-    """
-    stages = []
-    for categoricalCol in categoricalColumns:
-        stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
-        encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], outputCols=[categoricalCol + "classVec"])
-        stages += [stringIndexer, encoder]
-        
-    #label_stringIdx = StringIndexer(inputCol = 'TieneMedalla', outputCol = 'label')
-    #stages += [label_stringIdx]
-    assemblerInputs = [c + "classVec" for c in categoricalColumns] + numericColumns
-    print("assemblerInputs",assemblerInputs)
-    assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="features")
-    stages += [assembler]
-
-    pipeline = Pipeline(stages = stages)
-    pipelineModel = pipeline.fit(sample_df)
-    df = pipelineModel.transform(sample_df)
-    selectedCols = ['features'] + cols
-    #selectedCols = ['label', 'CategoricalFeatures'] + cols
-    df = df.select(selectedCols)
-    df.printSchema()
-    df.show(truncate=False,n=20)
-
-
-
-
-
-
-       
-    train_df, test_df = df.randomSplit([0.7, 0.3], seed = 2018)
-    print("Training Dataset Count: " + str(train_df.count()))
-    print("Test Dataset Count: " + str(test_df.count()))
-
-    
-    from pyspark.ml.classification import LogisticRegression
-    lr = LogisticRegression(featuresCol = 'features', labelCol = 'TieneMedalla', maxIter=10)
-    lrModel = lr.fit(train_df)
-    lr_summary=lrModel.summary
-    print("lr_summary.accuracy",lr_summary.accuracy)
-    print("lr_summary.areaUnderROC",lr_summary.areaUnderROC)
-    """
-
-
-
-
-
-    """
-    stringIndexer = StringIndexer(inputCols=["sport","sex"], outputCols=["sportIndex","sexIndex"])
-    model = stringIndexer.fit(sample_df)
-    indexed = model.transform(sample_df)
-    ohe = OneHotEncoder()
-    ohe.setInputCols(["sportIndex","sexIndex"])
-    ohe.setOutputCols(["output_sportIndex","output_sexIndex"])
-
-    model = ohe.fit(indexed)
-
-    model.setOutputCols(["output_sportIndex","output_sexIndex"])
-
-    encoded = model.transform(indexed)
-    encoded.show(truncate=False,n=500)
-    encoded.printSchema()
-    """
-
-
-
-
-    """
-    df = spark.createDataFrame([
-    (0, "a"),
-    (1, "b"),
-    (2, "c"),
-    (3, "a"),
-    (4, "a"),
-    (5, "d"),
-    (6, "d"),
-    (7, "d"),
-    (8, "d"),
-    (9, "d"),
-    (10, "e")
-    ], ["id", "category"])
-
-    stringIndexer = StringIndexer(inputCol="category", outputCol="categoryIndex")
-    model = stringIndexer.fit(df)
-    indexed = model.transform(df)
-    indexed.show()
-
-
-
-    ohe = OneHotEncoder()
-    ohe.setInputCols(["categoryIndex"])
-    ohe.setOutputCols(["outputCategoryOHE"])
-
-    model = ohe.fit(indexed)
-
-    model.setOutputCols(["outputCategoryOHE"])
-
-    encoded = model.transform(indexed)
-    encoded.show(truncate=False)
-    encoded.printSchema()
-
-  
-    """
-
 
     return True
 
