@@ -13,6 +13,10 @@ from pyspark.ml.linalg import Vectors
 from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler,StandardScaler
 from pyspark.ml import Pipeline
 import pandas as pd
+from pyspark.ml.classification import DecisionTreeClassifier
+from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
+from pyspark.ml.evaluation import BinaryClassificationEvaluator
+from pyspark.mllib.evaluation import BinaryClassificationMetrics
 
 import sys
 
@@ -191,19 +195,130 @@ def CustomOneHotEncoder():
     sample_df.show()
     cols = sample_df.columns
 
-    #Columnas Categoricas: crear una lista de las columnas que son del tipo string 
-    categoricalColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('string') ]
-    print(categoricalColumns)
 
     #Columnas Numericas: crear una lista de las columnas que son del tipo double y long 
-    numericColumns = [item[0] for item in sample_df.dtypes if (item[1].startswith('double')|item[1].startswith('long')) ]
-    print(numericColumns)
+    numericColumns = [item[0] for item in sample_df.dtypes if not(item[1].startswith('string')) ]
+    print("numericColumns",numericColumns)
+
+    #Columnas Categoricas: crear una lista de las columnas que son del tipo string 
+    categoricalColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('string')]
+    print("categoricalColumns",categoricalColumns)
+
+    
+
+    print("Define pipeline")
+    stages = []
+    assemblerInputsNumeric = numericColumns #
+    print("assemblerInputsNumeric",assemblerInputsNumeric)
+    assemblerNumeric = VectorAssembler(inputCols=assemblerInputsNumeric, outputCol="featuresNumericos")
+    stages += [assemblerNumeric]
+
+  
+
+    #One Hot Encoding para variables categoricas
+    for categoricalCol in categoricalColumns:
+        stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
+        encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], outputCols=[categoricalCol + "classVec"])
+        stages += [stringIndexer, encoder]
+
+    assemblerInputs = [c + "classVec" for c in categoricalColumns] #
+    print("assemblerInputs",assemblerInputs)
+    assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="featuresCategoricos")
+    stages += [assembler]
+
+
+
+    print("Start pipeline")
+    pipeline = Pipeline(stages = stages)
+    pipelineModel = pipeline.fit(sample_df)
+    df = pipelineModel.transform(sample_df)
+    df.show(truncate=False,n=20)
+    selectedCols = ['featuresCategoricos',"featuresNumericos"] + cols
+    #selectedCols = ['label', 'CategoricalFeatures'] + cols
+    df = df.select(selectedCols)
+    df.printSchema()
+    df.show(truncate=False,n=20)
+
+    print("Escalamiento")
+    standard_scaler = StandardScaler(inputCol='featuresNumericos', outputCol='scaledFeaturesNumericos')
+    scale_model = standard_scaler.fit(df)
+
+    scaled_df = scale_model.transform(df)
+    scaled_df.show()
+
+    print("finalAssembler")
+    Finalassembler = VectorAssembler(
+        inputCols=["featuresCategoricos", "scaledFeaturesNumericos"],
+        outputCol="featuresFull")
+    outputDF = Finalassembler.transform(scaled_df)
+    outputDF.show(truncate=False)
+    
+
+
+    train_df, test_df = outputDF.randomSplit([0.7, 0.3])#, seed = 2018
+    print("Training Dataset Count: " + str(train_df.count()))
+    print("Test Dataset Count: " + str(test_df.count()))
+
+    # Crear el model inicial de arbol de decision
+    dt = DecisionTreeClassifier(labelCol="TieneMedalla", featuresCol="featuresFull", maxDepth=8)
+
+    # crear grilla para probar el modelo 
+    dtparamGrid = (ParamGridBuilder()
+                .addGrid(dt.maxDepth, [4])             
+                .build())
+
+    # Evaluar el modelo
+    dtevaluator = BinaryClassificationEvaluator()
+    dtevaluator.setRawPredictionCol("prediction")
+    dtevaluator.setLabelCol("TieneMedalla")
+
+
+    # Create 5-fold CrossValidator
+    dtcv = CrossValidator(estimator = dt, estimatorParamMaps = dtparamGrid,evaluator = dtevaluator,numFolds = 5)#
+
+    # Run cross validations
+    dtcvModel = dtcv.fit(train_df)
+    predictions = dtcvModel.transform(train_df)
+    predictions.show()
+
+    print(dtcvModel)
+
+    print("****Evaluar Underfitting / Overfitting del modelo****")
+    print("dtpredictionsTrain")
+    dtpredictionsTrain = dtcvModel.transform(train_df)
+    print("areaUnderROC Train",dtevaluator.evaluate(dtpredictionsTrain, {dtevaluator.metricName: "areaUnderROC"}))
+    print("******************************************************")
+    print("dtpredictionsTest")
+    dtpredictionsTest = dtcvModel.transform(test_df)
+    print("areaUnderROC Test",dtevaluator.evaluate(dtpredictionsTest, {dtevaluator.metricName: "areaUnderROC"}))
+    print("******************************************************")
+
+
+    predictionsDF1 = dtpredictionsTest
+    predictionsDF1.show()
 
 
 
 
 
-    """ 
+
+
+
+    """
+    from pyspark.ml.classification import LogisticRegression
+    lr = LogisticRegression(featuresCol = 'featuresFull', labelCol = 'TieneMedalla', maxIter=2)
+    lrModel = lr.fit(train_df)
+    lr_summary=lrModel.summary
+    print("lr_summary.accuracy",lr_summary.accuracy)
+    print("lr_summary.areaUnderROC",lr_summary.areaUnderROC)
+    """
+
+
+
+
+
+
+    """
     stages = []
     for categoricalCol in categoricalColumns:
         stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
@@ -236,6 +351,7 @@ def CustomOneHotEncoder():
     print("Training Dataset Count: " + str(train_df.count()))
     print("Test Dataset Count: " + str(test_df.count()))
 
+    
     from pyspark.ml.classification import LogisticRegression
     lr = LogisticRegression(featuresCol = 'features', labelCol = 'TieneMedalla', maxIter=10)
     lrModel = lr.fit(train_df)
@@ -243,6 +359,7 @@ def CustomOneHotEncoder():
     print("lr_summary.accuracy",lr_summary.accuracy)
     print("lr_summary.areaUnderROC",lr_summary.areaUnderROC)
     """
+
 
 
 
