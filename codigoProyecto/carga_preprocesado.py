@@ -120,17 +120,7 @@ def imputacionAtletas(atletasDF):
     print("Tamano Dataframe preprocesado de Atletas",(cleanDF.count(), len(cleanDF.columns)))
     return cleanDF
 
-def escribir_en_DB(DF,nombreDF):
-    DF \
-        .write \
-        .format("jdbc") \
-        .mode('overwrite') \
-        .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
-        .option("user", "postgres") \
-        .option("password", "testPassword") \
-        .option("dbtable", nombreDF) \
-        .save()
-    return True
+
 
 def joinDataframes(DF1,DF2):
     jointDFs = DF1.join(DF2, ['country'])
@@ -196,18 +186,29 @@ def MuestraEstratificado(UnionDFs):
 
             print("DF NO ganadores")
             NoGanadoresDF = shuffleDF.limit(qtyGanadores)
-            NoGanadoresDF.show(n=1000)
+            #NoGanadoresDF.show(n=1000)
             
             
             sampleBySportDF = GanadoresDF.union(NoGanadoresDF)
-            sampleBySportDF.show(n=1000)
+            #sampleBySportDF.show(n=1000)
             sampledf = sampledf.union(sampleBySportDF)
-            sampledf.show(n=1000)
+            #sampledf.show(n=1000)
             print("********break******************")
 
     print("Tamano Dataframe sampledf",(sampledf.count(), len(sampledf.columns)))
-    return True
+    return sampledf
 
+def escribir_en_DB(DF,nombreDF):
+    DF \
+        .write \
+        .format("jdbc") \
+        .mode('overwrite') \
+        .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
+        .option("user", "postgres") \
+        .option("password", "testPassword") \
+        .option("dbtable", nombreDF) \
+        .save()
+    return True
 
 def main():
     csvPath1 = sys.argv[1]#Indices de desarrollo
@@ -225,7 +226,7 @@ def main():
     #Union/cruzar datasets
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
 
-    MuestraEstratificado(UnionDFs)
+    muestraEstratificadaDF = MuestraEstratificado(UnionDFs)
 
     
 
@@ -235,7 +236,7 @@ def main():
     #Escritura a base de datos
     escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
     escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-
+    escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
 
 
     return True
