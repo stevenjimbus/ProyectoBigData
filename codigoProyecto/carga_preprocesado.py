@@ -10,6 +10,7 @@ from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType,LongType,DoubleType)
 
 from pyspark.ml.linalg import Vectors
+from pyspark.ml.feature import OneHotEncoder, StringIndexer
 from pyspark.ml.feature import VectorAssembler
 import sys
 
@@ -183,25 +184,27 @@ def MuestraEstratificado(UnionDFs):
 #############################################
 def OneHotEncoder():
     sample_df = leer_desde_DB("MuestraEstrat")
-    sample_df.show()
+   
+    stringIndexer = StringIndexer(inputCol="sport", outputCol="sportIndex")
+    model = stringIndexer.fit(sample_df)
+    indexed = model.transform(sample_df)
+    indexed.show(n=500)
 
-    ohe = OneHotEncoder()
-    ohe.setInputCols(["sex"])
 
-    ohe.setOutputCols(["sex_output"])
+    encoder = OneHotEncoder()
+    encoder.setInputCols(["sportIndex"])
+    encoder.setOutputCols(["sportVec"])
 
-    model = ohe.fit(sample_df)
-    model.setOutputCols(["sex_output"])
-
+    model = encoder.fit(indexed)
+    model.setOutputCols(["sportVec"])
     model.getHandleInvalid()
+    model.show()
+    model.transform(indexed).head().output
 
-    model.transform(sample_df).head().output
 
-    single_col_ohe = OneHotEncoder(inputCol="sex_output", outputCol="sex_output")
-    single_col_model = single_col_ohe.fit(sample_df)
-    single_col_model.transform(sample_df).head().output
 
-    print("type single_col_model:", type(single_col_model))
+    print("type single_col_model:", type(model))
+    model.show()
 
 
     return True
