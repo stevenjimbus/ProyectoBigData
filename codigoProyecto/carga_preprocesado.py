@@ -183,7 +183,7 @@ def MuestraEstratificado(UnionDFs):
 
             
             GanadoresDF = deporteDF.filter((deporteDF.TieneMedalla  == 1) & \
-                            (deporteDF.sex  == genero) ) 
+                                            (deporteDF.sex  == genero) ) 
                         
             
             qtyGanadores = GanadoresDF.count()
