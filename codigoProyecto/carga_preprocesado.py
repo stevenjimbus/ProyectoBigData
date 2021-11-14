@@ -157,7 +157,11 @@ def main():
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
 
     sort1DF = UnionDFs.sort("sport","sex","TieneMedalla")#.take(1)
-    sort1DF.show(n=1000)
+    sort1DF.show(n=20)
+
+    uniqueSports = UnionDFs.select("sport").distinct()
+    print("type uniqueSports", type(uniqueSports))
+    uniqueSports.show()
 
 
 
