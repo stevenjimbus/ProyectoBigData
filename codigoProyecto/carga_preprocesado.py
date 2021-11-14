@@ -11,6 +11,7 @@ from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
 
 from pyspark.ml.linalg import Vectors
 from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler
+from pyspark.ml import Pipeline
 import pandas as pd
 
 import sys
@@ -189,13 +190,18 @@ def CustomOneHotEncoder():
     sample_df = sample_df.drop("country")
     sample_df.printSchema()
     sample_df.show()
+    cols = sample_df.columns
+
+    uniqueSex = sample_df.select("sport").distinct()   
+    listauniqueSex = [row.sport for row in uniqueSex.collect()]
+    print("listaunique:",listauniqueSex)
 
     #create a list of the columns that are string typed
     categoricalColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('string') ]
     print(categoricalColumns)
 
     #create a list of the columns that are string typed
-    numericColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('int') ]
+    numericColumns = [item[0] for item in sample_df.dtypes if (item[1].startswith('double')|item[1].startswith('long')) ]
     print(numericColumns)
 
     stages = []
@@ -203,11 +209,34 @@ def CustomOneHotEncoder():
         stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
         encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], outputCols=[categoricalCol + "classVec"])
         stages += [stringIndexer, encoder]
-    label_stringIdx = StringIndexer(inputCol = 'TieneMedalla', outputCol = 'label')
-    stages += [label_stringIdx]
+        
+    #label_stringIdx = StringIndexer(inputCol = 'TieneMedalla', outputCol = 'label')
+    #stages += [label_stringIdx]
     assemblerInputs = [c + "classVec" for c in categoricalColumns] + numericColumns
+    print("assemblerInputs",assemblerInputs)
     assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="features")
     stages += [assembler]
+
+    pipeline = Pipeline(stages = stages)
+    pipelineModel = pipeline.fit(sample_df)
+    df = pipelineModel.transform(sample_df)
+    selectedCols = ['features'] + cols
+    #selectedCols = ['label', 'CategoricalFeatures'] + cols
+    df = df.select(selectedCols)
+    df.printSchema()
+    df.show(truncate=False,n=500)
+
+    
+    train_df, test_df = df.randomSplit([0.7, 0.3], seed = 2018)
+    print("Training Dataset Count: " + str(train_df.count()))
+    print("Test Dataset Count: " + str(test_df.count()))
+
+    from pyspark.ml.classification import LogisticRegression
+    lr = LogisticRegression(featuresCol = 'features', labelCol = 'label', maxIter=10)
+    lrModel = lr.fit(train_df)
+    lr_summary=lrModel.summary
+    lr_summary.accuracy
+    lr_summary.areaUnderROC
 
 
 
