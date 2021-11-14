@@ -184,27 +184,34 @@ def MuestraEstratificado(UnionDFs):
 ############Ojo estoy leyendo desde DB#######
 #############################################
 def CustomOneHotEncoder():
-    """
-    sample_df = leer_desde_DB("MuestraEstrat")
-   
-    stringIndexer = StringIndexer(inputCol="sport", outputCol="sportIndex")
+    
+    sample_df = leer_desde_DB("MuestraEstrat")   
+
+
+
+    stringIndexer = StringIndexer(inputCols=["sport","sex"], outputCols=["sportIndex","sexIndex"])
     model = stringIndexer.fit(sample_df)
     indexed = model.transform(sample_df)
 
 
 
-    encoder = OneHotEncoder()
-    encoder.setInputCols(["sportIndex"])
-    encoder.setOutputCols(["sportVec"])
-    encoded = encoder.transform(indexed)
+
+    ohe = OneHotEncoder()
+    ohe.setInputCols(["sportIndex","sexIndex"])
+    ohe.setOutputCols(["output_sportIndex","output_sexIndex"])
+
+    model = ohe.fit(indexed)
+
+    model.setOutputCols(["output_sportIndex","output_sexIndex"])
+
+    encoded = model.transform(indexed)
+    encoded.show(truncate=False,n=500)
+    encoded.printSchema()
 
 
 
 
-    print("type single_col_model:", type(encoded))
-    encoded.show()
     """
-
     df = spark.createDataFrame([
     (0, "a"),
     (1, "b"),
@@ -239,7 +246,7 @@ def CustomOneHotEncoder():
     encoded.printSchema()
 
   
-
+    """
 
 
     return True
