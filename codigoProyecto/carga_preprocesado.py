@@ -166,21 +166,45 @@ def MuestraEstratificado(UnionDFs):
     #uniqueMedallas.show(n=1000)
     listauniqueMedallas = [row.TieneMedalla for row in uniqueMedallas.collect()]
     print("listauniqueSports:",listauniqueMedallas)
+    #Creates Empty RDD
 
-
+    print("empty DF")
+    emptyRDD = spark.sparkContext.emptyRDD()
+    sampledf = spark.createDataFrame(emptyRDD,UnionDFs.schema)
+    sampledf.printSchema()
+    
 
     print("Inicio de for loop")
     for deporte in listauniqueSports:
-        genero = "male"
-        ganadoresDF = UnionDFs.filter((UnionDFs.sport  == deporte) & \
-                        (UnionDFs.TieneMedalla  == 1) & \
-                        (UnionDFs.sex  == genero) ) 
-                    
-        ganadoresDF.show(truncate=False, n=500) 
-        qtyGanadores = ganadoresDF.count()
-        print("********break******************")
+        for genero in listauniqueSex:     
+            print("DF ganadores")
+            
+            GanadoresDF = UnionDFs.filter((UnionDFs.sport  == deporte) & \
+                            (UnionDFs.TieneMedalla  == 1) & \
+                            (UnionDFs.sex  == genero) ) 
+                        
+            
+            qtyGanadores = GanadoresDF.count()
+            print("qtyGanadores",qtyGanadores)
+            GanadoresDF.show(truncate=False, n=500) 
+        
+            NoGanadoresFullDF = UnionDFs.filter((UnionDFs.sport  == deporte) & \
+                            (UnionDFs.TieneMedalla  == 0) & \
+                            (UnionDFs.sex  == genero) ) 
+            shuffleDF = NoGanadoresFullDF.sample(fraction=1.0)#Aleatorizar Dataframe de No Ganadores
 
+            print("DF NO ganadores")
+            NoGanadoresDF = shuffleDF.limit(qtyGanadores)
+            NoGanadoresDF.show(n=1000)
+            
+            
+            sampleBySportDF = GanadoresDF.union(NoGanadoresDF)
+            sampleBySportDF.show(n=1000)
+            sampledf = sampledf.union(sampleBySportDF)
+            sampledf.show(n=1000)
+            print("********break******************")
 
+    print("Tamano Dataframe sampledf",(sampledf.count(), len(sampledf.columns)))
     return True
 
 
