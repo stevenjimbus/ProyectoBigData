@@ -11,6 +11,7 @@ from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
 
 from pyspark.ml.linalg import Vectors
 from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler
+import pandas as pd
 
 import sys
 
@@ -210,7 +211,12 @@ def CustomOneHotEncoder():
     (2, "c"),
     (3, "a"),
     (4, "a"),
-    (5, "c")
+    (5, "d"),
+    (6, "d"),
+    (7, "d"),
+    (8, "d"),
+    (9, "d"),
+    (10, "e")
     ], ["id", "category"])
 
     stringIndexer = StringIndexer(inputCol="category", outputCol="categoryIndex")
@@ -218,25 +224,21 @@ def CustomOneHotEncoder():
     indexed = model.transform(df)
     indexed.show()
 
-    """
-    encoder = OneHotEncoder(inputCol="categoryIndex", outputCol="categoryVec")
-    encoder.fit(indexed)
-    encoder.setOutputCols(["output"])
-    encoder.transform(indexed).head().output
-    """
+
 
     ohe = OneHotEncoder()
     ohe.setInputCols(["categoryIndex"])
-    ohe.setOutputCols(["output"])
+    ohe.setOutputCols(["outputCategoryOHE"])
 
     model = ohe.fit(indexed)
-    model.setOutputCols(["output"])
 
-    #model.getHandleInvalid()
+    model.setOutputCols(["outputCategoryOHE"])
 
-    encoded = model.transform(indexed)#.head().output
-    encoded.show()
+    encoded = model.transform(indexed)
+    encoded.show(truncate=False)
+    encoded.printSchema()
 
+  
 
 
 

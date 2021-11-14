@@ -1,19 +1,38 @@
 +---+--------+-------------+
 | id|category|categoryIndex|
 +---+--------+-------------+
-|  0|       a|          0.0|
+|  0|       a|          1.0|
 |  1|       b|          2.0|
-|  2|       c|          1.0|
-|  3|       a|          0.0|
-|  4|       a|          0.0|
-|  5|       c|          1.0|
+|  2|       c|          3.0|
+|  3|       a|          1.0|
+|  4|       a|          1.0|
+|  5|       d|          0.0|
+|  6|       d|          0.0|
+|  7|       d|          0.0|
+|  8|       d|          0.0|
+|  9|       d|          0.0|
+| 10|       e|          4.0|
 +---+--------+-------------+
 
-Traceback (most recent call last):
-  File "/src/codigoProyecto/carga_preprocesado.py", line 303, in <module>
-    main()
-  File "/src/codigoProyecto/carga_preprocesado.py", line 289, in main
-    CustomOneHotEncoder()
-  File "/src/codigoProyecto/carga_preprocesado.py", line 238, in CustomOneHotEncoder
-    encoded.show()
-AttributeError: 'SparseVector' object has no attribute 'show'
++---+--------+-------------+-----------------+
+|id |category|categoryIndex|outputCategoryOHE|
++---+--------+-------------+-----------------+
+|0  |a       |1.0          |(4,[1],[1.0])    |
+|1  |b       |2.0          |(4,[2],[1.0])    |
+|2  |c       |3.0          |(4,[3],[1.0])    |
+|3  |a       |1.0          |(4,[1],[1.0])    |
+|4  |a       |1.0          |(4,[1],[1.0])    |
+|5  |d       |0.0          |(4,[0],[1.0])    |
+|6  |d       |0.0          |(4,[0],[1.0])    |
+|7  |d       |0.0          |(4,[0],[1.0])    |
+|8  |d       |0.0          |(4,[0],[1.0])    |
+|9  |d       |0.0          |(4,[0],[1.0])    |
+|10 |e       |4.0          |(4,[],[])        |
++---+--------+-------------+-----------------+
+
+root
+ |-- id: long (nullable = true)
+ |-- category: string (nullable = true)
+ |-- categoryIndex: double (nullable = false)
+ |-- outputCategoryOHE: vector (nullable = true)
+
