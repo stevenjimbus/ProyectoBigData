@@ -294,30 +294,336 @@ Dataframe preprocesado de Atletas
 only showing top 20 rows
 
 Tamano Dataframe preprocesado de Atletas (10564, 6)
-+-----------+---------------+--------------+----------+------------------+-----------+------+------+------+----------+------------+
-|    country|poverty_percent|gdp_per_capita|population|years_of_education|    country|   sex|height|weight|     sport|TieneMedalla|
-+-----------+---------------+--------------+----------+------------------+-----------+------+------+------+----------+------------+
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.72|  64.0| athletics|           0|
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|female|   1.8|  62.0| athletics|           0|
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.75|  67.0| athletics|           0|
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.82|  71.0| athletics|           0|
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|  male|  1.93|  89.0|volleyball|           0|
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|female|  1.62|  65.0|   archery|           0|
-|      Spain|       1.169434|       30110.0|  46634131|               9.8|      Spain|female|   1.7|  58.0|  aquatics|           0|
-|Afghanistan|           51.7|        1929.0|  35383028|               3.9|Afghanistan|  male|  1.75|  68.0| athletics|           0|
-|South Korea|      0.2266651|       36103.0|  50983446|              12.1|South Korea|female|  1.68|  56.0|   fencing|           0|
-|South Korea|      0.2266651|       36103.0|  50983446|              12.1|South Korea|female|  1.63|  55.0|   cycling|           0|
-|     Canada|      0.2487137|       43745.0|  36382942|              13.1|     Canada|  male|  1.98|  79.0| athletics|           1|
-|     Canada|      0.2487137|       43745.0|  36382942|              13.1|     Canada|  male|  1.82|  81.0|    hockey|           0|
-|     Canada|      0.2487137|       43745.0|  36382942|              13.1|     Canada|  male|  1.82|  85.0|     canoe|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.85|  75.0|  football|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.86|  70.0|  football|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.85|  79.0|  football|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.77|  72.0| athletics|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|   1.7|  65.0|  football|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.83|  90.0|      judo|           0|
-|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|    Algeria|  male|  1.72|  66.0|   cycling|           0|
-+-----------+---------------+--------------+----------+------------------+-----------+------+------+------+----------+------------+
++-----------+---------------+--------------+----------+------------------+------+------+------+----------+------------+
+|    country|poverty_percent|gdp_per_capita|population|years_of_education|   sex|height|weight|     sport|TieneMedalla|
++-----------+---------------+--------------+----------+------------------+------+------+------+----------+------------+
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|  male|  1.72|  64.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|female|   1.8|  62.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|  male|  1.75|  67.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|  male|  1.82|  71.0| athletics|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|  male|  1.93|  89.0|volleyball|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.62|  65.0|   archery|           0|
+|      Spain|       1.169434|       30110.0|  46634131|               9.8|female|   1.7|  58.0|  aquatics|           0|
+|Afghanistan|           51.7|        1929.0|  35383028|               3.9|  male|  1.75|  68.0| athletics|           0|
+|South Korea|      0.2266651|       36103.0|  50983446|              12.1|female|  1.68|  56.0|   fencing|           0|
+|South Korea|      0.2266651|       36103.0|  50983446|              12.1|female|  1.63|  55.0|   cycling|           0|
+|     Canada|      0.2487137|       43745.0|  36382942|              13.1|  male|  1.98|  79.0| athletics|           1|
+|     Canada|      0.2487137|       43745.0|  36382942|              13.1|  male|  1.82|  81.0|    hockey|           0|
+|     Canada|      0.2487137|       43745.0|  36382942|              13.1|  male|  1.82|  85.0|     canoe|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|  1.85|  75.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|  1.86|  70.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|  1.85|  79.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|  1.77|  72.0| athletics|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|   1.7|  65.0|  football|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|  1.83|  90.0|      judo|           0|
+|    Algeria|      0.3268976|       14331.0|  40551398|               8.0|  male|  1.72|  66.0|   cycling|           0|
++-----------+---------------+--------------+----------+------------------+------+------+------+----------+------------+
 only showing top 20 rows
 
-Tamano Dataframe jointDFs (10407, 11)
+Tamano Dataframe jointDFs (10407, 10)
++--------------------+---------------+--------------+----------+------------------+------+------+------+--------+------------+
+|             country|poverty_percent|gdp_per_capita|population|years_of_education|   sex|height|weight|   sport|TieneMedalla|
++--------------------+---------------+--------------+----------+------------------+------+------+------+--------+------------+
+|             Denmark|       0.278387|       44836.0|   5711346|              12.6|female|  1.77|  65.0|aquatics|           0|
+|             Austria|      0.6640635|       41445.0|   8747306|              12.1|female|  1.72|  59.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.61|  59.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.62|  51.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|   1.7|  58.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.65|  58.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.75|  60.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.73|  70.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.71|  66.0|aquatics|           0|
+|        South Africa|        19.0491|       12139.0|  56207649|              10.1|female|  1.54|  57.0|aquatics|           0|
+|              Mexico|       2.158935|       16133.0| 123333379|               8.6|female|  1.57|  56.0|aquatics|           0|
+|       Liechtenstein|            0.0|      165642.0|     37655|              14.9|female|  1.77|  73.0|aquatics|           0|
+|          Kazakhstan|     0.01151561|       23842.0|  17830902|              11.7|female|  1.68|  46.0|aquatics|           0|
+|           Argentina|       1.070877|       18875.0|  43508459|             10.95|female|  1.78|  70.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|   1.8|  63.0|aquatics|           0|
+|               Palau|           22.3|       16653.0|     17718|              15.8|female|  1.65|  51.0|aquatics|           0|
+|             Jamaica|       1.836437|        7084.0|   2906242|               9.8|female|  1.73|  71.0|aquatics|           0|
+|          Luxembourg|      0.1172195|       57006.0|    579266|              12.1|female|   1.7|  63.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.65|  65.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|   1.8|  69.0|aquatics|           0|
+|              Poland|    0.004540368|       24838.0|  37989218|              12.2|female|  1.76|  68.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|  1.67|  60.0|aquatics|           0|
+|              Latvia|      0.6330571|       22092.0|   1974265|              12.8|female|  1.76|  63.0|aquatics|           0|
+|              Mexico|       2.158935|       16133.0| 123333379|               8.6|female|  1.69|  60.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.61|  51.0|aquatics|           0|
+|            Paraguay|       1.518428|        8786.0|   6777878|               8.4|female|   1.7|  66.0|aquatics|           0|
+|Bosnia and Herzeg...|     0.05898651|        9746.0|   3386263|               9.7|female|  1.73|  62.0|aquatics|           0|
+|             Bolivia|       7.465656|        6355.0|  11031822|               8.9|female|  1.65|  59.0|aquatics|           0|
+|              Malawi|       69.46827|        1112.0|  17205253|               4.5|female|  1.63|  61.0|aquatics|           0|
+|              Canada|      0.2487137|       43745.0|  36382942|              13.1|female|  1.72|  53.0|aquatics|           0|
+|     North Macedonia|       4.330195|       12644.0|   2080746|               9.6|female|  1.74|  57.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.63|  56.0|aquatics|           0|
+|              Russia|      0.0292134|       23635.0| 145275374|              12.0|female|  1.82|  71.0|aquatics|           0|
+|            Slovakia|       1.331123|       25364.0|   5442001|              12.5|female|  1.69|  60.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.62|  50.0|aquatics|           0|
+|              Poland|    0.004540368|       24838.0|  37989218|              12.2|female|  1.84|  72.0|aquatics|           0|
+|          Tajikistan|       3.356168|        3991.0|   8663575|              10.5|female|  1.65|  50.0|aquatics|           0|
+|              Poland|    0.004540368|       24838.0|  37989218|              12.2|female|  1.78|  64.0|aquatics|           0|
+|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|female|  1.75|  67.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.78|  58.0|aquatics|           0|
+|           Venezuela|           82.0|       15219.0|  29851249|              12.8|female|  1.76|  68.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.68|  56.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.71|  51.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.63|  59.0|aquatics|           0|
+|              Poland|    0.004540368|       24838.0|  37989218|              12.2|female|   1.7|  58.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.76|  64.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.68|  55.0|aquatics|           0|
+|              Greece|        1.05405|       22574.0|  10615183|              10.8|female|  1.69|  55.0|aquatics|           0|
+|              Greece|        1.05405|       22574.0|  10615183|              10.8|female|  1.77|  66.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.78|  64.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.77|  63.0|aquatics|           0|
+|              Israel|      0.2413946|       31701.0|   8108984|              13.0|female|   1.8|  68.0|aquatics|           0|
+|             Austria|      0.6640635|       41445.0|   8747306|              12.1|female|   1.7|  48.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.77|  66.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.67|  55.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.69|  63.0|aquatics|           0|
+|              Russia|      0.0292134|       23635.0| 145275374|              12.0|female|  1.68|  59.0|aquatics|           0|
+|              Canada|      0.2487137|       43745.0|  36382942|              13.1|female|   1.5|  57.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.88|  82.0|aquatics|           0|
+|             Belgium|     0.05981615|       38766.0|  11354407|              11.8|female|  1.87|  75.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.69|  57.0|aquatics|           0|
+|           Sri Lanka|      0.9453691|       11149.0|  21021177|              10.9|female|  1.65|  51.0|aquatics|           0|
+|               Syria|       14.36329|        3091.0|  17465567|               5.1|female|  1.82|  76.0|aquatics|           0|
+|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|female|  1.74|  72.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.75|  60.0|aquatics|           0|
+|            Zimbabwe|       32.36664|        1534.0|  14030338|               8.2|female|  1.76|  64.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.76|  64.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.65|  60.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.76|  66.0|aquatics|           0|
+|               Chile|      0.2875647|       21696.0|  18209072|              10.3|female|   1.7|  60.0|aquatics|           0|
+|             Austria|      0.6640635|       41445.0|   8747306|              12.1|female|  1.69|  61.0|aquatics|           0|
+|              Greece|        1.05405|       22574.0|  10615183|              10.8|female|  1.74|  61.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.64|  56.0|aquatics|           0|
+|              Russia|      0.0292134|       23635.0| 145275374|              12.0|female|  1.73|  56.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.68|  55.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|   1.7|  76.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.72|  68.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.78|  57.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.74|  59.0|aquatics|           0|
+|         North Korea|           60.0|       1742.02|  25307665|             11.68|female|  1.49|  39.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.73|  65.0|aquatics|           0|
+|            Barbados|         19.356|       12003.0|    285798|              10.6|female|  1.75|  66.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.75|  64.0|aquatics|           0|
+|      Cayman Islands|          3.458|       78471.0|     62564|             13.39|female|  1.72|  60.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.71|  63.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.73|  60.0|aquatics|           0|
+|Central African R...|        73.4232|         589.0|   4537683|               4.3|female|  1.66|  68.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.67|  59.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.78|  68.0|aquatics|           0|
+|               Benin|       49.33021|        2080.0|  10872072|               3.6|female|  1.73|  63.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.71|  62.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.69|  57.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|   1.8|  67.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.75|  60.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.63|  49.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|   1.7|  58.0|aquatics|           0|
+|           Nicaragua|       2.505943|        5045.0|   6303970|               6.7|female|  1.74|  70.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.71|  65.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.75|  65.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.68|  55.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.69|  59.0|aquatics|           0|
+|         New Zealand|            7.0|       34295.0|   4659265|              18.8|female|  1.83|  67.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.74|  57.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.73|  77.0|aquatics|           0|
+|          Kyrgyzstan|       1.005343|        4879.0|   6074327|              10.9|female|  1.68|  56.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|   1.6|  46.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.74|  62.0|aquatics|           0|
+|             Austria|      0.6640635|       41445.0|   8747306|              12.1|female|  1.74|  69.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.63|  55.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|  1.84|  62.0|aquatics|           0|
+|          Micronesia|       15.74535|        3014.0|    110215|               8.0|female|  1.53|  68.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|  1.75|  62.0|aquatics|           0|
+|            Colombia|       4.528075|       13326.0|  48175048|               8.3|female|  1.67|  55.0|aquatics|           0|
+|            Pakistan|       4.291767|        5223.0| 203631356|               5.2|female|  1.65|  67.0|aquatics|           0|
+|              Angola|       42.16528|        8453.0|  28842482|               5.1|female|  1.74|  70.0|aquatics|           0|
+|              Mexico|       2.158935|       16133.0| 123333379|               8.6|female|   1.8|  70.0|aquatics|           0|
+|              Mexico|       2.158935|       16133.0| 123333379|               8.6|female|  1.62|  62.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.75|  62.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.78|  83.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.83|  73.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.75|  63.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.73|  56.0|aquatics|           0|
+|  Dominican Republic|       1.636527|       14489.0|  10397738|               7.8|female|  1.86|  55.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|  1.83|  69.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|   1.8|  59.0|aquatics|           0|
+|             Austria|      0.6640635|       41445.0|   8747306|              12.1|female|  1.74|  63.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.81|  74.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.66|  51.0|aquatics|           0|
+|             Austria|      0.6640635|       41445.0|   8747306|              12.1|female|  1.71|  50.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.69|  52.0|aquatics|           0|
+|              Russia|      0.0292134|       23635.0| 145275374|              12.0|female|  1.63|  48.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|   1.6|  51.0|aquatics|           0|
+|British Virgin Is...|          22.35|       43818.0|     29355|              11.9|female|  1.64|  50.0|aquatics|           0|
+|             Denmark|       0.278387|       44836.0|   5711346|              12.6|female|  1.83|  75.0|aquatics|           0|
+|                Cuba|          26.54|        8000.0|  11335108|              14.3|female|  1.63|  57.0|aquatics|           0|
+|              Sweden|      0.2614527|       44659.0|   9836003|              12.4|female|  1.87|  72.0|aquatics|           0|
+|         New Zealand|            7.0|       34295.0|   4659265|              18.8|female|  1.59|  58.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.69|  64.0|aquatics|           0|
+|             Burundi|       77.26145|         665.0|  10488002|               3.0|female|  1.65|  54.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.66|  54.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.73|  52.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.73|  67.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|   1.8|  65.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.82|  79.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.77|  61.0|aquatics|           0|
+|            Tanzania|       49.14998|        2660.0|  53049231|               5.8|female|  1.69|  65.0|aquatics|           0|
+|            Colombia|       4.528075|       13326.0|  48175048|               8.3|female|  1.62|  60.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.72|  61.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.68|  58.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.65|  54.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.69|  60.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.88|  90.0|aquatics|           0|
+|              Greece|        1.05405|       22574.0|  10615183|              10.8|female|  1.72|  60.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.63|  57.0|aquatics|           0|
+|               Samoa|      0.5589933|        4109.0|    194540|              10.3|female|  1.62|  60.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.63|  57.0|aquatics|           0|
+|             Iceland|            0.0|       42085.0|    332209|              12.4|female|  1.87|  82.0|aquatics|           0|
+|             Croatia|      0.6206112|       20376.0|   4208611|              11.3|female|  1.58|  55.0|aquatics|           0|
+|             Belgium|     0.05981615|       38766.0|  11354407|              11.8|female|  1.77|  64.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.72|  61.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.73|  63.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.73|  58.0|aquatics|           0|
+|          Azerbaijan|            0.0|       16645.0|   9736041|              10.7|female|  1.75|  60.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|   1.8|  65.0|aquatics|           0|
+|                Mali|       46.32163|        1594.0|  17965448|               2.3|female|  1.68|  74.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|   1.6|  54.0|aquatics|           0|
+|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|female|   1.8|  68.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.67|  55.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.75|  65.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.67|  56.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.71|  64.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.59|  55.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.75|  76.0|aquatics|           0|
+|              Panama|        2.19565|       21449.0|   4037073|              10.0|female|  1.63| 130.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.65|  60.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|  1.58|  52.0|aquatics|           0|
+|               Nepal|        6.27957|        2435.0|  27263430|               4.9|female|  1.55|  45.0|aquatics|           0|
+|             Estonia|      0.4700586|       24857.0|   1316507|              12.6|female|  1.69|  65.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.73|  56.0|aquatics|           0|
+|         Switzerland|     0.03427533|       59662.0|   8379915|              13.4|female|  1.73|  65.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.74|  63.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.68|  64.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.62|  57.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.74|  63.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.69|  67.0|aquatics|           0|
+|              Guinea|       28.28551|        1417.0|  11738434|               2.6|female|  1.65|  65.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.77|  68.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|   1.7|  67.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.66|  52.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.73|  56.0|aquatics|           0|
+|           Hong Kong|           21.4|       48330.0|   7243541|               8.1|female|  1.68|  63.0|aquatics|           0|
+|          Costa Rica|       1.265725|       14098.0|   4899336|               8.8|female|  1.63|  58.0|aquatics|           0|
+|             Finland|     0.04643161|       37239.0|   5497714|              12.4|female|  1.74|  60.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.81|  71.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.69|  57.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.69|  63.0|aquatics|           0|
+|            Malaysia|     0.01196461|       23053.0|  30684652|              10.2|female|  1.62|  57.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|   1.8|  77.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.83|  82.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.66|  55.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.78|  66.0|aquatics|           0|
+|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|female|  1.78|  62.0|aquatics|           0|
+|              Sweden|      0.2614527|       44659.0|   9836003|              12.4|female|   1.7|  65.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.76|  66.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|   1.7|  65.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.81|  73.0|aquatics|           0|
+|             Uruguay|     0.07511552|       19468.0|   3424139|               8.7|female|  1.67|  55.0|aquatics|           0|
+|              Canada|      0.2487137|       43745.0|  36382942|              13.1|female|  1.68|  57.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|   1.6|  58.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.75|  60.0|aquatics|           0|
+|             Belarus|            0.0|       17628.0|   9445638|              12.3|female|  1.66|  54.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.75|  65.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|  1.75|  64.0|aquatics|           0|
+|         Switzerland|     0.03427533|       59662.0|   8379915|              13.4|female|  1.66|  54.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|   1.6|  50.0|aquatics|           0|
+|             Croatia|      0.6206112|       20376.0|   4208611|              11.3|female|  1.77|  61.0|aquatics|           0|
+|              Canada|      0.2487137|       43745.0|  36382942|              13.1|female|  1.65|  51.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.66|  62.0|aquatics|           0|
+|              Guyana|       6.640709|       11290.0|    771363|               8.4|female|  1.43|  58.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.74|  67.0|aquatics|           0|
+|            Slovenia|            0.0|       26908.0|   2074205|              12.3|female|  1.77|  60.0|aquatics|           0|
+|         Netherlands|     0.04591711|       45600.0|  16981285|              12.1|female|  1.78|  68.0|aquatics|           0|
+|         Philippines|       6.620026|        7410.0| 103663812|               9.3|female|   1.8|  60.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.75|  63.0|aquatics|           0|
+|              Sweden|      0.2614527|       44659.0|   9836003|              12.4|female|  1.88|  71.0|aquatics|           0|
+|               Spain|       1.169434|       30110.0|  46634131|               9.8|female|  1.79|  68.0|aquatics|           0|
+|             Germany|            0.0|       44689.0|  82193770|              14.1|female|  1.83|  70.0|aquatics|           0|
+|              France|     0.05812588|       37124.0|  64667590|              11.5|female|  1.72|  60.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.58|  50.0|aquatics|           0|
+|              Mexico|       2.158935|       16133.0| 123333379|               8.6|female|  1.65|  60.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.62|  52.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.52|  50.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|   1.7|  62.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.77|  62.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.78|  63.0|aquatics|           0|
+|         North Korea|           60.0|       1742.02|  25307665|             11.68|female|   1.5|  40.0|aquatics|           0|
+|         South Korea|      0.2266651|       36103.0|  50983446|              12.1|female|  1.62|  58.0|aquatics|           0|
+|              Sweden|      0.2614527|       44659.0|   9836003|              12.4|female|  1.86|  74.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.75|  70.0|aquatics|           0|
+|        South Africa|        19.0491|       12139.0|  56207649|              10.1|female|  1.66|  63.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|   1.6|  62.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|  1.61|  56.0|aquatics|           0|
+|                Togo|       49.12019|        1400.0|   7509952|               4.8|female|  1.58|  53.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|  1.65|  53.0|aquatics|           0|
+|              Poland|    0.004540368|       24838.0|  37989218|              12.2|female|  1.72|  64.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|  1.73|  62.0|aquatics|           0|
+|          Seychelles|      0.7564313|       26624.0|     95711|               9.5|female|  1.72|  61.0|aquatics|           0|
+|             Finland|     0.04643161|       37239.0|   5497714|              12.4|female|  1.76|  67.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.76|  69.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.72|  64.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.69|  58.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|   1.5|  47.0|aquatics|           0|
+|              Israel|      0.2413946|       31701.0|   8108984|              13.0|female|   1.7|  65.0|aquatics|           0|
+|           Palestine|      0.6939639|       5321.38|   4635644|               9.1|female|   1.7|  57.0|aquatics|           0|
+|              Israel|      0.2413946|       31701.0|   8108984|              13.0|female|  1.65|  53.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|  1.65|  60.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.77|  60.0|aquatics|           0|
+|             Comoros|       19.18614|        1702.0|    795597|               4.8|female|   1.6|  62.0|aquatics|           0|
+|              Israel|      0.2413946|       31701.0|   8108984|              13.0|female|  1.84|  77.0|aquatics|           0|
+|       United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.71|  70.0|aquatics|           0|
+|            Slovenia|            0.0|       26908.0|   2074205|              12.3|female|   1.7|  62.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.76|  66.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|   1.8|  73.0|aquatics|           0|
+|             Andorra|         0.2298|       40897.0|     77295|              10.5|female|   1.7|  55.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.68|  53.0|aquatics|           0|
+|            Colombia|       4.528075|       13326.0|  48175048|               8.3|female|  1.65|  60.0|aquatics|           0|
+|             Bahamas|         11.169|       31563.0|    377923|              12.9|female|  1.68|  61.0|aquatics|           0|
+|             Armenia|       1.162991|       10080.0|   2936147|              11.7|female|  1.66|  59.0|aquatics|           0|
+|              Canada|      0.2487137|       43745.0|  36382942|              13.1|female|  1.63|  54.0|aquatics|           0|
+|United Arab Emirates|            0.0|       75876.0|   9360975|              10.8|female|  1.62|  53.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.72|  82.0|aquatics|           0|
+|               Qatar|            0.0|      156299.0|   2654379|              12.0|female|  1.63|  59.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.67|  57.0|aquatics|           0|
+|            Slovakia|       1.331123|       25364.0|   5442001|              12.5|female|  1.65|  52.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.75|  65.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.68|  53.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.82|  88.0|aquatics|           0|
+|              Russia|      0.0292134|       23635.0| 145275374|              12.0|female|   1.7|  59.0|aquatics|           0|
+|           Hong Kong|           21.4|       48330.0|   7243541|               8.1|female|  1.78|  65.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.69|  55.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.62|  62.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.67|  63.0|aquatics|           0|
+|      United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.68|  62.0|aquatics|           0|
+|               Japan|      0.7278879|       37465.0| 127763267|              12.7|female|  1.72|  58.0|aquatics|           0|
+|               China|      0.5253779|       12569.0|1414049353|               7.8|female|  1.76|  62.0|aquatics|           0|
+|            Thailand|     0.02727074|       15454.0|  68971313|               7.6|female|  1.66|  57.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.59|  55.0|aquatics|           0|
+|               Egypt|       2.366573|       11351.0|  94447071|               7.2|female|  1.64|  49.0|aquatics|           0|
+|         Switzerland|     0.03427533|       59662.0|   8379915|              13.4|female|  1.78|  62.0|aquatics|           0|
+|               Malta|     0.09208711|       29817.0|    436099|              11.3|female|  1.73|  59.0|aquatics|           0|
+|              Russia|      0.0292134|       23635.0| 145275374|              12.0|female|  1.72|  61.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.74|  72.0|aquatics|           0|
+|             Ukraine|            0.0|        9214.0|  44713708|              11.3|female|  1.78|  67.0|aquatics|           0|
+|              Turkey|       0.202717|       17906.0|  79827868|               8.0|female|  1.79|  69.0|aquatics|           0|
+|              Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.75|  75.0|aquatics|           0|
+|           Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.68|  63.0|aquatics|           0|
+|               Italy|       1.625868|       33419.0|  60663068|              10.2|female|  1.63|  55.0|aquatics|           0|
+|             Albania|       0.858683|       10342.0|   2886427|              10.0|female|   1.8|  65.0|aquatics|           0|
+|             Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.69|  62.0|aquatics|           0|
+|            Bulgaria|       1.948435|       17037.0|   7151948|              11.8|female|   1.7|  56.0|aquatics|           0|
++--------------------+---------------+--------------+----------+------------------+------+------+------+--------+------------+
+only showing top 300 rows
+

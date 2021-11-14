@@ -147,3 +147,37 @@ def test_imputacionAtletas(spark_session):
     expected_ds.show()     
     expected_ds.printSchema()                                                             
     assert expected_ds.collect() == actual_ds.collect()
+
+def test_joinDataframes(spark_session):
+    indicesDF = spark_session.createDataFrame(
+        [
+            ('Afghanistan',49.3,2080.0,10872072,3.6), 
+            ('Austria',39.1,9550.23,71307,13.0), 
+            ('Chile',0.72,37465.45,127763267,12.7)           
+        ], 
+        [  'country','poverty_percent','gdp_per_capita','population','years_of_education']) 
+
+    atletasDF = spark_session.createDataFrame(
+        [
+            ('Afghanistan','female',1.68,75.3,'aquatics',1), 
+            ('Austria','male',1.63,62.0,'fencing',1), 
+            ("Chile",'male',1.83,84.0,'shooting',1)           
+        ], 
+        [  'country','sex','height','weight','sport','TieneMedalla'])  
+
+    actual_ds = joinDataframes(indicesDF,atletasDF)
+
+
+    expected_ds = spark_session.createDataFrame(
+        [
+            ('Afghanistan',49.3,2080.0,10872072,3.6,'female',1.68,75.3,'aquatics',1), 
+            ('Austria',39.1,9550.23,71307,13.0,'male',1.63,62.0,'fencing',1), 
+            ('Chile',0.72,37465.45,127763267,12.7,'male',1.83,84.0,'shooting',1)           
+        ], 
+        [  'country','poverty_percent','gdp_per_capita','population','years_of_education','sex','height','weight','sport','TieneMedalla'])  
+
+
+
+
+    assert expected_ds.collect() == actual_ds.collect()
+

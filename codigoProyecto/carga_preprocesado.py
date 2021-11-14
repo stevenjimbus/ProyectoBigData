@@ -133,7 +133,7 @@ def escribir_en_DB(DF,nombreDF):
     return True
 
 def joinDataframes(DF1,DF2):
-    jointDFs = DF1.join(DF2, DF1.country == DF2.country)
+    jointDFs = DF1.join(DF2, ['country'])
     jointDFs.show()
     print("Tamano Dataframe jointDFs",(jointDFs.count(), len(jointDFs.columns)))
 
@@ -155,6 +155,12 @@ def main():
 
     #Union/cruzar datasets
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
+
+    sort1DF = UnionDFs.sort("sport","sex","TieneMedalla")#.take(1)
+    sort1DF.show(n=1000)
+
+
+
 
 
     #Escritura a base de datos
