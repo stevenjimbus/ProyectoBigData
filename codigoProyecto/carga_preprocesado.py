@@ -178,19 +178,20 @@ def MuestraEstratificado(UnionDFs):
     for deporte in listauniqueSports:
         for genero in listauniqueSex:     
             print("DF ganadores")
+
+            deporteDF = UnionDFs.filter((UnionDFs.sport  == deporte))
+
             
-            GanadoresDF = UnionDFs.filter((UnionDFs.sport  == deporte) & \
-                            (UnionDFs.TieneMedalla  == 1) & \
-                            (UnionDFs.sex  == genero) ) 
+            GanadoresDF = deporteDF.filter((deporteDF.TieneMedalla  == 1) & \
+                            (deporteDF.sex  == genero) ) 
                         
             
             qtyGanadores = GanadoresDF.count()
             print("qtyGanadores",qtyGanadores)
             GanadoresDF.show(truncate=False, n=500) 
         
-            NoGanadoresFullDF = UnionDFs.filter((UnionDFs.sport  == deporte) & \
-                            (UnionDFs.TieneMedalla  == 0) & \
-                            (UnionDFs.sex  == genero) ) 
+            NoGanadoresFullDF = deporteDF.filter((deporteDF.TieneMedalla  == 0) & \
+                                                (deporteDF.sex  == genero) ) 
             shuffleDF = NoGanadoresFullDF.sample(fraction=1.0)#Aleatorizar Dataframe de No Ganadores
 
             print("DF NO ganadores")
