@@ -321,56 +321,52 @@ Tamano Dataframe preprocesado de Atletas (10564, 6)
 only showing top 20 rows
 
 Tamano Dataframe jointDFs (10407, 10)
-+--------------+---------------+--------------+----------+------------------+------+------+------+--------+------------+
-|       country|poverty_percent|gdp_per_capita|population|years_of_education|   sex|height|weight|   sport|TieneMedalla|
-+--------------+---------------+--------------+----------+------------------+------+------+------+--------+------------+
-|    Kazakhstan|     0.01151561|       23842.0|  17830902|              11.7|female|  1.68|  46.0|aquatics|           0|
-|        Malawi|       69.46827|        1112.0|  17205253|               4.5|female|  1.63|  61.0|aquatics|           0|
-|   Switzerland|     0.03427533|       59662.0|   8379915|              13.4|female|   1.7|  58.0|aquatics|           0|
-|United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.71|  66.0|aquatics|           0|
-|       Germany|            0.0|       44689.0|  82193770|              14.1|female|   1.8|  63.0|aquatics|           0|
-|         Italy|       1.625868|       33419.0|  60663068|              10.2|female|   1.8|  65.0|aquatics|           0|
-|United Kingdom|      0.2052228|       37334.0|  66297944|              12.9|female|  1.65|  65.0|aquatics|           0|
-|          Togo|       49.12019|        1400.0|   7509952|               4.8|female|  1.58|  53.0|aquatics|           0|
-|     Australia|      0.4984838|       48845.0|  24262710|              12.9|female|  1.76|  69.0|aquatics|           0|
-|       Hungary|       1.330806|       23279.0|   9752970|              11.9|female|  1.65|  54.0|aquatics|           0|
-|        Poland|    0.004540368|       24838.0|  37989218|              12.2|female|  1.76|  68.0|aquatics|           0|
-|        Poland|    0.004540368|       24838.0|  37989218|              12.2|female|  1.72|  64.0|aquatics|           0|
-|         Aruba|         42.958|       28452.0|    104865|             14.21|female|  1.65|  60.0|aquatics|           0|
-|         Spain|       1.169434|       30110.0|  46634131|               9.8|female|   1.7|  58.0|aquatics|           0|
-|        Latvia|      0.6330571|       22092.0|   1974265|              12.8|female|  1.76|  63.0|aquatics|           0|
-|    Seychelles|      0.7564313|       26624.0|     95711|               9.5|female|  1.72|  61.0|aquatics|           0|
-|        Brazil|       3.871028|       13873.0| 206163056|               7.8|female|  1.69|  58.0|aquatics|           0|
-|        Israel|      0.2413946|       31701.0|   8108984|              13.0|female|   1.7|  65.0|aquatics|           0|
-| United States|      0.9993911|       53015.0| 323015992|              13.4|female|  1.61|  51.0|aquatics|           0|
-|        Mexico|       2.158935|       16133.0| 123333379|               8.6|female|  1.57|  56.0|aquatics|           0|
-+--------------+---------------+--------------+----------+------------------+------+------+------+--------+------------+
-only showing top 20 rows
++------+
+|   sex|
++------+
+|female|
+|  male|
++------+
 
-type uniqueSports <class 'pyspark.sql.dataframe.DataFrame'>
-+------------+
-|       sport|
-+------------+
-|      hockey|
-|  gymnastics|
-|    shooting|
-|       canoe|
-|     cycling|
-|  equestrian|
-|    aquatics|
-|  basketball|
-|     sailing|
-|   triathlon|
-|     archery|
-|table tennis|
-|   wrestling|
-|    football|
-|        golf|
-|      rowing|
-|   badminton|
-|   taekwondo|
-|    handball|
-|rugby sevens|
-+------------+
-only showing top 20 rows
+listauniquSex: ['female', 'male']
++-----------------+
+|            sport|
++-----------------+
+|           hockey|
+|       gymnastics|
+|         shooting|
+|            canoe|
+|          cycling|
+|       equestrian|
+|         aquatics|
+|       basketball|
+|          sailing|
+|        triathlon|
+|          archery|
+|     table tennis|
+|        wrestling|
+|         football|
+|             golf|
+|           rowing|
+|        badminton|
+|        taekwondo|
+|         handball|
+|     rugby sevens|
+|          fencing|
+|       volleyball|
+|        athletics|
+|             judo|
+|           tennis|
+|modern pentathlon|
+|    weightlifting|
++-----------------+
 
+listauniqueSports: ['hockey', 'gymnastics', 'shooting', 'canoe', 'cycling', 'equestrian', 'aquatics', 'basketball', 'sailing', 'triathlon', 'archery', 'table tennis', 'wrestling', 'football', 'golf', 'rowing', 'badminton', 'taekwondo', 'handball', 'rugby sevens', 'fencing', 'volleyball', 'athletics', 'judo', 'tennis', 'modern pentathlon', 'weightlifting']
++------------+
+|TieneMedalla|
++------------+
+|           0|
+|           1|
++------------+
+
+listauniqueSports: [0, 1]

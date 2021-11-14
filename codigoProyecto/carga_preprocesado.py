@@ -140,6 +140,36 @@ def joinDataframes(DF1,DF2):
     return jointDFs
 
 
+
+
+def MuestraEstratificado(UnionDFs):
+
+    #sort1DF = UnionDFs.sort("sport","sex","TieneMedalla")#.take(1)
+    #sort1DF.show(n=20)
+
+    uniqueSex = UnionDFs.select("sex").distinct()
+    #print("type uniqueSex", type(uniqueSex))
+    #uniqueSex.show(n=1000)
+    listauniqueSex = [row.sex for row in uniqueSex.collect()]
+    print("listauniquSex:",listauniqueSex)
+
+
+    uniqueSports = UnionDFs.select("sport").distinct()
+    #print("type uniqueSports", type(uniqueSports))
+    #uniqueSports.show(n=1000)
+    listauniqueSports = [row.sport for row in uniqueSports.collect()]
+    print("listauniqueSports:",listauniqueSports)
+
+
+    uniqueMedallas = UnionDFs.select("TieneMedalla").distinct()
+    #print("type uniqueSports", type(uniqueMedallas))
+    #uniqueMedallas.show(n=1000)
+    listauniqueMedallas = [row.TieneMedalla for row in uniqueMedallas.collect()]
+    print("listauniqueSports:",listauniqueMedallas)
+
+    return True
+
+
 def main():
     csvPath1 = sys.argv[1]#Indices de desarrollo
     csvPath2 = sys.argv[2]#Informacion de atletas
@@ -156,13 +186,9 @@ def main():
     #Union/cruzar datasets
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
 
-    sort1DF = UnionDFs.sort("sport","sex","TieneMedalla")#.take(1)
-    sort1DF.show(n=20)
+    MuestraEstratificado(UnionDFs)
 
-    uniqueSports = UnionDFs.select("sport").distinct()
-    print("type uniqueSports", type(uniqueSports))
-    uniqueSports.show()
-
+    
 
 
 
