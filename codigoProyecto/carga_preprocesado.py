@@ -272,7 +272,7 @@ def CustomOneHotEncoder():
 
 
     
-
+    """
 
     train_df, test_df = outputDF.randomSplit([0.9,0.1])#, seed = 21
     print("Training Dataset Count: " + str(train_df.count()))
@@ -315,6 +315,8 @@ def CustomOneHotEncoder():
 
     predictionsDF1 = dtpredictionsTest
     predictionsDF1.show(n=500)
+
+    """
 
     return True
 
