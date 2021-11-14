@@ -224,7 +224,7 @@ def CustomOneHotEncoder():
     #selectedCols = ['label', 'CategoricalFeatures'] + cols
     df = df.select(selectedCols)
     df.printSchema()
-    df.show(truncate=False,n=500)
+    df.show(truncate=False,n=20)
 
     
     train_df, test_df = df.randomSplit([0.7, 0.3], seed = 2018)
@@ -232,11 +232,11 @@ def CustomOneHotEncoder():
     print("Test Dataset Count: " + str(test_df.count()))
 
     from pyspark.ml.classification import LogisticRegression
-    lr = LogisticRegression(featuresCol = 'features', labelCol = 'label', maxIter=10)
+    lr = LogisticRegression(featuresCol = 'features', labelCol = 'TieneMedalla', maxIter=10)
     lrModel = lr.fit(train_df)
     lr_summary=lrModel.summary
-    lr_summary.accuracy
-    lr_summary.areaUnderROC
+    print("lr_summary.accuracy",lr_summary.accuracy)
+    print("lr_summary.areaUnderROC",lr_summary.areaUnderROC)
 
 
 
