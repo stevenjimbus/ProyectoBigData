@@ -189,8 +189,8 @@ def MuestraEstratificado(UnionDFs):
 #############################################
 ############Ojo estoy leyendo desde DB#######
 #############################################
-def CustomOneHotEncoder():    
-    sample_df = leer_desde_DB("MuestraEstrat")#Leer desde DB   
+def CustomOneHotEncoder(sample_df):    
+    
     sample_df = sample_df.drop("country")#Eliminar columna country
     sample_df.printSchema()#imprimir schema
     sample_df.show()#mostrar DF
@@ -209,8 +209,9 @@ def CustomOneHotEncoder():
     #Definir el pipeline de transformacion
     print("Define pipeline")
     stages = []
-    assemblerInputsNumeric = numericColumns #
+    assemblerInputsNumeric = numericColumns #Definir el nombre de features numéricas
     print("assemblerInputsNumeric",assemblerInputsNumeric)
+
     #Agrupar features numericos en vector mediante VectorAssembler
     assemblerNumeric = VectorAssembler(inputCols=assemblerInputsNumeric, outputCol="featuresNumericos")
     #Agregar operacion al pipeline
@@ -245,12 +246,17 @@ def CustomOneHotEncoder():
     df_transformed.printSchema()
     df_transformed.show(truncate=False,n=20)
 
-    print("Escalamiento")
+    #Fase de normalización features continuos
+    #StandardScaler transforms a dataset of Vector rows, 
+    #normalizing each feature to have unit standard deviation and/or zero mean. 
+    print("Fase de normalización features continuos")
     standard_scaler = StandardScaler(inputCol='featuresNumericos', outputCol='scaledFeaturesNumericos')
     scale_model = standard_scaler.fit(df_transformed)
     scaled_df = scale_model.transform(df_transformed)
     scaled_df.show()
 
+
+    #Unión de vectores featuresCategoricos scaledFeaturesNumericos
     print("finalAssembler")
     Finalassembler = VectorAssembler(
         inputCols=["featuresCategoricos", "scaledFeaturesNumericos"],
@@ -258,15 +264,13 @@ def CustomOneHotEncoder():
     outputDF = Finalassembler.transform(scaled_df)
     outputDF.show(truncate=False)
 
-
-
-
+    #Transformar dataframe para escribir a la base de datos
     #ExpandedDFtoDB = outputDF.select("featuresCategoricos",vector_to_array("featuresNumericos"))
     ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeaturesNumericos")))\
                     .select([col("xs")[i].alias(numericColumns[i]) for i in range(len(numericColumns))]\
                            +["featuresCategoricos"] + ["TieneMedalla"])
     
-    
+    print("Listo para guardar en DB")
     ExpandedDFtoDB.show()
 
 
@@ -318,7 +322,7 @@ def CustomOneHotEncoder():
 
     """
 
-    return True
+    return ExpandedDFtoDB
 
 
 def escribir_en_DB(DF,nombreDF):
@@ -362,17 +366,29 @@ def main():
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
 
     muestraEstratificadaDF = MuestraEstratificado(UnionDFs)   
+    DF_Unido_y_preprocesado = CustomOneHotEncoder(muestraEstratificadaDF)#DF preprocesado con  
+    #                                                                    variables continuas estandarizadas y 
+    #                                                                    variables categoricas bajo One Hot Encoding
     """
-
-    CustomOneHotEncoder()
+    muestraEstratificadaDF = leer_desde_DB("MuestraEstrat")#Leer desde DB  
+    print("########################")
+    muestraEstratificadaDF.printSchema() 
+    print("########################")
+    DF_Unido_y_preprocesado=CustomOneHotEncoder(muestraEstratificadaDF.drop("featuresCategoricos"))
+    print("########################")
+    DF_Unido_y_preprocesado.printSchema() 
+    print("########################")
 
 
 
 
     #Escritura a base de datos
-    #escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
-    #escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-    #escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
+    """
+    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+    escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
+    """
+    escribir_en_DB(DF_Unido_y_preprocesado , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
 
 
     return True
