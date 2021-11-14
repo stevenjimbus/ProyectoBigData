@@ -8,6 +8,9 @@ from pyspark.sql import functions as f
 from pyspark.sql.functions import col, date_format, udf, isnan, when, count, isnull
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType,LongType,DoubleType)
+
+from pyspark.ml.linalg import Vectors
+from pyspark.ml.feature import VectorAssembler
 import sys
 
 
@@ -107,8 +110,7 @@ def imputacionIndicesGlobales(indicesGlobalesDF):
 
     return cleanDF
 
-def imputacionAtletas(atletasDF):
-    
+def imputacionAtletas(atletasDF):    
     print("Tamano Dataframe atletasDF",(atletasDF.count(), len(atletasDF.columns)))
     print("Cantidad de valores NaN por columna atletasDF")
     atletasDF.select([count(when(isnan(c), c)).alias(c) for c in atletasDF.columns]).show()
@@ -126,7 +128,6 @@ def joinDataframes(DF1,DF2):
     jointDFs = DF1.join(DF2, ['country'])
     jointDFs.show()
     print("Tamano Dataframe jointDFs",(jointDFs.count(), len(jointDFs.columns)))
-
     return jointDFs
 
 
@@ -173,7 +174,38 @@ def MuestraEstratificado(UnionDFs):
             sampledf = sampledf.union(sampleBySportDF)
             print("********break******************")
     print("Tamano Dataframe sampledf",(sampledf.count(), len(sampledf.columns)))
+    sampledf.show()
     return sampledf
+
+
+#############################################
+############Ojo estoy leyendo desde DB#######
+#############################################
+def OneHotEncoder():
+    sample_df = leer_desde_DB("MuestraEstrat")
+    sample_df.show()
+
+    ohe = OneHotEncoder()
+    ohe.setInputCols(["sex"])
+
+    ohe.setOutputCols(["sex_output"])
+
+    model = ohe.fit(sample_df)
+    model.setOutputCols(["sex_output"])
+
+    model.getHandleInvalid()
+
+    model.transform(sample_df).head().output
+
+    single_col_ohe = OneHotEncoder(inputCol="sex_output", outputCol="sex_output")
+    single_col_model = single_col_ohe.fit(sample_df)
+    single_col_model.transform(sample_df).head().output
+
+    print("type single_col_model:", type(single_col_model))
+
+
+    return True
+
 
 def escribir_en_DB(DF,nombreDF):
     DF \
@@ -187,7 +219,19 @@ def escribir_en_DB(DF,nombreDF):
         .save()
     return True
 
+def leer_desde_DB(nombreDF):
+    df = spark \
+        .read \
+        .format("jdbc") \
+        .option("url", "jdbc:postgresql://host.docker.internal:5433/postgres") \
+        .option("user", "postgres") \
+        .option("password", "testPassword") \
+        .option("dbtable", nombreDF) \
+        .load()
+    return df
+
 def main():
+    """
     csvPath1 = sys.argv[1]#Indices de desarrollo
     csvPath2 = sys.argv[2]#Informacion de atletas
     ###Cargar datos desde .csv
@@ -203,9 +247,10 @@ def main():
     #Union/cruzar datasets
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
 
-    muestraEstratificadaDF = MuestraEstratificado(UnionDFs)
+    muestraEstratificadaDF = MuestraEstratificado(UnionDFs)   
+    """
 
-    
+    OneHotEncoder()
 
 
 
