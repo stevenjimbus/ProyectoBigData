@@ -186,16 +186,37 @@ def MuestraEstratificado(UnionDFs):
 def CustomOneHotEncoder():
     
     sample_df = leer_desde_DB("MuestraEstrat")   
+    sample_df = sample_df.drop("country")
+    sample_df.printSchema()
+    sample_df.show()
+
+    #create a list of the columns that are string typed
+    categoricalColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('string') ]
+    print(categoricalColumns)
+
+    #create a list of the columns that are string typed
+    numericColumns = [item[0] for item in sample_df.dtypes if item[1].startswith('int') ]
+    print(numericColumns)
+
+    stages = []
+    for categoricalCol in categoricalColumns:
+        stringIndexer = StringIndexer(inputCol = categoricalCol, outputCol = categoricalCol + 'Index')
+        encoder = OneHotEncoder(inputCols=[stringIndexer.getOutputCol()], outputCols=[categoricalCol + "classVec"])
+        stages += [stringIndexer, encoder]
+    label_stringIdx = StringIndexer(inputCol = 'TieneMedalla', outputCol = 'label')
+    stages += [label_stringIdx]
+    assemblerInputs = [c + "classVec" for c in categoricalColumns] + numericColumns
+    assembler = VectorAssembler(inputCols=assemblerInputs, outputCol="features")
+    stages += [assembler]
 
 
 
+
+
+    """
     stringIndexer = StringIndexer(inputCols=["sport","sex"], outputCols=["sportIndex","sexIndex"])
     model = stringIndexer.fit(sample_df)
     indexed = model.transform(sample_df)
-
-
-
-
     ohe = OneHotEncoder()
     ohe.setInputCols(["sportIndex","sexIndex"])
     ohe.setOutputCols(["output_sportIndex","output_sexIndex"])
@@ -207,6 +228,7 @@ def CustomOneHotEncoder():
     encoded = model.transform(indexed)
     encoded.show(truncate=False,n=500)
     encoded.printSchema()
+    """
 
 
 
