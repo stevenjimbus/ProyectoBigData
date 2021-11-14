@@ -268,10 +268,14 @@ def CustomOneHotEncoder(sample_df):
     #ExpandedDFtoDB = outputDF.select("featuresCategoricos",vector_to_array("featuresNumericos"))
     ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeaturesNumericos")))\
                     .select([col("xs")[i].alias(numericColumns[i]) for i in range(len(numericColumns))]\
-                           +["featuresCategoricos"] + ["TieneMedalla"])
+                           +["featuresCategoricos"])
     
     print("Listo para guardar en DB")
     ExpandedDFtoDB.show()
+
+    paGuardar = DF_Unido_y_preprocesado.drop("featuresCategoricos")
+    paGuardar.show()
+    paGuardar.printSchema() 
 
 
 
@@ -322,7 +326,7 @@ def CustomOneHotEncoder(sample_df):
 
     """
 
-    return ExpandedDFtoDB
+    return paGuardar
 
 
 def escribir_en_DB(DF,nombreDF):
@@ -374,10 +378,12 @@ def main():
     print("########################")
     muestraEstratificadaDF.printSchema() 
     print("########################")
-    DF_Unido_y_preprocesado=CustomOneHotEncoder(muestraEstratificadaDF.drop("featuresCategoricos"))
+    DF_Unido_y_preprocesado=CustomOneHotEncoder(muestraEstratificadaDF)
     print("########################")
     DF_Unido_y_preprocesado.printSchema() 
     print("########################")
+    print("paGuardar")
+
 
 
 
@@ -388,7 +394,7 @@ def main():
     escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
     escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
     """
-    escribir_en_DB(DF_Unido_y_preprocesado , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
+    escribir_en_DB(paGuardar , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
 
 
     return True
