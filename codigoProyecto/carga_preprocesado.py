@@ -167,6 +167,20 @@ def MuestraEstratificado(UnionDFs):
     listauniqueMedallas = [row.TieneMedalla for row in uniqueMedallas.collect()]
     print("listauniqueSports:",listauniqueMedallas)
 
+
+
+    print("Inicio de for loop")
+    for deporte in listauniqueSports:
+        genero = "male"
+        ganadoresDF = UnionDFs.filter((UnionDFs.sport  == deporte) & \
+                        (UnionDFs.TieneMedalla  == 1) & \
+                        (UnionDFs.sex  == genero) ) 
+                    
+        ganadoresDF.show(truncate=False, n=500) 
+        qtyGanadores = ganadoresDF.count()
+        print("********break******************")
+
+
     return True
 
 
