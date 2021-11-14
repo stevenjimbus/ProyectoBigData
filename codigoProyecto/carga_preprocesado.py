@@ -133,68 +133,45 @@ def joinDataframes(DF1,DF2):
 
 
 def MuestraEstratificado(UnionDFs):
-
-    #sort1DF = UnionDFs.sort("sport","sex","TieneMedalla")#.take(1)
-    #sort1DF.show(n=20)
-
-    uniqueSex = UnionDFs.select("sex").distinct()
-    #print("type uniqueSex", type(uniqueSex))
-    #uniqueSex.show(n=1000)
+    uniqueSex = UnionDFs.select("sex").distinct()   
     listauniqueSex = [row.sex for row in uniqueSex.collect()]
     print("listauniquSex:",listauniqueSex)
 
 
     uniqueSports = UnionDFs.select("sport").distinct()
-    #print("type uniqueSports", type(uniqueSports))
-    #uniqueSports.show(n=1000)
     listauniqueSports = [row.sport for row in uniqueSports.collect()]
     print("listauniqueSports:",listauniqueSports)
 
 
     uniqueMedallas = UnionDFs.select("TieneMedalla").distinct()
-    #print("type uniqueSports", type(uniqueMedallas))
-    #uniqueMedallas.show(n=1000)
     listauniqueMedallas = [row.TieneMedalla for row in uniqueMedallas.collect()]
     print("listauniqueSports:",listauniqueMedallas)
-    #Creates Empty RDD
 
     print("empty DF")
     emptyRDD = spark.sparkContext.emptyRDD()
     sampledf = spark.createDataFrame(emptyRDD,UnionDFs.schema)
-    sampledf.printSchema()
-    
+    sampledf.printSchema()    
 
     print("Inicio de for loop")
     for deporte in listauniqueSports:
         for genero in listauniqueSex:     
             print("DF ganadores")
-
-            deporteDF = UnionDFs.filter((UnionDFs.sport  == deporte))
-
-            
+            deporteDF = UnionDFs.filter((UnionDFs.sport  == deporte))            
             GanadoresDF = deporteDF.filter((deporteDF.TieneMedalla  == 1) & \
                                             (deporteDF.sex  == genero) ) 
-                        
-            
+                                    
             qtyGanadores = GanadoresDF.count()
             print("qtyGanadores",qtyGanadores)
-            GanadoresDF.show(truncate=False, n=500) 
-        
+            GanadoresDF.show(truncate=False, n=500)         
             NoGanadoresFullDF = deporteDF.filter((deporteDF.TieneMedalla  == 0) & \
                                                 (deporteDF.sex  == genero) ) 
             shuffleDF = NoGanadoresFullDF.sample(fraction=1.0)#Aleatorizar Dataframe de No Ganadores
 
             print("DF NO ganadores")
-            NoGanadoresDF = shuffleDF.limit(qtyGanadores)
-            #NoGanadoresDF.show(n=1000)
-            
-            
+            NoGanadoresDF = shuffleDF.limit(qtyGanadores)             
             sampleBySportDF = GanadoresDF.union(NoGanadoresDF)
-            #sampleBySportDF.show(n=1000)
             sampledf = sampledf.union(sampleBySportDF)
-            #sampledf.show(n=1000)
             print("********break******************")
-
     print("Tamano Dataframe sampledf",(sampledf.count(), len(sampledf.columns)))
     return sampledf
 
@@ -234,9 +211,9 @@ def main():
 
 
     #Escritura a base de datos
-    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
-    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-    escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
+    #escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    #escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+    #escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
 
 
     return True
