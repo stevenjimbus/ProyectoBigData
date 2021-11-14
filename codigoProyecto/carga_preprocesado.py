@@ -262,7 +262,7 @@ def CustomOneHotEncoder():
 
 
     #ExpandedDFtoDB = outputDF.select("featuresCategoricos",vector_to_array("featuresNumericos"))
-    ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeatures")))\
+    ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeaturesNumericos")))\
                     .select([col("xs")[i].alias(numericColumns[i]) for i in range(len(numericColumns))]\
                            +["featuresCategoricos"] + ["TieneMedalla"])
     
