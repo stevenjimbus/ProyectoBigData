@@ -204,36 +204,39 @@ def CustomOneHotEncoder():
     encoded.show()
     """
 
-    df = spark.createDataFrame([(0.0,), (1.0,), (2.0,)], ["input"])
-    df.show()
-    ohe = OneHotEncoder()
-    ohe.setInputCols(["input"])
+    df = spark.createDataFrame([
+    (0, "a"),
+    (1, "b"),
+    (2, "c"),
+    (3, "a"),
+    (4, "a"),
+    (5, "c")
+    ], ["id", "category"])
 
+    stringIndexer = StringIndexer(inputCol="category", outputCol="categoryIndex")
+    model = stringIndexer.fit(df)
+    indexed = model.transform(df)
+    indexed.show()
+
+    """
+    encoder = OneHotEncoder(inputCol="categoryIndex", outputCol="categoryVec")
+    encoder.fit(indexed)
+    encoder.setOutputCols(["output"])
+    encoder.transform(indexed).head().output
+    """
+
+    ohe = OneHotEncoder()
+    ohe.setInputCols(["categoryIndex"])
     ohe.setOutputCols(["output"])
 
-    model = ohe.fit(df)
+    model = ohe.fit(indexed)
     model.setOutputCols(["output"])
 
-    model.getHandleInvalid()
+    #model.getHandleInvalid()
 
-    model.transform(df).head().output
+    encoded = model.transform(indexed)#.head().output
+    encoded.show()
 
-    single_col_ohe = OneHotEncoder(inputCol="input", outputCol="output")
-    single_col_model = single_col_ohe.fit(df)
-    single_col_model.transform(df).head().output
-    
-    ohePath = "./ohe"
-    ohe.save(ohePath)
-    loadedOHE = OneHotEncoder.load(ohePath)
-    loadedOHE.getInputCols() == ohe.getInputCols()
-
-    modelPath = "./ohe-model"
-    model.save(modelPath)
-    loadedModel = OneHotEncoderModel.load(modelPath)
-    loadedModel.categorySizes == model.categorySizes
-
-    loadedModel.transform(df).take(1) == model.transform(df).take(1)
-    
 
 
 
