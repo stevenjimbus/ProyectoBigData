@@ -295,7 +295,7 @@ def CustomOneHotEncoder():
 
 
     predictionsDF1 = dtpredictionsTest
-    predictionsDF1.show()
+    predictionsDF1.show(n=500)
 
 
 
