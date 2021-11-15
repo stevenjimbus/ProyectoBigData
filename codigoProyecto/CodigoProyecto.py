@@ -409,7 +409,9 @@ def main():
     #"""
     muestraEstratificadaDF = leer_desde_DB("MuestraEstrat")#Leer desde DB  
     print("########################")
+    print("muestraEstratificadaDF")
     muestraEstratificadaDF.printSchema() 
+    muestraEstratificadaDF.show()
     print("########################")
     DF_Unido_y_preprocesado=EncodeAndStandardizeFeatures(muestraEstratificadaDF)
     print("########################")
