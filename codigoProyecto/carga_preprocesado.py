@@ -9,7 +9,8 @@ from pyspark.sql.functions import col, date_format, udf, isnan, when, count, isn
 from pyspark.sql.types import (DateType, IntegerType, FloatType, StringType,
                                StructField, StructType, TimestampType,LongType,DoubleType)
 
-from pyspark.ml.linalg import Vectors
+from pyspark.ml.linalg import Vectors, SparseVector
+
 from pyspark.ml.feature import OneHotEncoder,OneHotEncoderModel, StringIndexer, VectorAssembler,StandardScaler
 from pyspark.ml import Pipeline
 import pandas as pd
@@ -18,6 +19,9 @@ from pyspark.ml.classification import DecisionTreeClassifier
 from pyspark.ml.tuning import ParamGridBuilder, CrossValidator
 from pyspark.ml.evaluation import BinaryClassificationEvaluator
 from pyspark.mllib.evaluation import BinaryClassificationMetrics
+
+from pyspark.ml.classification import LogisticRegression
+
 
 import sys
 
@@ -189,7 +193,7 @@ def MuestraEstratificado(UnionDFs):
 #############################################
 ############Ojo estoy leyendo desde DB#######
 #############################################
-def CustomOneHotEncoder(sample_df):    
+def EncodeAndStandardizeFeatures(sample_df):    
     
     sample_df = sample_df.drop("country")#Eliminar columna country
     sample_df.printSchema()#imprimir schema
@@ -264,25 +268,45 @@ def CustomOneHotEncoder(sample_df):
     outputDF = Finalassembler.transform(scaled_df)
     outputDF.show(truncate=False)
 
+    """
     #Transformar dataframe para escribir a la base de datos
     #ExpandedDFtoDB = outputDF.select("featuresCategoricos",vector_to_array("featuresNumericos"))
+    print("ExpandedDFtoDB")
     ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeaturesNumericos")))\
                     .select([col("xs")[i].alias(numericColumns[i]) for i in range(len(numericColumns))]\
                            +["featuresCategoricos"])
+
+    ExpandedDFtoDB.show(truncate=False)
+    ExpandedDFtoDB.printSchema()
+
+   
+
+   
+    
+
+    
     
     print("Listo para guardar en DB")
-    ExpandedDFtoDB.show()
+    
 
-    paGuardar = DF_Unido_y_preprocesado.drop("featuresCategoricos")
+    arrayDB = ExpandedDFtoDB.withColumn('ExpandedfeaturesCategoricos', vector_to_array('featuresCategoricos'))
+
+    arrayDB.show(truncate=False)
+    arrayDB.printSchema()
+
+    paGuardar = arrayDB.drop("featuresCategoricos")
     paGuardar.show()
     paGuardar.printSchema() 
 
 
 
-    
+    print("Ultimo Assembler")
     """
+    return outputDF
 
-    train_df, test_df = outputDF.randomSplit([0.9,0.1])#, seed = 21
+
+def ClasificadorArbolDecision(preprocessedDF):
+    train_df, test_df = preprocessedDF.randomSplit([0.9,0.1])#, seed = 21
     print("Training Dataset Count: " + str(train_df.count()))
     print("Test Dataset Count: " + str(test_df.count()))
 
@@ -305,7 +329,7 @@ def CustomOneHotEncoder(sample_df):
 
     # Run cross validations
     dtcvModel = dtcv.fit(train_df)
-    predictions = dtcvModel.transform(train_df)
+    predictions = dtcvModel.transform(test_df)
     predictions.show()
 
     print(dtcvModel)
@@ -322,11 +346,52 @@ def CustomOneHotEncoder(sample_df):
 
 
     predictionsDF1 = dtpredictionsTest
-    predictionsDF1.show(n=500)
+    predictionsDF1.show(n=100)
 
-    """
 
-    return paGuardar
+    return True
+
+def ClasificadorRegresionLogistica(preprocessedDF):
+    train_df, test_df = preprocessedDF.randomSplit([0.9,0.1])#, seed = 21
+    print("Training Dataset Count: " + str(train_df.count()))
+    print("Test Dataset Count: " + str(test_df.count()))
+
+    lr = LogisticRegression(labelCol="TieneMedalla", featuresCol="featuresFull")
+    # crear grilla para probar el modelo 
+    lrparamGrid = (ParamGridBuilder()
+                .addGrid(lr.maxIter, [15])             
+                .build())
+
+    # Evaluar el model
+    dtevaluator = BinaryClassificationEvaluator()
+    dtevaluator.setRawPredictionCol("prediction")
+    dtevaluator.setLabelCol("TieneMedalla")
+
+
+    # Create 5-fold CrossValidator
+    dtcv = CrossValidator(estimator = lr, estimatorParamMaps = lrparamGrid,evaluator = dtevaluator,numFolds = 5)#
+
+    # Run cross validations
+    dtcvModel = dtcv.fit(train_df)
+    predictions = dtcvModel.transform(test_df)
+
+    print(dtcvModel)
+
+    print("****Evaluar Underfitting / Overfitting del modelo****")
+    print("dtpredictionsTrain")
+    dtpredictionsTrain = dtcvModel.transform(train_df)
+    print("areaUnderROC Train",dtevaluator.evaluate(dtpredictionsTrain, {dtevaluator.metricName: "areaUnderROC"}))
+    print("******************************************************")
+
+    print("dtpredictionsTest")
+    dtpredictionsTest = dtcvModel.transform(test_df)
+    print("areaUnderROC Test",dtevaluator.evaluate(dtpredictionsTest, {dtevaluator.metricName: "areaUnderROC"}))
+    print("******************************************************")
+
+
+    predictionsDF2 = dtpredictionsTest
+
+    return True
 
 
 def escribir_en_DB(DF,nombreDF):
@@ -378,15 +443,10 @@ def main():
     print("########################")
     muestraEstratificadaDF.printSchema() 
     print("########################")
-    DF_Unido_y_preprocesado=CustomOneHotEncoder(muestraEstratificadaDF)
+    DF_Unido_y_preprocesado=EncodeAndStandardizeFeatures(muestraEstratificadaDF)
     print("########################")
     DF_Unido_y_preprocesado.printSchema() 
     print("########################")
-    print("paGuardar")
-
-
-
-
 
     #Escritura a base de datos
     """
@@ -394,8 +454,15 @@ def main():
     escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
     escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
     """
-    escribir_en_DB(paGuardar , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
+    #escribir_en_DB(DF_Unido_y_preprocesado , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
 
+
+    ###Aquí debe haber sucedido la lectura desde la base de datos###
+
+    ClasificadorArbolDecision(DF_Unido_y_preprocesado)
+    ClasificadorRegresionLogistica(DF_Unido_y_preprocesado)
+
+    
 
     return True
 
