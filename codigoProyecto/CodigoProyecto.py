@@ -268,40 +268,6 @@ def EncodeAndStandardizeFeatures(sample_df):
     outputDF = Finalassembler.transform(scaled_df)
     outputDF.show(truncate=False)
 
-    """
-    #Transformar dataframe para escribir a la base de datos
-    #ExpandedDFtoDB = outputDF.select("featuresCategoricos",vector_to_array("featuresNumericos"))
-    print("ExpandedDFtoDB")
-    ExpandedDFtoDB = (outputDF.withColumn("xs", vector_to_array("scaledFeaturesNumericos")))\
-                    .select([col("xs")[i].alias(numericColumns[i]) for i in range(len(numericColumns))]\
-                           +["featuresCategoricos"])
-
-    ExpandedDFtoDB.show(truncate=False)
-    ExpandedDFtoDB.printSchema()
-
-   
-
-   
-    
-
-    
-    
-    print("Listo para guardar en DB")
-    
-
-    arrayDB = ExpandedDFtoDB.withColumn('ExpandedfeaturesCategoricos', vector_to_array('featuresCategoricos'))
-
-    arrayDB.show(truncate=False)
-    arrayDB.printSchema()
-
-    paGuardar = arrayDB.drop("featuresCategoricos")
-    paGuardar.show()
-    paGuardar.printSchema() 
-
-
-
-    print("Ultimo Assembler")
-    """
     return outputDF
 
 
@@ -390,6 +356,7 @@ def ClasificadorRegresionLogistica(preprocessedDF):
 
 
     predictionsDF2 = dtpredictionsTest
+    predictionsDF2.show()
 
     return True
 
@@ -435,32 +402,40 @@ def main():
     UnionDFs = joinDataframes(IndicesPreprocesadosDF,AtletasPreprocesadosDF)
 
     muestraEstratificadaDF = MuestraEstratificado(UnionDFs)   
-    DF_Unido_y_preprocesado = CustomOneHotEncoder(muestraEstratificadaDF)#DF preprocesado con  
+    DF_Unido_y_preprocesado = EncodeAndStandardizeFeatures(muestraEstratificadaDF)#DF preprocesado con  
     #                                                                    variables continuas estandarizadas y 
     #                                                                    variables categoricas bajo One Hot Encoding
     """
+    #"""
     muestraEstratificadaDF = leer_desde_DB("MuestraEstrat")#Leer desde DB  
     print("########################")
     muestraEstratificadaDF.printSchema() 
     print("########################")
     DF_Unido_y_preprocesado=EncodeAndStandardizeFeatures(muestraEstratificadaDF)
     print("########################")
+    print("DF_Unido_y_preprocesado",DF_Unido_y_preprocesado)
+    DF_Unido_y_preprocesado.show()
     DF_Unido_y_preprocesado.printSchema() 
     print("########################")
 
     #Escritura a base de datos
-    """
-    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
-    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-    escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
-    """
+    #"""
+
+
+
+    #escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    #escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+    #escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
     #escribir_en_DB(DF_Unido_y_preprocesado , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
 
 
-    ###Aquí debe haber sucedido la lectura desde la base de datos###
+    ###Aquí debió haber sucedido la lectura desde la base de datos###
+    desdeDB_DF_Unido_y_preprocesado = DF_Unido_y_preprocesado
 
-    ClasificadorArbolDecision(DF_Unido_y_preprocesado)
-    ClasificadorRegresionLogistica(DF_Unido_y_preprocesado)
+    print("resultado ClasificadorArbolDecision")
+    ClasificadorArbolDecision(desdeDB_DF_Unido_y_preprocesado)
+    print("resultado ClasificadorRegresionLogistica")
+    ClasificadorRegresionLogistica(desdeDB_DF_Unido_y_preprocesado)
 
     
 

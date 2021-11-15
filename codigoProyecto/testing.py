@@ -3,7 +3,7 @@
 import pytest
 from pyspark.sql.window import Window
 from pyspark.sql import functions as FN
-from .carga_preprocesado import *
+from .CodigoProyecto import *
 import sys,os
 from pathlib import Path
 
