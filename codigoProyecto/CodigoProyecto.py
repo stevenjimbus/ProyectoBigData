@@ -385,7 +385,7 @@ def leer_desde_DB(nombreDF):
     return df
 
 def main():
-    """
+    
     csvPath1 = sys.argv[1]#Indices de desarrollo
     csvPath2 = sys.argv[2]#Informacion de atletas
     ###Cargar datos desde .csv
@@ -405,30 +405,13 @@ def main():
     DF_Unido_y_preprocesado = EncodeAndStandardizeFeatures(muestraEstratificadaDF)#DF preprocesado con  
     #                                                                    variables continuas estandarizadas y 
     #                                                                    variables categoricas bajo One Hot Encoding
-    """
-    #"""
-    muestraEstratificadaDF = leer_desde_DB("MuestraEstrat")#Leer desde DB  
-    print("########################")
-    print("muestraEstratificadaDF")
-    muestraEstratificadaDF.printSchema() 
-    muestraEstratificadaDF.show()
-    print("########################")
-    DF_Unido_y_preprocesado=EncodeAndStandardizeFeatures(muestraEstratificadaDF)
-    print("########################")
-    print("DF_Unido_y_preprocesado",DF_Unido_y_preprocesado)
-    DF_Unido_y_preprocesado.show()
-    DF_Unido_y_preprocesado.printSchema() 
-    print("########################")
-
-    #Escritura a base de datos
-    #"""
-
-
-
-    #escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
-    #escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
-    #escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
-    #escribir_en_DB(DF_Unido_y_preprocesado , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
+    
+    # Escribir a la base de datos
+    escribir_en_DB(IndicesPreprocesadosDF ,"IndicesGlobales")#Escribir IndicesGlobales a base de datos
+    escribir_en_DB(AtletasPreprocesadosDF , "InfoAtletasOlimp")#Escribir InfoAtletasOlimp a base de datos
+    escribir_en_DB(muestraEstratificadaDF , "MuestraEstrat")#Escribir muestraEstratificadaDF a base de datos
+    # No Funcional 
+    # escribir_en_DB(DF_Unido_y_preprocesado , "DFUnidoypreprocesado")#Escribir DF_Unido_y_preprocesado a base de datos
 
 
     ###Aquí debió haber sucedido la lectura desde la base de datos###
